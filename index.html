@@ -231,5 +231,18 @@
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
  </script>
+<div id="privacy-modal" class="hidden-section fixed inset-0 bg-black bg-opacity-50 z-[2000] flex items-center justify-center p-4">
+    <div class="bg-white p-6 rounded-2xl max-h-[80vh] overflow-y-auto w-full">
+        <h2 class="font-bold text-xl mb-4 text-blue-600">Privacy Policy</h2>
+        <div class="text-sm text-gray-600 space-y-3">
+            <p>1. **Data:** We only store your email for login purposes.</p>
+            <p>2. **Payments:** All 700 PKR fees are non-refundable after account activation.</p>
+            <p>3. **Earnings:** Daily tasks are reset every 24 hours.</p>
+            <p>4. **Security:** Do not share your password with anyone.</p>
+        </div>
+        <button onclick="document.getElementById('privacy-modal').classList.add('hidden-section')" 
+                class="w-full mt-6 bg-blue-600 text-white p-3 rounded-xl font-bold">I Understand</button>
+    </div>
+</div>
 </body>
 </html>
