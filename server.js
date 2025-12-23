@@ -10,7 +10,27 @@ const pool = new Pool({
 
 app.use(express.static(__dirname));
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+// WITHDRAWAL REQUEST ROUTE
+app.post('/api/withdraw', async (req, res) => {
+    const { email, amount, number } = req.body;
+    try {
+        // 1. Check if user has enough balance
+        const user = await pool.query('SELECT balance, is_active FROM users WHERE email = $1', [email]);
+        const userData = user.rows[0];
 
+        if (!userData.is_active) return res.status(403).json({ error: "Account not active" });
+        if (userData.balance < amount) return res.status(400).json({ error: "Insufficient balance" });
+        if (amount < 1000) return res.status(400).json({ error: "Minimum withdrawal is 1000 PKR" });
+
+        // 2. Subtract balance from user
+        await pool.query('UPDATE users SET balance = balance - $1 WHERE email = $1', [amount, email]);
+
+        // 3. Log the request (Optional: You can create a 'withdrawals' table later)
+        console.log(`WITHDRAWAL REQUEST: ${email} requested ${amount} PKR to number ${number}`);
+
+        res.json({ success: true, message: "Request sent to admin!" });
+    } catch (e) { res.status(500).json({ error: "Withdrawal failed" }); }
+});
 app.listen(process.env.PORT || 3000, () => console.log('Ready'));
 const express = require('express');
 const { Pool } = require('pg');
