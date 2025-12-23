@@ -225,6 +225,11 @@
         msg.className = "text-xs mt-2 text-center text-red-500";
     }
 }
+        function shareReferral() {
+    const code = document.getElementById('ref-code-display').innerText;
+    const msg = `Join Digital Earn and make 100 PKR daily! Use my code: ${code}. Link: https://digital-earn-v2.onrender.com`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
  </script>
 </body>
 </html>
