@@ -48,4 +48,126 @@
                 <div class="mt-3 p-3 bg-white rounded border text-xs">
                     <p><b>Easypaisa:</b> Saif Ullah</p>
                     <p><b>Number:</b> 03707340477</p>
-                    <p class="mt-1">Send proof to: saifullahbk386@gmail
+                    <p class="mt-1">Send proof to: saifullahbk386@gmail.com</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 class="font-bold mb-2"><i class="fas fa-share-alt mr-2 text-blue-600"></i>Your Referral Code</h3>
+                <p id="ref-code-display" class="bg-gray-100 p-2 rounded text-center font-mono text-blue-600 font-bold">---</p>
+                <p class="text-xs text-gray-500 mt-2">Earn 10% from every member you invite!</p>
+            </div>
+        </div>
+
+        <div id="tasks-sec" class="hidden-section">
+            <h2 class="text-xl font-bold mb-4">Daily Tasks (10 Left)</h2>
+            <div id="task-container" class="space-y-3">
+                </div>
+            <div id="task-locked" class="text-center py-10">
+                <i class="fas fa-lock text-4xl text-gray-300 mb-3"></i>
+                <p class="text-gray-500">Pay the registration fee to unlock video tasks.</p>
+            </div>
+        </div>
+
+        <div id="profile-sec" class="hidden-section">
+            <div class="card text-center">
+                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-user text-3xl text-blue-600"></i>
+                </div>
+                <h2 id="user-email-display" class="font-bold">user@example.com</h2>
+                <p class="text-sm text-gray-500">Member ID: #<span id="user-id">000</span></p>
+            </div>
+            <div class="card space-y-4">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <span>Withdrawals (Min. 1000)</span>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+                <div class="flex justify-between items-center border-b pb-2">
+                    <span>Privacy Policy</span>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                </div>
+                <button onclick="location.reload()" class="w-full text-red-500 font-bold pt-2">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="nav-bottom hidden-section" id="bottom-nav">
+        <div class="nav-item active" onclick="showSec('home')">
+            <i class="fas fa-home text-xl"></i>
+            <div>Home</div>
+        </div>
+        <div class="nav-item" onclick="showSec('tasks')">
+            <i class="fas fa-tasks text-xl"></i>
+            <div>Tasks</div>
+        </div>
+        <div class="nav-item" onclick="showSec('profile')">
+            <i class="fas fa-user text-xl"></i>
+            <div>Profile</div>
+        </div>
+    </nav>
+
+    <script>
+        let isLogin = true;
+        let currentUser = null;
+
+        function toggleAuth() {
+            isLogin = !isLogin;
+            document.getElementById('auth-title').innerText = isLogin ? 'Digital Earn' : 'Create Account';
+            document.getElementById('auth-btn').innerText = isLogin ? 'Login' : 'Sign Up';
+            document.getElementById('signup-extra').classList.toggle('hidden');
+        }
+
+        async function handleAuth() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const ref = document.getElementById('refBy').value;
+            const path = isLogin ? '/api/login' : '/api/signup';
+
+            const res = await fetch(path, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password, ref })
+            });
+
+            const data = await res.json();
+            if(data.success) {
+                if(isLogin) {
+                    currentUser = data.user;
+                    loadDashboard();
+                } else {
+                    alert("Registration Successful! Please Login.");
+                    toggleAuth();
+                }
+            } else {
+                alert(data.error || "Execution failed");
+            }
+        }
+
+        function loadDashboard() {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('app-content').classList.remove('hidden-section');
+            document.getElementById('bottom-nav').classList.remove('hidden-section');
+            
+            // Set User Data
+            document.getElementById('user-balance').innerText = currentUser.balance;
+            document.getElementById('user-email-display').innerText = currentUser.email;
+            document.getElementById('ref-code-display').innerText = currentUser.referral_code || 'N/A';
+            
+            if(currentUser.is_active) {
+                document.getElementById('activation-notice').classList.add('hidden');
+                document.getElementById('task-locked').classList.add('hidden');
+            }
+        }
+
+        function showSec(sec) {
+            ['home-sec', 'tasks-sec', 'profile-sec'].forEach(s => document.getElementById(s).classList.add('hidden-section'));
+            document.getElementById(sec + '-sec').classList.remove('hidden-section');
+            
+            // Update Nav colors
+            const items = document.querySelectorAll('.nav-item');
+            items.forEach(i => i.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
