@@ -290,5 +290,19 @@
                 class="w-full mt-6 bg-blue-600 text-white p-3 rounded-xl font-bold">I Understand</button>
     </div>
 </div>
+    <div id="privacy-modal" class="hidden-section fixed inset-0 bg-black/50 z-[2000] flex items-center justify-center p-6 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
+        <div class="bg-blue-600 p-4 text-white text-center font-bold">Privacy & Terms</div>
+        <div class="p-6 text-sm text-gray-600 space-y-4 max-h-[60vh] overflow-y-auto">
+            <p><b>1. Registration:</b> Fee of 700 PKR is required to start earning.</p>
+            <p><b>2. Withdrawals:</b> Minimum limit is 1000 PKR via Easypaisa.</p>
+            <p><b>3. Referrals:</b> You get 10% (70 PKR) only after your friend's account is activated.</p>
+            <p><b>4. Fair Use:</b> Creating multiple accounts will result in a permanent ban.</p>
+        </div>
+        <div class="p-4 bg-gray-50">
+            <button onclick="document.getElementById('privacy-modal').classList.add('hidden-section')" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">I Agree & Close</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
