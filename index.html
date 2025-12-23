@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Earn - v2</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 { color: #1a73e8; margin-bottom: 0.5rem; }
+        .balance-box {
+            background: #e8f0fe;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+        }
+        #balance {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #202124;
+        }
+        button {
+            background-color: #34a853;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.1s;
+        }
+        button:active { transform: scale(0.98); }
+        .status { margin-top: 1rem; font-size: 0.9rem; color: #5f6368; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Digital Earn</h1>
+    <p>Watch and Earn Money</p>
+
+    <div class="balance-box">
+        <span id="balance">$0.00</span>
+    </div>
+
+    <button onclick="handleEarn()">Watch Video ($0.50)</button>
+    <p id="statusMsg" class="status">Account: testuser@example.com</p>
+</div>
+
+<script>
+    // Configuration
+    const USER_EMAIL = "testuser@example.com";
+
+    async function handleEarn() {
+        const btn = document.querySelector('button');
+        const status = document.getElementById('statusMsg');
+        
+        // Disable button during process
+        btn.disabled = true;
+        status.innerText = "Processing video reward...";
+
+        try {
+            const response = await fetch('/earn', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: USER_EMAIL, amount: 0.50 })
+            });
+
+            if (!response.ok) throw new Error('Server error');
+
+            const data = await response.json();
+            
+            // Update UI
+            document.getElementById('balance').innerText = `$${parseFloat(data.balance).toFixed(2)}`;
+            status.innerText = "Success! $0.50 added.";
+            status.style.color = "#34a853";
+
+        } catch (err) {
+            console.error(err);
+            status.innerText = "Error: Could not connect to server.";
+            status.style.color = "#d93025";
+        } finally {
+            // Re-enable button after 2 seconds
+            setTimeout(() => {
+                btn.disabled = false;
+                status.style.color = "#5f6368";
+            }, 2000);
+        }
+    }
+</script>
+
+</body>
+</html>
