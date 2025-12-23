@@ -176,6 +176,46 @@
             items.forEach(i => i.classList.remove('active'));
             event.currentTarget.classList.add('active');
         }
-    </script>
+   async function requestWithdrawal() {
+    const amount = document.getElementById('withdraw-amount').value;
+    const number = document.getElementById('withdraw-number').value;
+    const msg = document.getElementById('withdraw-msg');
+
+    if (amount < 1000) {
+        msg.innerText = "Minimum withdrawal is 1000 PKR";
+        msg.className = "text-xs mt-2 text-center text-red-500";
+        return;
+    }
+
+    if (currentUser.balance < amount) {
+        msg.innerText = "Insufficient balance!";
+        msg.className = "text-xs mt-2 text-center text-red-500";
+        return;
+    }
+
+    // This sends the request to the server (we will add this route to server.js next)
+    const res = await fetch('/api/withdraw', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            email: currentUser.email, 
+            amount: amount, 
+            number: number 
+        })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+        msg.innerText = "Request submitted! Pending approval.";
+        msg.className = "text-xs mt-2 text-center text-green-600";
+        // Update UI balance
+        currentUser.balance -= amount;
+        document.getElementById('user-balance').innerText = currentUser.balance;
+    } else {
+        msg.innerText = data.error || "Request failed";
+        msg.className = "text-xs mt-2 text-center text-red-500";
+    }
+}
+ </script>
 </body>
 </html>
