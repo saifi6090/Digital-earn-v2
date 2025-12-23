@@ -79,4 +79,24 @@ app.post('/api/login', async (req, res) => {
 
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
+// TASK COMPLETION ROUTE
+app.post('/api/tasks/complete', async (req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        const userData = user.rows[0];
+
+        if (!userData.is_active) return res.status(403).json({ error: "Activate account first" });
+        if (userData.tasks_completed >= 10) return res.status(400).json({ error: "Daily limit reached" });
+
+        // Update balance by 10 PKR and increment task count
+        await pool.query(
+            'UPDATE users SET balance = balance + 10, tasks_completed = tasks_completed + 1 WHERE email = $1',
+            [email]
+        );
+
+        res.json({ success: true, message: "10 PKR added to your wallet!" });
+    } catch (e) { res.status(500).json({ error: "Task failed" }); }
+});
+
 app.listen(process.env.PORT || 3000, () => console.log('Server running...'));
