@@ -3,290 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn | Professional Dashboard</title>
+    <title>Digital Earn | Professional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        .hidden-section { display: none !important; }
-        /* Glassmorphism effect for cards */
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 1.5rem; border: 1px solid rgba(255,255,255,0.3); }
-        .nav-active { color: #2563eb !important; border-top: 3px solid #2563eb; }
-        body { -webkit-tap-highlight-color: transparent; }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .animate-marquee { display: inline-block; animation: marquee 15s linear infinite; }
+        .hidden-sec { display: none; }
     </style>
 </head>
-<body class="bg-slate-100 font-sans pb-24 text-slate-800">
+<body class="bg-slate-50 font-sans text-slate-900">
 
-    <div id="auth-overlay" class="fixed inset-0 bg-blue-700 z-[10000] flex items-center justify-center p-6">
-        <div class="bg-white w-full max-w-sm rounded-3xl p-8 shadow-2xl">
-            <h2 id="auth-title" class="text-3xl font-black text-center text-blue-700 mb-2">WELCOME</h2>
-            <p id="auth-sub" class="text-center text-slate-400 text-sm mb-8">Login to start earning today</p>
-            
-            <div class="space-y-4">
-                <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 border border-slate-200">
-                <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 border border-slate-200">
-                
-                <div id="signup-extra" class="hidden-section">
-                    <input type="text" id="auth-ref" placeholder="Referral Code (Optional)" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 border border-slate-200">
-                </div>
-                
-                <button onclick="handleAuth()" id="auth-btn" class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold shadow-lg active:scale-95 transition hover:bg-blue-700">Login</button>
-                
-                <div class="flex justify-between text-xs font-bold text-slate-500 px-2 mt-4">
-                    <span onclick="toggleAuthMode()" id="auth-switch" class="cursor-pointer text-blue-600 underline">Create Account</span>
-                    <span class="cursor-pointer hover:text-blue-600">Forgot Password?</span>
-                </div>
-            </div>
+    <div class="bg-blue-900 text-white overflow-hidden py-2 text-[10px] font-bold uppercase tracking-widest flex sticky top-0 z-[6000]">
+        <div class="whitespace-nowrap animate-marquee">
+            🚀 USER ***492 JUST WITHDREW 1200 PKR — USER ***991 RECEIVED 70 PKR REFERRAL BONUS — WELCOME TO DIGITAL EARN — START TASKS TO EARN NOW!
         </div>
     </div>
 
-    <nav class="bg-white/90 backdrop-blur-md p-4 sticky top-0 z-50 flex justify-between items-center px-6 border-b border-slate-200 shadow-sm">
-        <span class="font-black text-blue-600 text-xl tracking-tighter">DIGITAL EARN</span>
-        <div class="bg-blue-50 px-3 py-1 rounded-full text-[10px] font-bold text-blue-600 border border-blue-100" id="top-email">...</div>
-    </nav>
-<div class="bg-blue-900 text-white overflow-hidden py-2 text-[10px] font-bold uppercase tracking-widest flex">
-    <div class="whitespace-nowrap animate-marquee">
-        🚀 USER ***492 JUST WITHDREW 1200 PKR VIA EASYPAISA — USER ***991 JUST RECEIVED 70 PKR REFERRAL BONUS — WELCOME TO DIGITAL EARN — START TASKS TO EARN NOW!
-    </div>
-</div>
-
-<style>
-@keyframes marquee {
-    0% { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
-.animate-marquee {
-    display: inline-block;
-    animation: marquee 15s linear infinite;
-}
-</style>
-
-    <main class="p-5 max-w-md mx-auto space-y-5">
-        
-        <div id="home-sec">
-            <div class="glass-card bg-gradient-to-r from-blue-600 to-blue-500 p-6 text-white shadow-xl relative overflow-hidden">
-                <div class="relative z-10">
-                    <p class="text-xs opacity-80 font-bold uppercase tracking-widest">Available Balance</p>
-                    <h1 class="text-5xl font-black mt-2">Rs. <span id="user-balance">0.00</span></h1>
-                </div>
-                <div class="absolute -right-6 -bottom-10 w-32 h-32 bg-white opacity-10 rounded-full"></div>
+    <div id="auth-page" class="min-h-screen flex items-center justify-center p-6">
+        <div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
+            <h1 class="text-3xl font-black text-blue-900 mb-2 text-center">Digital Earn</h1>
+            <p class="text-slate-400 text-center mb-8 text-sm">Sign in to start earning daily rewards</p>
+            
+            <div class="space-y-4">
+                <input id="login-email" type="email" placeholder="Email Address" class="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                <input id="login-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl border-none focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                <button onclick="handleLogin()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-95">Login</button>
             </div>
 
-            <div id="activation-notice" class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-xl shadow-sm">
-                <h3 class="font-bold text-yellow-800 text-sm flex items-center"><i class="fas fa-lock mr-2"></i> Account Locked</h3>
-                <p class="text-xs text-yellow-700 mt-2">Send <b>700 PKR</b> to Easypaisa: <b>03707340477</b> (Saif Ullah).</p>
-                <a href="https://wa.me/923707340477?text=Please%20activate%20my%20account" class="mt-3 block text-center bg-yellow-500 text-white text-xs font-bold py-2 rounded-lg">Send Proof on WhatsApp</a>
+            <p class="text-center mt-6 text-slate-400 text-xs">Don't have an account? <span class="text-blue-600 font-bold cursor-pointer">Register Now</span></p>
+        </div>
+    </div>
+
+    <div id="dashboard-page" class="hidden-sec min-h-screen pb-24">
+        <div class="bg-white p-6 rounded-b-[40px] shadow-sm flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 font-bold text-xl">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div>
+                    <h2 id="top-email" class="font-bold text-slate-800">user@email.com</h2>
+                    <p id="user-status" class="text-[10px] text-red-500 font-bold uppercase">Account Not Active</p>
+                </div>
+            </div>
+            <button onclick="logout()" class="text-slate-300 hover:text-red-500 transition-colors"><i class="fas fa-power-off text-xl"></i></button>
+        </div>
+
+        <div class="p-6 space-y-6">
+            <div class="bg-gradient-to-br from-blue-600 to-blue-800 p-8 rounded-[35px] text-white shadow-2xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <p class="text-blue-100 text-xs font-medium uppercase tracking-widest mb-1">Total Balance</p>
+                    <h1 class="text-5xl font-black italic">Rs. <span id="user-balance">0.00</span></h1>
+                </div>
+                <i class="fas fa-wallet absolute -bottom-4 -right-4 text-9xl text-white opacity-10"></i>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 text-center">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase">Task Income</p>
-                    <p class="text-xl font-black text-slate-700">Rs. <span id="task-income">0</span></p>
-                </div>
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 text-center">
-                    <p class="text-[10px] font-bold text-slate-400 uppercase">Refer Income</p>
-                    <p class="text-xl font-black text-slate-700">Rs. <span id="refer-income">0</span></p>
-                </div>
-            </div>
-
-            <div class="bg-white p-5 rounded-3xl shadow-sm border border-slate-100">
-                <p class="text-xs font-bold text-slate-400 mb-3 uppercase text-center">Your Referral Code</p>
-                <div class="bg-blue-50 p-3 rounded-xl border-2 border-dashed border-blue-200 text-center mb-4">
-                    <span id="ref-code-display" class="text-2xl font-black text-blue-600 tracking-widest">---</span>
-                </div>
-                <button onclick="shareReferral()" class="w-full bg-green-500 text-white p-3 rounded-xl font-bold flex items-center justify-center shadow-md active:scale-95 transition">
-                    <i class="fab fa-whatsapp mr-2 text-xl"></i> Share & Earn 70 PKR
+                <button onclick="doTask()" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-xl"><i class="fas fa-play"></i></div>
+                    <span class="font-bold text-slate-700 text-sm">Start Task</span>
+                </button>
+                <button onclick="showSection('profile')" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-3">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-xl"><i class="fas fa-history"></i></div>
+                    <span class="font-bold text-slate-700 text-sm">History</span>
                 </button>
             </div>
-        </div>
 
-        <div id="task-sec" class="hidden-section space-y-4">
-            <h2 class="text-xl font-black text-slate-700">Daily Tasks</h2>
-            <div class="bg-white p-5 rounded-2xl flex justify-between items-center shadow-sm border border-slate-100">
-                <div class="flex items-center">
-                    <div class="bg-blue-100 p-3 rounded-full mr-3 text-blue-600"><i class="fas fa-play"></i></div>
-                    <div>
-                        <p class="font-bold text-sm">Watch Video Ad</p>
-                        <p class="text-xs text-slate-400">Reward: 10 PKR</p>
-                    </div>
+            <div id="profile-sec" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 mt-6">
+                <h3 class="font-bold mb-4 text-slate-700 text-sm"><i class="fas fa-history mr-2 text-blue-600"></i>Withdrawal History</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-[11px]">
+                        <thead><tr class="text-slate-400 border-b"><th class="pb-2">Date</th><th class="pb-2">Amount</th><th class="pb-2 text-right">Status</th></tr></thead>
+                        <tbody id="withdraw-history-list">
+                            <tr><td colspan="3" class="py-4 text-center text-slate-300 italic">No records found.</td></tr>
+                        </tbody>
+                    </table>
                 </div>
-                <button onclick="doTask()" class="bg-blue-600 text-white px-5 py-2 rounded-full text-xs font-bold shadow-lg active:scale-95 transition">Start</button>
             </div>
         </div>
-
-        <div id="profile-sec" class="hidden-section space-y-5">
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 mt-6">
-    <h3 class="font-bold mb-4 text-slate-700 text-sm italic"><i class="fas fa-history mr-2 text-blue-600"></i>Recent History</h3>
-    <div class="overflow-x-auto">
-        <table class="w-full text-left text-[10px]">
-            <thead>
-                <tr class="text-slate-400 border-b">
-                    <th class="pb-2">Date</th>
-                    <th class="pb-2">Amount</th>
-                    <th class="pb-2 text-right">Status</th>
-                </tr>
-            </thead>
-            <tbody id="withdraw-history-list">
-                <tr>
-                    <td colspan="3" class="py-4 text-center text-slate-300 italic">No history yet...</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                <h3 class="font-bold mb-4 text-slate-700"><i class="fas fa-wallet mr-2 text-blue-600"></i>Withdraw Funds</h3>
-                <input type="number" id="w-amount" placeholder="Amount (Min 1000)" class="w-full p-3 bg-slate-50 rounded-xl mb-3 border border-slate-200 text-sm">
-                <input type="text" id="w-num" placeholder="Easypaisa Number" class="w-full p-3 bg-slate-50 rounded-xl mb-4 border border-slate-200 text-sm">
-                <button onclick="handleWithdraw()" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold shadow-lg active:scale-95 transition">Request Payout</button>
-                <p id="withdraw-status" class="text-xs text-center mt-3 font-bold"></p>
-            </div>
-
-            <div class="space-y-3">
-                <div onclick="toggleModal('privacy-modal', true)" class="bg-white p-4 rounded-2xl flex justify-between items-center cursor-pointer border border-slate-100 hover:bg-slate-50">
-                    <div class="flex items-center"><i class="fas fa-shield-alt text-slate-400 mr-3 w-6"></i> <span class="text-sm font-bold text-slate-600">Privacy Policy</span></div>
-                    <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
-                </div>
-                <a href="https://wa.me/923707340477" target="_blank" class="bg-white p-4 rounded-2xl flex justify-between items-center cursor-pointer border border-slate-100 hover:bg-slate-50">
-                    <div class="flex items-center"><i class="fab fa-whatsapp text-green-500 mr-3 w-6 text-lg"></i> <span class="text-sm font-bold text-slate-600">Customer Support</span></div>
-                    <i class="fas fa-chevron-right text-slate-300 text-xs"></i>
-                </a>
-                <button onclick="logout()" class="w-full bg-red-50 text-red-500 font-bold py-4 rounded-2xl text-sm mt-4">Logout Account</button>
-            </div>
-        </div>
-    </main>
-
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex justify-around py-3 shadow-[0_-5px_20px_rgba(0,0,0,0.05)] pb-5">
-        <button onclick="nav('home')" id="btn-home" class="flex flex-col items-center nav-active text-slate-400 w-1/3"><i class="fas fa-home text-xl mb-1"></i><span class="text-[10px] font-bold">Home</span></button>
-        <button onclick="nav('task')" id="btn-task" class="flex flex-col items-center text-slate-400 w-1/3"><i class="fas fa-layer-group text-xl mb-1"></i><span class="text-[10px] font-bold">Tasks</span></button>
-        <button onclick="nav('profile')" id="btn-profile" class="flex flex-col items-center text-slate-400 w-1/3"><i class="fas fa-user-circle text-xl mb-1"></i><span class="text-[10px] font-bold">Profile</span></button>
     </div>
 
-    <div id="privacy-modal" class="hidden-section fixed inset-0 bg-black/60 z-[20000] flex items-center justify-center p-6 backdrop-blur-sm">
-        <div class="bg-white rounded-3xl w-full max-w-sm p-6 shadow-2xl relative">
-            <button onclick="toggleModal('privacy-modal', false)" class="absolute top-4 right-4 text-slate-400 hover:text-red-500"><i class="fas fa-times text-xl"></i></button>
-            <h2 class="text-xl font-black mb-4 text-slate-800">Terms & Privacy</h2>
-            <div class="text-xs text-slate-500 space-y-3 max-h-[60vh] overflow-y-auto leading-relaxed">
-                <p><b>1. Activation:</b> 700 PKR fee is lifetime and non-refundable.</p>
-                <p><b>2. Withdrawals:</b> Minimum 1000 PKR. Processed within 24 hours via Easypaisa.</p>
-                <p><b>3. Referrals:</b> You get 70 PKR bonus only when your friend activates their account.</p>
-                <p><b>4. Security:</b> Multiple accounts on one device will lead to a permanent ban.</p>
-            </div>
-            <button onclick="toggleModal('privacy-modal', false)" class="w-full mt-6 bg-blue-600 text-white p-3 rounded-xl font-bold shadow-lg">I Understand</button>
-        </div>
-    </div>
+    <a href="https://wa.me/923707340477" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-[5000] animate-bounce">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
 
     <script>
-        let isLogin = true;
-        // Check if user is already logged in
-        let user = JSON.parse(localStorage.getItem('user'));
+        let user = JSON.parse(localStorage.getItem('user')) || null;
 
-        function initApp() {
-            if(user) {
-                // If logged in, hide auth overlay and show dashboard
-                document.getElementById('auth-overlay').classList.add('hidden-section');
-                document.getElementById('top-email').innerText = user.email;
-                document.getElementById('user-balance').innerText = user.balance;
-                document.getElementById('task-income').innerText = user.task_income || "0";
-                document.getElementById('refer-income').innerText = user.referral_income || "0";
-                document.getElementById('ref-code-display').innerText = user.referral_code || "---";
-                
-                // Hide activation notice if active
-                if(user.is_active) {
-                    document.getElementById('activation-notice').style.display = 'none';
-                }
+        function checkAuth() {
+            const authPage = document.getElementById('auth-page');
+            const dashPage = document.getElementById('dashboard-page');
+            if (user) {
+                authPage.classList.add('hidden-sec');
+                dashPage.classList.remove('hidden-sec');
+                renderUser();
             } else {
-                // If not logged in, show auth overlay (Safety Check)
-                document.getElementById('auth-overlay').classList.remove('hidden-section');
+                authPage.classList.remove('hidden-sec');
+                dashPage.classList.add('hidden-sec');
             }
         }
-        
-        // Run immediately
-        initApp();
 
-        // Toggle between Login and Signup
-        function toggleAuthMode() {
-            isLogin = !isLogin;
-            document.getElementById('auth-title').innerText = isLogin ? "WELCOME" : "CREATE ACCOUNT";
-            document.getElementById('auth-sub').innerText = isLogin ? "Login to start earning" : "Join us to make money daily";
-            document.getElementById('auth-btn').innerText = isLogin ? "Login" : "Register Now";
-            document.getElementById('auth-switch').innerText = isLogin ? "Create Account" : "Back to Login";
-            
-            const extra = document.getElementById('signup-extra');
-            if(isLogin) extra.classList.add('hidden-section');
-            else extra.classList.remove('hidden-section');
-        }
+        async function handleLogin() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-pass').value;
 
-        // Handle Login/Register
-        async function handleAuth() {
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-pass').value;
-            const btn = document.getElementById('auth-btn');
-            
-            if(!email || !password) return alert("Please fill all fields");
-
-            btn.innerText = "Processing...";
-            
             try {
-                const endpoint = isLogin ? '/api/login' : '/api/register';
-                const payload = { email, password };
-                
-                if (!isLogin) {
-                    const ref = document.getElementById('auth-ref').value;
-                    if(ref) payload.referral_by = ref;
-                }
-                
-                const res = await fetch(endpoint, {
+                const res = await fetch('/api/login', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({ email, password })
                 });
-                
                 const data = await res.json();
-                
                 if(data.success) {
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    location.reload(); // Refresh to load dashboard
+                    user = data.user;
+                    checkAuth();
                 } else {
-                    alert(data.error || "Something went wrong");
-                    btn.innerText = isLogin ? "Login" : "Register Now";
+                    alert(data.error);
                 }
-            } catch (e) {
-                alert("Connection Error. Please try again.");
-                btn.innerText = isLogin ? "Login" : "Register Now";
+            } catch (err) {
+                alert("Connection Error. Please wait 1 minute for server to wake up.");
             }
         }
 
-        // Navigation Tabs
-        function nav(id) {
-            ['home', 'task', 'profile'].forEach(s => {
-                document.getElementById(s + '-sec').classList.add('hidden-section');
-                document.getElementById('btn-' + s).classList.remove('nav-active', 'text-blue-600');
-                document.getElementById('btn-' + s).classList.add('text-slate-400');
-            });
-            document.getElementById(id + '-sec').classList.remove('hidden-section');
-            const activeBtn = document.getElementById('btn-' + id);
-            activeBtn.classList.add('nav-active', 'text-blue-600');
-            activeBtn.classList.remove('text-slate-400');
+        function renderUser() {
+            document.getElementById('top-email').innerText = user.email;
+            document.getElementById('user-balance').innerText = user.balance;
+            document.getElementById('user-status').innerText = user.is_active ? "Active" : "Not Active";
+            document.getElementById('user-status').className = user.is_active ? "text-[10px] text-green-500 font-bold uppercase" : "text-[10px] text-red-500 font-bold uppercase";
+
+            const historyList = document.getElementById('withdraw-history-list');
+            if (user.withdrawals && user.withdrawals.length > 0) {
+                historyList.innerHTML = user.withdrawals.map(w => `
+                    <tr class="border-b border-slate-50">
+                        <td class="py-3 text-slate-500">${w.date}</td>
+                        <td class="py-3 font-bold">Rs. ${w.amount}</td>
+                        <td class="py-3 text-right"><span class="bg-amber-100 text-amber-600 px-2 py-1 rounded-full text-[8px] font-bold">${w.status}</span></td>
+                    </tr>
+                `).join('');
+            }
         }
 
-        // Modal Logic
-        function toggleModal(id, show) {
-            const el = document.getElementById(id);
-            if(show) el.classList.remove('hidden-section');
-            else el.classList.add('hidden-section');
-        }
-
-        // Share Function
-        function shareReferral() {
-            if(!user) return;
-            const msg = `🔥 *Join Digital Earn!*%0AEarn 100 PKR Daily.%0AUse my Code: *${user.referral_code}*%0ALink: ${window.location.origin}`;
-            window.open(`https://wa.me/?text=${msg}`, '_blank');
-        }
-
-        // Task Logic
         async function doTask() {
-            if(!user.is_active) return alert("Please Activate your Account first!");
+            if(!user.is_active) return alert("Please Activate your Account (700 PKR) to earn!");
             
             const res = await fetch('/api/task', {
                 method: 'POST',
@@ -295,71 +154,17 @@
             });
             const data = await res.json();
             if(data.success) {
-                alert("✅ Task Complete! 10 PKR Added.");
-                // Update local data
-                user.balance = data.new_balance;
-                user.task_income = (user.task_income || 0) + 10;
-                localStorage.setItem('user', JSON.stringify(user));
+                alert("Task Complete! 10 PKR Added.");
                 location.reload();
-            } else {
-                alert(data.error);
-            }
-        }
-
-        // Withdrawal Logic
-        async function handleWithdraw() {
-            const amount = document.getElementById('w-amount').value;
-            const num = document.getElementById('w-num').value;
-            const status = document.getElementById('withdraw-status');
-            
-            if(amount < 1000) return alert("Minimum withdrawal is 1000 PKR");
-            
-            status.innerText = "Sending Request...";
-            
-            const res = await fetch('/api/withdraw', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ email: user.email, amount, number: num })
-            });
-            const data = await res.json();
-            
-            if(data.success) {
-                status.innerText = "✅ Request Sent Successfully!";
-                status.className = "text-xs text-center mt-3 font-bold text-green-600";
-            } else {
-                status.innerText = "❌ " + data.error;
-                status.className = "text-xs text-center mt-3 font-bold text-red-500";
             }
         }
 
         function logout() {
-            localStorage.clear();
+            localStorage.removeItem('user');
             location.reload();
         }
-        function initApp() {
-    if(user) {
-        // Existing code...
-        document.getElementById('top-email').innerText = user.email;
-        document.getElementById('user-balance').innerText = user.balance;
 
-        // NEW: Load Withdrawal History
-        const list = document.getElementById('withdraw-history-list');
-        if (user.withdrawals && user.withdrawals.length > 0) {
-            list.innerHTML = user.withdrawals.map(w => `
-                <tr class="border-b border-slate-50">
-                    <td class="py-3 text-slate-500">${w.date}</td>
-                    <td class="py-3 font-bold text-slate-700">Rs. ${w.amount}</td>
-                    <td class="py-3 text-right">
-                        <span class="bg-amber-100 text-amber-600 px-2 py-1 rounded-full text-[8px] font-bold">${w.status}</span>
-                    </td>
-                </tr>
-            `).join('');
-        }
-    }
-}
+        checkAuth();
     </script>
-    <a href="https://wa.me/923707340477" target="_blank" class="fixed bottom-24 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-[5000] animate-bounce">
-    <i class="fab fa-whatsapp text-3xl"></i>
-</a>
 </body>
 </html>
