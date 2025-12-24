@@ -132,6 +132,80 @@
             document.getElementById('withdraw-msg').innerText = data.success ? "Request Sent Successfully!" : data.error;
             document.getElementById('withdraw-msg').style.color = data.success ? "green" : "red";
         }
-    </script>
+   <script>
+    // 1. SAFETY CHECK: Get user from memory or use a "Guest" template
+    let currentUser = JSON.parse(localStorage.getItem('user')) || {
+        email: "Guest Mode",
+        balance: "0.00",
+        referral_code: "LOGIN-REQUIRED",
+        is_active: false
+    };
+
+    // 2. INITIALIZE UI (Fixes the "---" issue)
+    function init() {
+        document.getElementById('user-email-display').innerText = currentUser.email;
+        document.getElementById('user-balance').innerText = currentUser.balance;
+        document.getElementById('ref-code-display').innerText = currentUser.referral_code;
+        
+        // Hide activation notice if they are already active
+        if(currentUser.is_active) {
+            document.getElementById('activation-notice').style.display = 'none';
+        }
+    }
+    init();
+
+    // 3. NAVIGATION LOGIC
+    function showSec(id) {
+        document.getElementById('home-sec').classList.add('hidden-section');
+        document.getElementById('profile-sec').classList.add('hidden-section');
+        document.getElementById(id + '-sec').classList.remove('hidden-section');
+        
+        // Update button colors
+        const navBtns = document.querySelectorAll('nav button, div.fixed.bottom-0 button');
+        // Add logic here to change colors if you want
+    }
+
+    // 4. PRIVACY MODAL LOGIC (Fixed)
+    function togglePrivacy(show) {
+        const modal = document.getElementById('privacy-modal');
+        if(show) {
+            modal.classList.remove('hidden-section');
+        } else {
+            modal.classList.add('hidden-section');
+        }
+    }
+
+    // 5. SHARE LOGIC
+    function shareReferral() {
+        const code = document.getElementById('ref-code-display').innerText;
+        if(code === "LOGIN-REQUIRED") {
+            alert("Please login first to get your referral code!");
+            return;
+        }
+        const msg = `🔥 *Join Digital Earn!*%0AEarn 100 PKR Daily!%0AMy Code: *${code}*%0ALink: ${window.location.origin}`;
+        window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+
+    // 6. WITHDRAWAL LOGIC
+    async function requestWithdrawal() {
+        if(currentUser.email === "Guest Mode") {
+            alert("Please login to withdraw!");
+            return;
+        }
+        const amount = document.getElementById('withdraw-amount').value;
+        const num = document.getElementById('withdraw-number').value;
+        
+        const res = await fetch('/api/withdraw', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ email: currentUser.email, amount, number: num })
+        });
+        const data = await res.json();
+        const msgEl = document.getElementById('withdraw-msg');
+        msgEl.innerText = data.success ? "Request Sent Successfully!" : data.error;
+        msgEl.style.color = data.success ? "green" : "red";
+    }
+</script>
+ </script>
 </body>
 </html>
