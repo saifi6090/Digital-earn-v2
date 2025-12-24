@@ -1,6 +1,7 @@
 {
   "name": "digital-earn",
   "version": "1.0.0",
+  "description": "Professional Earning Platform",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
