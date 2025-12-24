@@ -114,6 +114,26 @@
         </div>
 
         <div id="profile-sec" class="hidden-section space-y-5">
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 mt-6">
+    <h3 class="font-bold mb-4 text-slate-700 text-sm italic"><i class="fas fa-history mr-2 text-blue-600"></i>Recent History</h3>
+    <div class="overflow-x-auto">
+        <table class="w-full text-left text-[10px]">
+            <thead>
+                <tr class="text-slate-400 border-b">
+                    <th class="pb-2">Date</th>
+                    <th class="pb-2">Amount</th>
+                    <th class="pb-2 text-right">Status</th>
+                </tr>
+            </thead>
+            <tbody id="withdraw-history-list">
+                <tr>
+                    <td colspan="3" class="py-4 text-center text-slate-300 italic">No history yet...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
             <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
                 <h3 class="font-bold mb-4 text-slate-700"><i class="fas fa-wallet mr-2 text-blue-600"></i>Withdraw Funds</h3>
                 <input type="number" id="w-amount" placeholder="Amount (Min 1000)" class="w-full p-3 bg-slate-50 rounded-xl mb-3 border border-slate-200 text-sm">
