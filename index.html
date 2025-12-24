@@ -3,37 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn | Professional</title>
+    <title>Digital Earn | Multi-Level Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .animate-marquee { display: inline-block; animation: marquee 15s linear infinite; }
         .hidden-sec { display: none; }
+        .plan-card.active { border-color: #2563eb; background-color: #eff6ff; }
     </style>
 </head>
 <body class="bg-slate-50 font-sans text-slate-900">
 
     <div class="bg-blue-900 text-white overflow-hidden py-2 text-[10px] font-bold uppercase tracking-widest flex sticky top-0 z-[6000]">
         <div class="whitespace-nowrap animate-marquee">
-            🚀 USER ***492 JUST WITHDREW 1200 PKR — USER ***991 RECEIVED 70 PKR REFERRAL BONUS — START EARNING NOW!
+            🚀 USER ***492 JUST WITHDREW 2500 PKR — USER ***102 UPGRADED TO GOLD PLAN — USER ***991 RECEIVED 250 PKR REFERRAL BONUS — START EARNING NOW!
         </div>
     </div>
 
     <div id="auth-page" class="min-h-screen flex items-center justify-center p-6">
         <div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
             <h1 id="auth-title" class="text-3xl font-black text-blue-900 mb-2 text-center">Digital Earn</h1>
-            <p id="auth-subtitle" class="text-slate-400 text-center mb-8 text-sm">Sign in to start earning daily rewards</p>
+            <p id="auth-subtitle" class="text-slate-400 text-center mb-6 text-sm">Sign in to start earning</p>
             
             <div class="space-y-4">
-                <input id="auth-email" type="email" placeholder="Email Address" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition-all">
-                <input id="auth-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                <input id="auth-email" type="email" placeholder="Email Address" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
+                <input id="auth-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
                 
-                <div id="referral-container" class="hidden-sec">
-                    <input id="auth-ref" type="text" placeholder="Referral Code (Optional)" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                <div id="register-extras" class="hidden-sec space-y-4">
+                    <p class="text-[10px] font-bold text-slate-500 uppercase ml-2">Select Your Plan</p>
+                    <div class="grid grid-cols-3 gap-2">
+                        <div onclick="selectPlan(1, 700)" id="plan-1" class="plan-card active border-2 p-3 rounded-2xl text-center cursor-pointer transition-all">
+                            <p class="text-[8px] font-bold">BASIC</p>
+                            <p class="text-xs font-black">700</p>
+                        </div>
+                        <div onclick="selectPlan(2, 1500)" id="plan-2" class="plan-card border p-3 rounded-2xl text-center cursor-pointer transition-all">
+                            <p class="text-[8px] font-bold text-slate-400">SILVER</p>
+                            <p class="text-xs font-black">1500</p>
+                        </div>
+                        <div onclick="selectPlan(3, 2500)" id="plan-3" class="plan-card border p-3 rounded-2xl text-center cursor-pointer transition-all">
+                            <p class="text-[8px] font-bold text-slate-400">GOLD</p>
+                            <p class="text-xs font-black">2500</p>
+                        </div>
+                    </div>
+                    <input id="auth-ref" type="text" placeholder="Referral Code (Optional)" class="w-full p-4 bg-slate-50 rounded-2xl outline-none">
                 </div>
 
-                <button id="auth-btn" onclick="handleAuth()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-95">Login</button>
+                <button onclick="handleAuth()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-95">Continue</button>
             </div>
 
             <p class="text-center mt-6 text-slate-400 text-xs">
@@ -46,42 +62,58 @@
     <div id="dashboard-page" class="hidden-sec min-h-screen pb-24">
         <div class="bg-white p-6 rounded-b-[40px] shadow-sm flex items-center justify-between">
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 font-bold text-xl"><i class="fas fa-user"></i></div>
+                <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 font-bold text-xl"><i class="fas fa-user-tie"></i></div>
                 <div>
-                    <h2 id="top-email" class="font-bold text-slate-800">user@email.com</h2>
-                    <p id="user-status" class="text-[10px] text-red-500 font-bold uppercase">Account Not Active</p>
+                    <h2 id="top-email" class="font-bold text-slate-800 text-sm">user@email.com</h2>
+                    <div class="flex items-center gap-2">
+                        <span id="plan-badge" class="bg-blue-600 text-white text-[8px] px-2 py-0.5 rounded-full font-bold">BASIC</span>
+                        <span id="user-status" class="text-[9px] font-bold uppercase">Inactive</span>
+                    </div>
                 </div>
             </div>
-            <button onclick="logout()" class="text-slate-300 hover:text-red-500 transition-colors"><i class="fas fa-power-off text-xl"></i></button>
+            <button onclick="logout()" class="text-slate-300 hover:text-red-500"><i class="fas fa-power-off text-xl"></i></button>
         </div>
 
         <div class="p-6 space-y-6">
-            <div class="bg-gradient-to-br from-blue-600 to-blue-800 p-8 rounded-[35px] text-white shadow-2xl relative overflow-hidden">
+            <div class="bg-gradient-to-br from-blue-700 to-blue-900 p-8 rounded-[35px] text-white shadow-2xl relative overflow-hidden">
                 <div class="relative z-10">
-                    <p class="text-blue-100 text-xs font-medium uppercase tracking-widest mb-1">Total Balance</p>
+                    <p class="text-blue-200 text-[10px] font-medium uppercase tracking-widest mb-1">Available Balance</p>
                     <h1 class="text-5xl font-black italic">Rs. <span id="user-balance">0.00</span></h1>
                 </div>
-                <i class="fas fa-wallet absolute -bottom-4 -right-4 text-9xl text-white opacity-10"></i>
+                <i class="fas fa-gem absolute -bottom-4 -right-4 text-9xl text-white opacity-10"></i>
+            </div>
+
+            <div class="flex gap-4">
+                <div class="flex-1 bg-white p-4 rounded-2xl border border-slate-100 text-center">
+                    <p class="text-[9px] text-slate-400 font-bold uppercase">Remaining Tasks</p>
+                    <p id="tasks-left" class="text-xl font-black text-slate-700">0</p>
+                </div>
+                <div class="flex-1 bg-white p-4 rounded-2xl border border-slate-100 text-center">
+                    <p class="text-[9px] text-slate-400 font-bold uppercase">Daily Limit</p>
+                    <p id="total-limit" class="text-xl font-black text-slate-700">0</p>
+                </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
                 <button onclick="doTask()" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-3 active:scale-95 transition-all">
-                    <div class="w-12 h-12 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-xl"><i class="fas fa-play"></i></div>
-                    <span class="font-bold text-slate-700 text-sm">Start Task</span>
+                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner"><i class="fas fa-play"></i></div>
+                    <span class="font-bold text-slate-700 text-sm uppercase tracking-tight">Watch Ad</span>
                 </button>
-                <button class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-3 opacity-50">
-                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center text-xl"><i class="fas fa-share-alt"></i></div>
-                    <span class="font-bold text-slate-700 text-sm">Refer & Earn</span>
+                <button onclick="alert('Invite link copied!')" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-3 active:scale-95 transition-all">
+                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner"><i class="fas fa-users"></i></div>
+                    <span class="font-bold text-slate-700 text-sm uppercase tracking-tight">Referral</span>
                 </button>
             </div>
 
-            <div id="history-sec" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                <h3 class="font-bold mb-4 text-slate-700 text-sm italic"><i class="fas fa-history mr-2 text-blue-600"></i>Recent History</h3>
+            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+                <h3 class="font-bold mb-4 text-slate-700 text-xs italic flex items-center gap-2">
+                    <i class="fas fa-history text-blue-600"></i> Withdrawal History
+                </h3>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-[10px]">
-                        <thead><tr class="text-slate-400 border-b"><th class="pb-2">Date</th><th class="pb-2">Amount</th><th class="pb-2 text-right">Status</th></tr></thead>
+                        <thead><tr class="text-slate-300 border-b uppercase"><th class="pb-2">Date</th><th class="pb-2">Amount</th><th class="pb-2 text-right">Status</th></tr></thead>
                         <tbody id="withdraw-history-list">
-                            <tr><td colspan="3" class="py-4 text-center text-slate-300 italic">No history yet...</td></tr>
+                            <tr><td colspan="3" class="py-6 text-center text-slate-300 italic">No transactions found</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -96,78 +128,68 @@
     <script>
         let user = JSON.parse(localStorage.getItem('user')) || null;
         let isLoginMode = true;
+        let selectedLevel = 1;
 
         function toggleAuthMode() {
             isLoginMode = !isLoginMode;
-            const title = document.getElementById('auth-title');
-            const subtitle = document.getElementById('auth-subtitle');
-            const btn = document.getElementById('auth-btn');
-            const toggleBtn = document.getElementById('toggle-btn');
-            const toggleText = document.getElementById('toggle-text');
-            const refContainer = document.getElementById('referral-container');
+            document.getElementById('auth-title').innerText = isLoginMode ? "Digital Earn" : "Create Account";
+            document.getElementById('register-extras').classList.toggle('hidden-sec', isLoginMode);
+            document.getElementById('toggle-btn').innerText = isLoginMode ? "Register Now" : "Login Now";
+        }
 
-            if (isLoginMode) {
-                title.innerText = "Digital Earn";
-                subtitle.innerText = "Sign in to start earning daily rewards";
-                btn.innerText = "Login";
-                toggleText.innerText = "Don't have an account?";
-                toggleBtn.innerText = "Register Now";
-                refContainer.classList.add('hidden-sec');
-            } else {
-                title.innerText = "Create Account";
-                subtitle.innerText = "Join the community and earn daily";
-                btn.innerText = "Register";
-                toggleText.innerText = "Already have an account?";
-                toggleBtn.innerText = "Login Now";
-                refContainer.classList.remove('hidden-sec');
-            }
+        function selectPlan(lvl, fee) {
+            selectedLevel = lvl;
+            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('active', 'border-2', 'border-blue-500'));
+            const activeCard = document.getElementById('plan-' + lvl);
+            activeCard.classList.add('active', 'border-2', 'border-blue-500');
         }
 
         async function handleAuth() {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-pass').value;
-            const referral = document.getElementById('auth-ref').value;
-
-            if(!email || !password) return alert("Please fill all fields");
+            const ref = document.getElementById('auth-ref').value;
 
             const endpoint = isLoginMode ? '/api/login' : '/api/register';
-            const bodyData = isLoginMode ? { email, password } : { email, password, referral_by: referral };
+            const payload = isLoginMode ? { email, password } : { email, password, referral_by: ref, level: selectedLevel };
 
             try {
                 const res = await fetch(endpoint, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(bodyData)
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
                 if(data.success) {
                     localStorage.setItem('user', JSON.stringify(data.user));
-                    user = data.user;
                     location.reload();
-                } else {
-                    alert(data.error);
-                }
-            } catch (err) {
-                alert("Connection Error. Wait 1 minute for server wake-up.");
-            }
+                } else alert(data.error);
+            } catch (e) { alert("Server is waking up. Please wait 1 minute."); }
         }
 
         function init() {
-            if (user) {
+            if(user) {
                 document.getElementById('auth-page').classList.add('hidden-sec');
                 document.getElementById('dashboard-page').classList.remove('hidden-sec');
                 document.getElementById('top-email').innerText = user.email;
                 document.getElementById('user-balance').innerText = user.balance.toFixed(2);
-                document.getElementById('user-status').innerText = user.is_active ? "Account Active" : "Account Not Active";
-                document.getElementById('user-status').className = user.is_active ? "text-[10px] text-green-500 font-bold uppercase" : "text-[10px] text-red-500 font-bold uppercase";
+                
+                const plans = { 1: "BASIC", 2: "SILVER", 3: "GOLD" };
+                const limits = { 1: 10, 2: 20, 3: 30 };
+                
+                document.getElementById('plan-badge').innerText = plans[user.level || 1];
+                document.getElementById('total-limit').innerText = limits[user.level || 1];
+                document.getElementById('tasks-left').innerText = limits[user.level || 1] - (user.daily_count || 0);
 
-                if (user.withdrawals && user.withdrawals.length > 0) {
-                    const list = document.getElementById('withdraw-history-list');
-                    list.innerHTML = user.withdrawals.map(w => `
+                const statusEl = document.getElementById('user-status');
+                statusEl.innerText = user.is_active ? "Verified Account" : "Unverified (Pay Fee)";
+                statusEl.className = user.is_active ? "text-[9px] font-bold text-green-500" : "text-[9px] font-bold text-red-500";
+
+                if (user.withdrawals?.length) {
+                    document.getElementById('withdraw-history-list').innerHTML = user.withdrawals.map(w => `
                         <tr class="border-b border-slate-50">
-                            <td class="py-3 text-slate-500">${w.date}</td>
-                            <td class="py-3 font-bold text-slate-700">Rs. ${w.amount}</td>
-                            <td class="py-3 text-right"><span class="bg-amber-100 text-amber-600 px-2 py-1 rounded-full text-[8px] font-bold">${w.status}</span></td>
+                            <td class="py-3 text-slate-500 font-medium">${w.date}</td>
+                            <td class="py-3 font-black text-slate-700">Rs. ${w.amount}</td>
+                            <td class="py-3 text-right"><span class="bg-amber-100 text-amber-600 px-2 py-1 rounded-full text-[8px] font-black">${w.status}</span></td>
                         </tr>
                     `).join('');
                 }
@@ -175,24 +197,22 @@
         }
 
         async function doTask() {
-            if(!user.is_active) return alert("Please Activate your Account first!");
-            const res = await fetch('/api/task', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ email: user.email })
-            });
-            const data = await res.json();
-            if(data.success) {
-                alert("✅ Task Complete! 10 PKR Added.");
-                location.reload();
-            }
+            if(!user.is_active) return alert("❌ Please Activate your Account (Contact WhatsApp)");
+            try {
+                const res = await fetch('/api/task', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ email: user.email })
+                });
+                const data = await res.json();
+                if(data.success) {
+                    alert("✅ Success! Reward added to balance.");
+                    location.reload();
+                } else alert(data.error);
+            } catch (e) { alert("Error connecting to server."); }
         }
 
-        function logout() {
-            localStorage.removeItem('user');
-            location.reload();
-        }
-
+        function logout() { localStorage.removeItem('user'); location.reload(); }
         init();
     </script>
 </body>
