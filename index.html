@@ -3,332 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn | Earning Platform</title>
+    <title>Digital Earn - Earn Daily</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #f3f4f6; padding-bottom: 70px; }
-        .nav-bottom { position: fixed; bottom: 0; width: 100%; background: white; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000; }
-        .nav-item { text-align: center; color: #6b7280; font-size: 12px; transition: 0.3s; cursor: pointer; }
-        .nav-item.active { color: #1a73e8; }
-        .hidden-section { display: none; }
-        .card { background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
+        .hidden-section { display: none !important; }
+        .card { background: white; border-radius: 1.5rem; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 font-sans pb-24">
 
-    <div id="auth-section" class="min-h-screen flex items-center justify-center p-4">
-        <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-            <h2 id="auth-title" class="text-3xl font-bold text-blue-600 text-center mb-6">Digital Earn</h2>
-            <div id="auth-inputs" class="space-y-4">
-                <input type="email" id="email" placeholder="Email Address" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                <input type="password" id="password" placeholder="Password" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                <div id="signup-extra" class="hidden">
-                    <input type="text" id="refBy" placeholder="Referral Code (Optional)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none">
-                </div>
-                <button onclick="handleAuth()" id="auth-btn" class="w-full bg-blue-600 text-white p-3 rounded-lg font-bold hover:bg-blue-700 transition">Login</button>
-            </div>
-            <p class="text-center mt-6 text-gray-600">
-                <span id="toggle-text">Don't have an account?</span> 
-                <button onclick="toggleAuth()" class="text-blue-600 font-bold ml-1">Switch</button>
-            </p>
-        </div>
-    </div>
+    <nav class="bg-white p-4 sticky top-0 z-50 shadow-sm flex justify-between items-center">
+        <h1 class="text-xl font-black text-blue-600 tracking-tighter">DIGITAL EARN</h1>
+        <div id="user-email-display" class="text-xs font-bold text-gray-400 bg-gray-50 px-3 py-1 rounded-full italic">Not Logged In</div>
+    </nav>
 
-    <div id="app-content" class="hidden-section p-4">
-        <div id="home-sec">
-            <div class="card bg-gradient-to-r from-blue-600 to-blue-400 text-white">
-                <p class="text-sm opacity-80">Total Balance<
-                                                               <div id="home-sec">
-    <div class="card bg-gradient-to-r from-blue-600 to-blue-400 text-white shadow-lg">
-        <p class="text-sm opacity-80 font-medium">Available Balance</p>
-        <h1 class="text-4xl font-bold mt-1">Rs. <span id="user-balance">0.00</span></h1>
-    </div>
-
-    <div id="activation-notice" class="card border-l-4 border-yellow-500 bg-yellow-50">
-        <h3 class="font-bold text-yellow-800 flex items-center"><i class="fas fa-exclamation-triangle mr-2"></i>Account Inactive</h3>
-        <p class="text-xs text-yellow-700 mt-1 font-medium">Fee: 700 PKR | Method: Easypaisa</p>
-        <div class="mt-3 p-3 bg-white rounded-xl border border-yellow-200 text-xs">
-            <p><b>Name:</b> Saif Ullah</p>
-            <p><b>Number:</b> 03707340477</p>
-            <p class="mt-2 text-blue-600 font-bold">Send screenshot to WhatsApp for activation.</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <h3 class="font-bold text-gray-700 mb-2"><i class="fas fa-users mr-2 text-blue-600"></i>Refer & Earn</h3>
-        <div class="bg-gray-100 p-4 rounded-xl text-center border-2 border-dashed border-gray-300">
-            <p class="text-[10px] text-gray-500 uppercase tracking-widest mb-1 font-bold">Your Referral Code</p>
-            <p id="ref-code-display" class="text-2xl font-mono text-blue-700 font-bold tracking-tighter">LOADING...</p>
-        </div>
+    <main class="p-4 max-w-md mx-auto">
         
-        <button onclick="shareReferral()" class="w-full mt-4 bg-green-500 text-white p-3 rounded-xl font-bold flex items-center justify-center shadow-md hover:bg-green-600 transition">
-            <i class="fab fa-whatsapp mr-2 text-xl"></i> Share on WhatsApp
-        </button>
-        <p class="text-[10px] text-gray-400 text-center mt-2">Get 70 PKR bonus for every friend who joins!</p>
-    </div>
-</div>
-
+        <div id="home-sec">
+            <div class="card bg-gradient-to-br from-blue-600 to-blue-400 text-white shadow-xl">
+                <p class="text-sm opacity-90 font-medium">Available Balance</p>
+                <h1 class="text-4xl font-bold mt-1">Rs. <span id="user-balance">0.00</span></h1>
             </div>
 
             <div id="activation-notice" class="card border-l-4 border-yellow-500 bg-yellow-50">
-                <h3 class="font-bold text-yellow-800">Account Inactive</h3>
-                <p class="text-sm text-yellow-700 mt-1">Pay 700 PKR to unlock daily tasks & withdrawals.</p>
-                <div class="mt-3 p-3 bg-white rounded border text-xs">
-                    <p><b>Easypaisa:</b> Saif Ullah</p>
-                    <p><b>Number:</b> 03707340477</p>
-                    <p class="mt-1">Send proof to: saifullahbk386@gmail.com</p>
+                <h3 class="font-bold text-yellow-800 flex items-center text-sm"><i class="fas fa-shield-halved mr-2"></i>Account Inactive</h3>
+                <div class="mt-3 p-3 bg-white rounded-xl border border-yellow-200 text-xs text-gray-700">
+                    <p class="mb-1"><b>Fee:</b> 700 PKR (Life Time)</p>
+                    <p class="mb-1"><b>Easypaisa:</b> 03707340477</p>
+                    <p><b>Name:</b> Saif Ullah</p>
+                    <p class="mt-2 text-blue-600 font-bold">Send screenshot to WhatsApp for activation.</p>
                 </div>
             </div>
 
             <div class="card">
-                <h3 class="font-bold mb-2"><i class="fas fa-share-alt mr-2 text-blue-600"></i>Your Referral Code</h3>
-                <p id="ref-code-display" class="bg-gray-100 p-2 rounded text-center font-mono text-blue-600 font-bold">---</p>
-                <p class="text-xs text-gray-500 mt-2">Earn 10% from every member you invite!</p>
-            </div>
-        </div>
-
-        <div id="tasks-sec" class="hidden-section">
-            <h2 class="text-xl font-bold mb-4">Daily Tasks (10 Left)</h2>
-            <div id="task-container" class="space-y-3">
+                <h3 class="font-bold text-gray-700 mb-3 text-sm">Refer & Earn</h3>
+                <div class="bg-blue-50 p-4 rounded-2xl text-center border-2 border-dashed border-blue-200">
+                    <p class="text-[10px] text-blue-400 uppercase font-bold mb-1">Your Code</p>
+                    <p id="ref-code-display" class="text-2xl font-mono text-blue-700 font-black">---</p>
                 </div>
-            <div id="task-locked" class="text-center py-10">
-                <i class="fas fa-lock text-4xl text-gray-300 mb-3"></i>
-                <p class="text-gray-500">Pay the registration fee to unlock video tasks.</p>
+                <button onclick="shareReferral()" class="w-full mt-4 bg-green-500 text-white p-4 rounded-2xl font-bold flex items-center justify-center shadow-lg active:scale-95 transition">
+                    <i class="fab fa-whatsapp mr-2 text-xl"></i> Share on WhatsApp
+                </button>
             </div>
         </div>
 
         <div id="profile-sec" class="hidden-section">
-            <div onclick="togglePrivacy(true)" class="flex justify-between items-center mt-4 p-3 bg-gray-50 rounded-lg cursor-pointer border border-gray-200">
-    <span class="text-sm font-medium text-gray-600">Privacy Policy & Terms</span>
-    <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-</div>
-            <div class="mt-6 pt-4 border-t">
-    <h3 class="font-bold text-sm mb-3 text-gray-700">Withdraw Funds</h3>
-    <input type="number" id="withdraw-amount" placeholder="Amount (Min 1000)" class="w-full p-2 border rounded mb-2 text-sm outline-none">
-    <input type="text" id="withdraw-number" placeholder="Easypaisa Number" class="w-full p-2 border rounded mb-3 text-sm outline-none">
-    <button onclick="requestWithdrawal()" class="w-full bg-green-600 text-white p-2 rounded font-bold text-sm hover:bg-green-700 transition">Submit Request</button>
-    <p id="withdraw-msg" class="text-xs mt-2 text-center"></p>
-             <div class="mt-6 pt-4 border-t border-gray-100">
-    <h3 class="font-bold text-sm mb-3 text-gray-700">Customer Support</h3>
-    <a href="https://wa.me/923707340477?text=Hi%20Saif,%20I%20need%20help%20with%20Digital%20Earn" 
-       target="_blank"
-       class="flex items-center justify-center space-x-2 w-full bg-green-500 text-white p-3 rounded-xl font-bold hover:bg-green-600 transition shadow-lg">
-        <i class="fab fa-whatsapp text-xl"></i>
-        <span>Contact on WhatsApp</span>
-    </a>
-    <p class="text-[10px] text-gray-400 text-center mt-2">Official Support: Saif Ullah</p>
-</div>
-
-<div onclick="document.getElementById('privacy-modal').classList.remove('hidden-section')" 
-     class="flex justify-between items-center mt-4 p-3 bg-gray-50 rounded-lg cursor-pointer border border-gray-200">
-    <span class="text-sm font-medium text-gray-600">Privacy Policy & Terms</span>
-    <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
-</div>
-   
-</div>
-<div class="card mt-4">
-    <h3 class="font-bold text-sm mb-3"><i class="fas fa-headset mr-2 text-green-600"></i>Support Center</h3>
-    <a href="https://wa.me/923707340477?text=Hello%20Saif,%20I%20have%20a%20question%20about%20Digital%20Earn" 
-       class="flex items-center justify-between p-3 bg-green-50 rounded-lg border border-green-200 text-green-700 font-bold mb-2">
-        <span>Contact on WhatsApp</span>
-        <i class="fab fa-whatsapp text-xl"></i>
-    </a>
-    <p class="text-[10px] text-gray-500 text-center">Support Available: 9 AM - 9 PM</p>
-</div>
-
-            <div class="card text-center">
-                <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-user text-3xl text-blue-600"></i>
-                </div>
-                <h2 id="user-email-display" class="font-bold">user@example.com</h2>
-                <p class="text-sm text-gray-500">Member ID: #<span id="user-id">000</span></p>
+            <div class="card">
+                <h3 class="font-bold text-gray-700 mb-4 text-sm">Withdrawal Request</h3>
+                <input type="number" id="withdraw-amount" placeholder="Amount (Min 1000)" class="w-full p-4 bg-gray-50 rounded-xl mb-3 border-none focus:ring-2 focus:ring-blue-500 outline-none">
+                <input type="text" id="withdraw-number" placeholder="Easypaisa Number" class="w-full p-4 bg-gray-50 rounded-xl mb-4 border-none focus:ring-2 focus:ring-blue-500 outline-none">
+                <button onclick="requestWithdrawal()" class="w-full bg-blue-600 text-white p-4 rounded-2xl font-bold shadow-lg">Submit Request</button>
+                <p id="withdraw-msg" class="text-xs mt-3 text-center font-medium"></p>
             </div>
-            <div class="card space-y-4">
-                <div class="flex justify-between items-center border-b pb-2">
-                    <span>Withdrawals (Min. 1000)</span>
-                    <i class="fas fa-chevron-right text-gray-400"></i>
+
+            <div class="card">
+                <h3 class="font-bold text-gray-700 mb-4 text-sm">Support & Info</h3>
+                <a href="https://wa.me/923707340477" target="_blank" class="flex items-center justify-between p-4 bg-green-50 rounded-2xl border border-green-100 mb-3">
+                    <div class="flex items-center"><i class="fab fa-whatsapp text-green-600 text-xl mr-3"></i> <span class="text-sm font-bold text-green-700">Contact Support</span></div>
+                    <i class="fas fa-chevron-right text-green-300 text-xs"></i>
+                </a>
+                <div onclick="togglePrivacy(true)" class="flex justify-between items-center p-4 bg-gray-50 rounded-2xl cursor-pointer">
+                    <div class="flex items-center"><i class="fas fa-file-contract text-gray-400 mr-3"></i> <span class="text-sm font-medium text-gray-600">Privacy Policy</span></div>
+                    <i class="fas fa-chevron-right text-gray-300 text-xs"></i>
                 </div>
-                <div class="flex justify-between items-center border-b pb-2">
-                    <span>Privacy Policy</span>
-                    <i class="fas fa-chevron-right text-gray-400"></i>
+                <button onclick="localStorage.clear(); location.reload();" class="w-full mt-6 text-red-500 font-bold text-sm">Logout Account</button>
+            </div>
+        </div>
+    </main>
+
+    <div id="privacy-modal" class="hidden-section fixed inset-0 bg-black/60 z-[9999] flex items-center justify-center p-6 backdrop-blur-sm">
+        <div class="bg-white rounded-[2rem] w-full max-w-sm shadow-2xl overflow-hidden">
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 text-center">Privacy & Terms</h2>
+                <div class="text-xs text-gray-500 space-y-3 leading-relaxed">
+                    <p><b>1. Accounts:</b> One account per device allowed.</p>
+                    <p><b>2. Fees:</b> 700 PKR activation fee is non-refundable.</p>
+                    <p><b>3. Earnings:</b> Users earn 10 PKR per task (Max 10/day).</p>
+                    <p><b>4. Withdrawals:</b> Processed within 24 hours (Min 1000 PKR).</p>
                 </div>
-                <button onclick="location.reload()" class="w-full text-red-500 font-bold pt-2">Logout</button>
+                <button onclick="togglePrivacy(false)" class="w-full mt-6 bg-blue-600 text-white p-4 rounded-2xl font-bold">I Agree</button>
             </div>
         </div>
     </div>
 
-    <nav class="nav-bottom hidden-section" id="bottom-nav">
-        <div class="nav-item active" onclick="showSec('home')">
-            <i class="fas fa-home text-xl"></i>
-            <div>Home</div>
-        </div>
-        <div class="nav-item" onclick="showSec('tasks')">
-            <i class="fas fa-tasks text-xl"></i>
-            <div>Tasks</div>
-        </div>
-        <div class="nav-item" onclick="showSec('profile')">
-            <i class="fas fa-user text-xl"></i>
-            <div>Profile</div>
-        </div>
-    </nav>
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around p-4 shadow-2xl">
+        <button onclick="showSec('home')" class="flex flex-col items-center text-blue-600"><i class="fas fa-home text-xl"></i><span class="text-[10px] font-bold">Home</span></button>
+        <button onclick="showSec('profile')" class="flex flex-col items-center text-gray-400"><i class="fas fa-user text-xl"></i><span class="text-[10px] font-bold">Profile</span></button>
+    </div>
 
     <script>
-        let isLogin = true;
-        let currentUser = null;
+        let currentUser = JSON.parse(localStorage.getItem('user'));
+        if(!currentUser) { window.location.href = 'login.html'; } // Redirect to login if not found
 
-        function toggleAuth() {
-            isLogin = !isLogin;
-            document.getElementById('auth-title').innerText = isLogin ? 'Digital Earn' : 'Create Account';
-            document.getElementById('auth-btn').innerText = isLogin ? 'Login' : 'Sign Up';
-            document.getElementById('signup-extra').classList.toggle('hidden');
+        function showSec(id) {
+            document.getElementById('home-sec').classList.add('hidden-section');
+            document.getElementById('profile-sec').classList.add('hidden-section');
+            document.getElementById(id + '-sec').classList.remove('hidden-section');
         }
 
-        async function handleAuth() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const ref = document.getElementById('refBy').value;
-            const path = isLogin ? '/api/login' : '/api/signup';
-
-            const res = await fetch(path, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password, ref })
-            });
-
-            const data = await res.json();
-            if(data.success) {
-                if(isLogin) {
-                    currentUser = data.user;
-                    loadDashboard();
-                } else {
-                    alert("Registration Successful! Please Login.");
-                    toggleAuth();
-                }
-            } else {
-                alert(data.error || "Execution failed");
-            }
+        function togglePrivacy(show) {
+            const modal = document.getElementById('privacy-modal');
+            if(show) modal.classList.remove('hidden-section');
+            else modal.classList.add('hidden-section');
         }
 
-        function loadDashboard() {
-            document.getElementById('auth-section').classList.add('hidden');
-            document.getElementById('app-content').classList.remove('hidden-section');
-            document.getElementById('bottom-nav').classList.remove('hidden-section');
-            
-            // Set User Data
-            document.getElementById('user-balance').innerText = currentUser.balance;
-            document.getElementById('user-email-display').innerText = currentUser.email;
-            document.getElementById('ref-code-display').innerText = currentUser.referral_code || 'N/A';
-            
-            if(currentUser.is_active) {
-                document.getElementById('activation-notice').classList.add('hidden');
-                document.getElementById('task-locked').classList.add('hidden');
-            }
-        }
-
-        function showSec(sec) {
-            ['home-sec', 'tasks-sec', 'profile-sec'].forEach(s => document.getElementById(s).classList.add('hidden-section'));
-            document.getElementById(sec + '-sec').classList.remove('hidden-section');
-            
-            // Update Nav colors
-            const items = document.querySelectorAll('.nav-item');
-            items.forEach(i => i.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-        }
-   async function requestWithdrawal() {
-    const amount = document.getElementById('withdraw-amount').value;
-    const number = document.getElementById('withdraw-number').value;
-    const msg = document.getElementById('withdraw-msg');
-
-    if (amount < 1000) {
-        msg.innerText = "Minimum withdrawal is 1000 PKR";
-        msg.className = "text-xs mt-2 text-center text-red-500";
-        return;
-    }
-
-    if (currentUser.balance < amount) {
-        msg.innerText = "Insufficient balance!";
-        msg.className = "text-xs mt-2 text-center text-red-500";
-        return;
-    }
-
-    // This sends the request to the server (we will add this route to server.js next)
-    const res = await fetch('/api/withdraw', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-            email: currentUser.email, 
-            amount: amount, 
-            number: number 
-        })
-    });
-
-    const data = await res.json();
-    if (data.success) {
-        msg.innerText = "Request submitted! Pending approval.";
-        msg.className = "text-xs mt-2 text-center text-green-600";
-        // Update UI balance
-        currentUser.balance -= amount;
-        document.getElementById('user-balance').innerText = currentUser.balance;
-    } else {
-        msg.innerText = data.error || "Request failed";
-        msg.className = "text-xs mt-2 text-center text-red-500";
-    }
-}
         function shareReferral() {
-    const code = document.getElementById('ref-code-display').innerText;
-    const msg = `Join Digital Earn and make 100 PKR daily! Use my code: ${code}. Link: https://digital-earn-v2.onrender.com`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-}
-function togglePrivacy(show) {
-    const modal = document.getElementById('privacy-modal');
-    if (show) {
-        modal.classList.remove('hidden-section');
-    } else {
-        modal.classList.add('hidden-section');
-    }
-}
- </script>
-<div id="privacy-modal" class="hidden-section fixed inset-0 bg-black bg-opacity-50 z-[2000] flex items-center justify-center p-4">
-    <div class="bg-white p-6 rounded-2xl max-h-[80vh] overflow-y-auto w-full">
-        <h2 class="font-bold text-xl mb-4 text-blue-600">Privacy Policy</h2>
-        <div class="text-sm text-gray-600 space-y-3">
-            <p>1. **Data:** We only store your email for login purposes.</p>
-            <p>2. **Payments:** All 700 PKR fees are non-refundable after account activation.</p>
-            <p>3. **Earnings:** Daily tasks are reset every 24 hours.</p>
-            <p>4. **Security:** Do not share your password with anyone.</p>
-        </div>
-        <button onclick="document.getElementById('privacy-modal').classList.add('hidden-section')" 
-                class="w-full mt-6 bg-blue-600 text-white p-3 rounded-xl font-bold">I Understand</button>
-    </div>
-</div>
-    <div id="privacy-modal" class="hidden-section fixed inset-0 bg-black/50 z-[2000] flex items-center justify-center p-6 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
-        <div class="bg-blue-600 p-4 text-white text-center font-bold">Privacy & Terms</div>
-        <div class="p-6 text-sm text-gray-600 space-y-4 max-h-[60vh] overflow-y-auto">
-            <p><b>1. Registration:</b> Fee of 700 PKR is required to start earning.</p>
-            <p><b>2. Withdrawals:</b> Minimum limit is 1000 PKR via Easypaisa.</p>
-            <p><b>3. Referrals:</b> You get 10% (70 PKR) only after your friend's account is activated.</p>
-            <p><b>4. Fair Use:</b> Creating multiple accounts will result in a permanent ban.</p>
-        </div>
-        <div class="p-4 bg-gray-50">
-            <button onclick="document.getElementById('privacy-modal').classList.add('hidden-section')" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">I Agree & Close</button>
-        </div>
-    </div>
-</div>
-    <div id="privacy-modal" class="hidden-section fixed inset-0 bg-black bg-opacity-50 z-[2000] flex items-center justify-center p-6 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl w-full max-w-sm overflow-hidden shadow-2xl">
-        <div class="bg-blue-600 p-4 text-white text-center font-bold">Privacy & Terms</div>
-        <div class="p-6 text-sm text-gray-600 space-y-4 max-h-[60vh] overflow-y-auto">
-            <p><b>1. Registration:</b> Fee of 700 PKR is required to start earning.</p>
-            <p><b>2. Withdrawals:</b> Minimum limit is 1000 PKR via Easypaisa.</p>
-            <p><b>3. Referrals:</b> You get 70 PKR only after your friend's account is activated.</p>
-            <p><b>4. Fair Use:</b> Multiple accounts will result in a permanent ban.</p>
-        </div>
-        <div class="p-4 bg-gray-50 text-center">
-            <button onclick="togglePrivacy(false)" class="w-full bg-blue-600 text-white p-3 rounded-xl font-bold">I Agree & Close</button>
-        </div>
-    </div>
-</div>
+            const code = document.getElementById('ref-code-display').innerText;
+            const msg = `🔥 *Join Digital Earn!*%0AEarn 100 PKR Daily!%0AMy Code: *${code}*%0ALink: ${window.location.origin}`;
+            window.open(`https://wa.me/?text=${msg}`, '_blank');
+        }
+
+        // Initialize User Data
+        document.getElementById('user-email-display').innerText = currentUser.email;
+        document.getElementById('user-balance').innerText = currentUser.balance;
+        document.getElementById('ref-code-display').innerText = currentUser.referral_code;
+        if(currentUser.is_active) document.getElementById('activation-notice').style.display = 'none';
+
+        async function requestWithdrawal() {
+            const amount = document.getElementById('withdraw-amount').value;
+            const num = document.getElementById('withdraw-number').value;
+            const res = await fetch('/api/withdraw', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email: currentUser.email, amount, number: num })
+            });
+            const data = await res.json();
+            document.getElementById('withdraw-msg').innerText = data.success ? "Request Sent Successfully!" : data.error;
+            document.getElementById('withdraw-msg').style.color = data.success ? "green" : "red";
+        }
+    </script>
 </body>
 </html>
