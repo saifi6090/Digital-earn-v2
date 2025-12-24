@@ -1,89 +1,112 @@
 const express = require('express');
-const { Pool } = require('pg');
-const bcrypt = require('bcrypt');
+const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 const app = express();
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-});
-
+// Middleware
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(cors());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// 1. DATABASE SETUP
-async function initDB() {
-    try {
-        await pool.query(`
-            CREATE TABLE IF NOT EXISTS users (
-                id SERIAL PRIMARY KEY,
-                email TEXT UNIQUE NOT NULL,
-                password TEXT NOT NULL,
-                balance DECIMAL DEFAULT 0.00,
-                is_active BOOLEAN DEFAULT false,
-                referral_code TEXT UNIQUE,
-                referred_by TEXT,
-                tasks_completed INTEGER DEFAULT 0,
-                last_task_date DATE DEFAULT CURRENT_DATE
-            );
-        `);
-        console.log("Database ready.");
-    } catch (err) { console.error("DB Error:", err); }
+// DATABASE FILE (Simple JSON file to store users)
+const DB_FILE = 'database.json';
+
+// Helper: Read Database
+function readDB() {
+    if (!fs.existsSync(DB_FILE)) return { users: [] };
+    const data = fs.readFileSync(DB_FILE);
+    return JSON.parse(data);
 }
-initDB();
 
-// 2. AUTH ROUTES
-app.post('/api/signup', async (req, res) => {
-    const { email, password, ref } = req.body;
-    try {
-        const hashed = await bcrypt.hash(password, 10);
-        const code = Math.random().toString(36).substring(2, 8);
-        await pool.query(
-            'INSERT INTO users (email, password, referral_code, referred_by) VALUES ($1, $2, $3, $4)',
-            [email, hashed, code, ref || null]
-        );
-        res.json({ success: true });
-    } catch (e) { res.status(400).json({ error: "Email exists" }); }
+// Helper: Write Database
+function writeDB(data) {
+    fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
+}
+
+// 1. SERVE HTML (The Face)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.post('/api/login', async (req, res) => {
+// 2. REGISTER API
+app.post('/api/register', (req, res) => {
+    const { email, password, referral_by } = req.body;
+    const db = readDB();
+    
+    // Check if user exists
+    if (db.users.find(u => u.email === email)) {
+        return res.json({ success: false, error: "User already exists!" });
+    }
+
+    // Create new user
+    const newUser = {
+        email,
+        password, // In a real app, you should encrypt this!
+        balance: 0,
+        referral_code: Math.random().toString(36).substring(2, 8).toUpperCase(),
+        referral_by: referral_by || null,
+        referral_income: 0,
+        task_income: 0,
+        is_active: false, // User must pay 700 PKR to activate
+        joined_at: new Date().toISOString()
+    };
+
+    db.users.push(newUser);
+    writeDB(db);
+    res.json({ success: true, user: newUser });
+});
+
+// 3. LOGIN API
+app.post('/api/login', (req, res) => {
     const { email, password } = req.body;
-    const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    if (result.rows.length > 0 && await bcrypt.compare(password, result.rows[0].password)) {
-        return res.json({ success: true, user: result.rows[0] });
+    const db = readDB();
+    
+    const user = db.users.find(u => u.email === email && u.password === password);
+    
+    if (user) {
+        res.json({ success: true, user });
+    } else {
+        res.json({ success: false, error: "Invalid Email or Password" });
     }
-    res.status(401).json({ error: "Wrong credentials" });
 });
 
-// 3. TASK & WITHDRAW ROUTES
-app.post('/api/tasks/complete', async (req, res) => {
+// 4. TASK API (Earn 10 PKR)
+app.post('/api/task', (req, res) => {
     const { email } = req.body;
-    await pool.query('UPDATE users SET balance = balance + 10, tasks_completed = tasks_completed + 1 WHERE email = $1 AND tasks_completed < 10', [email]);
-    res.json({ success: true });
+    const db = readDB();
+    const user = db.users.find(u => u.email === email);
+
+    if (!user) return res.json({ success: false, error: "User not found" });
+    if (!user.is_active) return res.json({ success: false, error: "Account not active" });
+
+    // Add Balance
+    user.balance += 10;
+    user.task_income = (user.task_income || 0) + 10;
+    
+    writeDB(db);
+    res.json({ success: true, new_balance: user.balance });
 });
 
-app.post('/api/withdraw', async (req, res) => {
+// 5. WITHDRAW API
+app.post('/api/withdraw', (req, res) => {
     const { email, amount, number } = req.body;
-    const user = await pool.query('SELECT balance FROM users WHERE email = $1', [email]);
-    if (user.rows[0].balance >= amount && amount >= 1000) {
-        await pool.query('UPDATE users SET balance = balance - $1 WHERE email = $2', [amount, email]);
-        console.log(`WITHDRAW: ${email} to ${number} amount ${amount}`);
-        return res.json({ success: true });
-    }
-    res.status(400).json({ error: "Invalid request" });
+    const db = readDB();
+    const user = db.users.find(u => u.email === email);
+
+    if (!user) return res.json({ success: false, error: "User not found" });
+    if (user.balance < amount) return res.json({ success: false, error: "Insufficient Balance" });
+
+    // Deduct Balance
+    user.balance -= Number(amount);
+    
+    // Log the withdrawal (Optional: You could save this to a 'withdrawals' array)
+    console.log(`WITHDRAW REQUEST: ${email} wants ${amount} PKR to ${number}`);
+
+    writeDB(db);
+    res.json({ success: true, new_balance: user.balance });
 });
 
-// 4. ADMIN APPROVAL
-app.get('/api/admin/approve', async (req, res) => {
-    const { email, secret } = req.query;
-    if (secret !== "Saif_786") return res.status(403).send("Wrong Secret");
-    const result = await pool.query('UPDATE users SET is_active = true WHERE email = $1 RETURNING referred_by', [email]);
-    if (result.rows[0]?.referred_by) {
-        await pool.query('UPDATE users SET balance = balance + 70 WHERE referral_code = $1', [result.rows[0].referred_by]);
-    }
-    res.send("User Activated!");
-});
-
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-app.listen(process.env.PORT || 3000);
+// START SERVER
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
