@@ -3,259 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn | Multi-Level Platform</title>
+    <title>Digital Earn | Professional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .animate-marquee { display: inline-block; animation: marquee 15s linear infinite; }
         .hidden-sec { display: none !important; }
-        .plan-card.active { border-color: #2563eb; background-color: #eff6ff; border-width: 2px; }
+        .nav-active { color: #2563eb; }
     </style>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900">
+<body class="bg-slate-50 font-sans text-slate-900 pb-20">
 
-    <div class="bg-blue-900 text-white overflow-hidden py-2 text-[10px] font-bold uppercase tracking-widest flex sticky top-0 z-[6000]">
+    <div class="bg-blue-900 text-white overflow-hidden py-2 text-[10px] font-bold uppercase flex sticky top-0 z-[50]">
         <div class="whitespace-nowrap animate-marquee">
-            🚀 USER ***492 JUST WITHDREW 2500 PKR — USER ***102 UPGRADED TO GOLD PLAN — USER ***991 RECEIVED 250 PKR REFERRAL BONUS — START EARNING NOW!
+            🚀 USER ***492 WITHDREW 2500 PKR — USER ***102 UPGRADED TO GOLD — START EARNING NOW!
         </div>
     </div>
 
     <div id="auth-page" class="min-h-screen flex items-center justify-center p-6">
-        <div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-slate-100">
-            <h1 id="auth-title" class="text-3xl font-black text-blue-900 mb-2 text-center">Digital Earn</h1>
-            <p id="auth-subtitle" class="text-slate-400 text-center mb-6 text-sm">Sign in to start earning</p>
-            
+        <div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-8">
+            <h1 id="auth-title" class="text-3xl font-black text-blue-900 text-center mb-6">Digital Earn</h1>
             <div class="space-y-4">
-                <input id="auth-email" type="email" placeholder="Email Address" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
-                <input id="auth-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl outline-none focus:ring-2 focus:ring-blue-500">
-                
-                <div id="register-extras" class="hidden-sec space-y-4">
-                    <p class="text-[10px] font-bold text-slate-500 uppercase ml-2">Select Your Plan</p>
-                    <div class="grid grid-cols-3 gap-2">
-                        <div onclick="selectPlan(1)" id="plan-1" class="plan-card active border p-3 rounded-2xl text-center cursor-pointer transition-all">
-                            <p class="text-[8px] font-bold">BASIC</p>
-                            <p class="text-xs font-black">700</p>
-                        </div>
-                        <div onclick="selectPlan(2)" id="plan-2" class="plan-card border p-3 rounded-2xl text-center cursor-pointer transition-all">
-                            <p class="text-[8px] font-bold">SILVER</p>
-                            <p class="text-xs font-black">1500</p>
-                        </div>
-                        <div onclick="selectPlan(3)" id="plan-3" class="plan-card border p-3 rounded-2xl text-center cursor-pointer transition-all">
-                            <p class="text-[8px] font-bold">GOLD</p>
-                            <p class="text-xs font-black">2500</p>
-                        </div>
-                    </div>
+                <input id="auth-email" type="email" placeholder="Email" class="w-full p-4 bg-slate-50 rounded-2xl outline-none">
+                <input id="auth-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl outline-none">
+                <div id="register-extras" class="hidden-sec grid grid-cols-3 gap-2">
+                    <div onclick="selectPlan(1)" id="p-1" class="border-2 border-blue-500 p-2 rounded-xl text-center text-[10px] font-bold">BASIC<br>700</div>
+                    <div onclick="selectPlan(2)" id="p-2" class="border p-2 rounded-xl text-center text-[10px]">SILVER<br>1500</div>
+                    <div onclick="selectPlan(3)" id="p-3" class="border p-2 rounded-xl text-center text-[10px]">GOLD<br>2500</div>
                 </div>
-
-                <button id="auth-main-btn" onclick="handleAuth()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-95">Login</button>
+                <button onclick="handleAuth()" id="auth-btn" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl">Login</button>
             </div>
-
-            <p class="text-center mt-6 text-slate-400 text-xs">
-                <span id="toggle-text">Don't have an account?</span> 
-                <button onclick="toggleAuthMode()" id="toggle-btn" class="text-blue-600 font-bold hover:underline">Register Now</button>
+            <p class="text-center mt-6 text-xs text-slate-400">
+                <button onclick="toggleAuthMode()" id="toggle-btn" class="text-blue-600 font-bold">Register Now</button>
             </p>
         </div>
     </div>
 
-    <div id="dashboard-page" class="hidden-sec min-h-screen pb-24">
-        <div class="bg-white p-6 rounded-b-[40px] shadow-sm flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 font-bold text-xl"><i class="fas fa-user-tie"></i></div>
-                <div>
-                    <h2 id="top-email" class="font-bold text-slate-800 text-sm italic">User</h2>
-                    <div class="flex items-center gap-2">
-                        <span id="plan-badge" class="bg-blue-600 text-white text-[8px] px-2 py-0.5 rounded-full font-bold">BASIC</span>
-                        <span id="user-status" class="text-[9px] font-bold uppercase">Inactive</span>
-                    </div>
-                </div>
+    <div id="home-sec" class="hidden-sec p-6 space-y-6">
+        <div class="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm">
+            <div>
+                <p id="top-email" class="text-xs font-bold text-slate-500">user@email.com</p>
+                <span id="user-status" class="text-[9px] font-bold uppercase">Inactive</span>
             </div>
-            <button onclick="logout()" class="text-slate-300 hover:text-red-500"><i class="fas fa-power-off text-xl"></i></button>
+            <button onclick="logout()"><i class="fas fa-power-off text-slate-300"></i></button>
         </div>
 
-        <div class="p-6 space-y-6">
-            <div class="bg-gradient-to-br from-blue-700 to-blue-900 p-8 rounded-[35px] text-white shadow-2xl relative overflow-hidden">
-                <div class="relative z-10">
-                    <p class="text-blue-200 text-[10px] font-medium uppercase tracking-widest mb-1">Available Balance</p>
-                    <h1 class="text-5xl font-black italic">Rs. <span id="user-balance">0.00</span></h1>
-                </div>
-                <i class="fas fa-gem absolute -bottom-4 -right-4 text-9xl text-white opacity-10"></i>
-            </div>
+        <div class="bg-gradient-to-br from-blue-700 to-blue-900 p-8 rounded-[35px] text-white shadow-xl relative overflow-hidden">
+            <p class="text-blue-200 text-[10px] uppercase font-bold">Balance</p>
+            <h1 class="text-4xl font-black italic">Rs. <span id="user-balance">0.00</span></h1>
+            <i class="fas fa-gem absolute -bottom-4 -right-4 text-8xl opacity-10"></i>
+        </div>
 
-            <div class="flex gap-4">
-                <div class="flex-1 bg-white p-4 rounded-2xl border border-slate-100 text-center">
-                    <p class="text-[9px] text-slate-400 font-bold uppercase">Tasks Left</p>
-                    <p id="tasks-left" class="text-xl font-black text-slate-700">0</p>
-                </div>
-                <div class="flex-1 bg-white p-4 rounded-2xl border border-slate-100 text-center">
-                    <p class="text-[9px] text-slate-400 font-bold uppercase">Max Daily</p>
-                    <p id="total-limit" class="text-xl font-black text-slate-700">0</p>
-                </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white p-4 rounded-2xl text-center border">
+                <p class="text-[9px] text-slate-400 font-bold uppercase">Tasks Left</p>
+                <p id="tasks-left" class="text-xl font-bold">0</p>
             </div>
-
-            <div class="grid grid-cols-2 gap-4">
-                <button onclick="doTask()" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-3 active:scale-95 transition-all">
-                    <div class="w-14 h-14 bg-green-100 text-green-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner"><i class="fas fa-play"></i></div>
-                    <span class="font-bold text-slate-700 text-sm uppercase">Watch Ad</span>
-                </button>
-                <button onclick="alert('Withdrawal system opening soon!')" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100 flex flex-col items-center gap-3 active:scale-95 transition-all">
-                    <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl shadow-inner"><i class="fas fa-wallet"></i></div>
-                    <span class="font-bold text-slate-700 text-sm uppercase">Withdraw</span>
-                </button>
-            </div>
-
-            <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
-                <h3 class="font-bold mb-4 text-slate-700 text-xs italic flex items-center gap-2">
-                    <i class="fas fa-history text-blue-600"></i> Withdrawal History
-                </h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left text-[10px]">
-                        <thead><tr class="text-slate-300 border-b uppercase"><th class="pb-2">Date</th><th class="pb-2">Amount</th><th class="pb-2 text-right">Status</th></tr></thead>
-                        <tbody id="withdraw-history-list">
-                            <tr><td colspan="3" class="py-6 text-center text-slate-300 italic">No transactions found</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="bg-white p-4 rounded-2xl text-center border">
+                <p class="text-[9px] text-slate-400 font-bold uppercase">Plan</p>
+                <p id="plan-name" class="text-xl font-bold">BASIC</p>
             </div>
         </div>
     </div>
 
-    <a href="https://wa.me/923707340477" target="_blank" class="fixed bottom-6 right-6 bg-green-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-2xl z-[5000] animate-bounce">
-        <i class="fab fa-whatsapp text-3xl"></i>
+    <div id="task-sec" class="hidden-sec p-6">
+        <h2 class="text-xl font-black mb-4">Daily Tasks</h2>
+        <div class="bg-white p-8 rounded-3xl border border-dashed border-blue-200 text-center space-y-4">
+            <div class="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mx-auto">
+                <i class="fas fa-play text-3xl text-blue-600"></i>
+            </div>
+            <p class="text-sm text-slate-500">Watch a 30-second ad to earn your reward.</p>
+            <button onclick="doTask()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-2xl">Watch Ad Now</button>
+        </div>
+    </div>
+
+    <div id="profile-sec" class="hidden-sec p-6 space-y-6">
+        <h2 class="text-xl font-black">My Profile</h2>
+        <div class="bg-white p-6 rounded-3xl space-y-4 shadow-sm">
+            <div class="flex justify-between border-b pb-2 text-sm"><span>Account</span><span id="prof-email" class="font-bold"></span></div>
+            <div class="flex justify-between border-b pb-2 text-sm"><span>Plan</span><span id="prof-plan" class="font-bold"></span></div>
+        </div>
+        <div class="bg-slate-100 p-4 rounded-2xl text-[10px] text-slate-500">
+            <p class="font-bold mb-1 uppercase">Privacy Policy</p>
+            Your data is encrypted. We only collect email for login purposes. Withdrawals take 24-48 hours.
+        </div>
+    </div>
+
+    <nav id="bottom-nav" class="hidden-sec fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around py-4 z-[5000]">
+        <button onclick="showTab('home')" class="nav-btn text-slate-400 flex flex-col items-center" id="nav-home">
+            <i class="fas fa-home text-xl"></i><span class="text-[10px] font-bold">Home</span>
+        </button>
+        <button onclick="showTab('task')" class="nav-btn text-slate-400 flex flex-col items-center" id="nav-task">
+            <i class="fas fa-tasks text-xl"></i><span class="text-[10px] font-bold">Tasks</span>
+        </button>
+        <button onclick="showTab('profile')" class="nav-btn text-slate-400 flex flex-col items-center" id="nav-profile">
+            <i class="fas fa-user text-xl"></i><span class="text-[10px] font-bold">Profile</span>
+        </button>
+    </nav>
+
+    <a href="https://wa.me/923707340477" target="_blank" class="fixed bottom-20 right-6 bg-green-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg animate-bounce">
+        <i class="fab fa-whatsapp text-2xl"></i>
     </a>
 
     <script>
         let user = JSON.parse(localStorage.getItem('user')) || null;
-        let isLoginMode = true;
-        let selectedLevel = 1;
+        let isLogin = true;
+        let selLvl = 1;
 
         function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? "Digital Earn" : "Create Account";
-            document.getElementById('auth-subtitle').innerText = isLoginMode ? "Sign in to start earning" : "Join the community and earn daily";
-            document.getElementById('register-extras').classList.toggle('hidden-sec', isLoginMode);
-            document.getElementById('toggle-btn').innerText = isLoginMode ? "Register Now" : "Login Now";
-            document.getElementById('auth-main-btn').innerText = isLoginMode ? "Login" : "Register";
+            isLogin = !isLogin;
+            document.getElementById('auth-title').innerText = isLogin ? "Digital Earn" : "Register";
+            document.getElementById('register-extras').classList.toggle('hidden-sec', isLogin);
+            document.getElementById('toggle-btn').innerText = isLogin ? "Register Now" : "Login Now";
+            document.getElementById('auth-btn').innerText = isLogin ? "Login" : "Register";
         }
 
-        function selectPlan(lvl) {
-            selectedLevel = lvl;
-            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('active'));
-            document.getElementById('plan-' + lvl).classList.add('active');
+        function selectPlan(l) {
+            selLvl = l;
+            document.querySelectorAll('#register-extras div').forEach(d => d.classList.remove('border-2', 'border-blue-500'));
+            document.getElementById('p-'+l).classList.add('border-2', 'border-blue-500');
+        }
+
+        function showTab(tab) {
+            ['home-sec', 'task-sec', 'profile-sec'].forEach(s => document.getElementById(s).classList.add('hidden-sec'));
+            document.getElementById(tab + '-sec').classList.remove('hidden-sec');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('text-blue-600'));
+            document.getElementById('nav-' + tab).classList.add('text-blue-600');
         }
 
         async function handleAuth() {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-pass').value;
-            const btn = document.getElementById('auth-main-btn');
-
-            if(!email || !password) return alert("Please fill all fields");
-            
-            btn.innerText = "Processing...";
-            btn.disabled = true;
-
-            const endpoint = isLoginMode ? '/api/login' : '/api/register';
-            const payload = isLoginMode ? { email, password } : { email, password, level: selectedLevel };
-
-            try {
-                const res = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify(payload)
-                });
-                const data = await res.json();
-                
-                if(data.success) {
-                    localStorage.setItem('user', JSON.stringify(data.user));
-                    window.location.reload(); 
-                } else {
-                    alert(data.error || "Action failed");
-                    btn.innerText = isLoginMode ? "Login" : "Register";
-                    btn.disabled = false;
-                }
-            } catch (e) {
-                alert("Server connection error. Please wait 1 minute for server to wake up.");
-                btn.innerText = "Try Again";
-                btn.disabled = false;
-            }
-        }
-
-        function init() {
-            const authPage = document.getElementById('auth-page');
-            const dashPage = document.getElementById('dashboard-page');
-
-            if(user) {
-                authPage.classList.add('hidden-sec');
-                dashPage.classList.remove('hidden-sec');
-                
-                document.getElementById('top-email').innerText = user.email || "User";
-                document.getElementById('user-balance').innerText = (user.balance || 0).toFixed(2);
-                
-                const plans = { 1: "BASIC", 2: "SILVER", 3: "GOLD" };
-                const limits = { 1: 10, 2: 20, 3: 30 };
-                
-                const userLevel = user.level || 1;
-                document.getElementById('plan-badge').innerText = plans[userLevel];
-                document.getElementById('total-limit').innerText = limits[userLevel];
-                
-                const dailyCount = user.daily_count || 0;
-                document.getElementById('tasks-left').innerText = limits[userLevel] - dailyCount;
-
-                const statusEl = document.getElementById('user-status');
-                statusEl.innerText = user.is_active ? "Verified Account" : "Unverified (Pay Fee)";
-                statusEl.className = user.is_active ? "text-[9px] font-bold text-green-500" : "text-[9px] font-bold text-red-500";
-
-                const historyList = document.getElementById('withdraw-history-list');
-                if (user.withdrawals && user.withdrawals.length > 0) {
-                    historyList.innerHTML = user.withdrawals.map(w => `
-                        <tr class="border-b border-slate-50">
-                            <td class="py-3 text-slate-500 font-medium">${w.date}</td>
-                            <td class="py-3 font-black text-slate-700">Rs. ${w.amount}</td>
-                            <td class="py-3 text-right"><span class="bg-amber-100 text-amber-600 px-2 py-1 rounded-full text-[8px] font-black">${w.status}</span></td>
-                        </tr>
-                    `).join('');
-                }
-            } else {
-                authPage.classList.remove('hidden-sec');
-                dashPage.classList.add('hidden-sec');
-            }
+            const endpoint = isLogin ? '/api/login' : '/api/register';
+            const res = await fetch(endpoint, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email, password, level: selLvl })
+            });
+            const data = await res.json();
+            if(data.success) {
+                localStorage.setItem('user', JSON.stringify(data.user));
+                location.reload();
+            } else alert(data.error);
         }
 
         async function doTask() {
-            if(!user.is_active) return alert("❌ Account Inactive. Contact Admin on WhatsApp to activate.");
-            try {
-                const res = await fetch('/api/task', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ email: user.email })
-                });
-                const data = await res.json();
-                if(data.success) {
-                    alert("✅ Success! Reward added.");
-                    // Fetch updated user data after task
-                    const loginRes = await fetch('/api/login', {
-                        method: 'POST',
-                        headers: {'Content-Type': 'application/json'},
-                        body: JSON.stringify({ email: user.email, password: user.password })
-                    });
-                    const loginData = await loginRes.json();
-                    if(loginData.success) {
-                        localStorage.setItem('user', JSON.stringify(loginData.user));
-                        location.reload();
-                    }
-                } else {
-                    alert(data.error);
-                }
-            } catch (e) { alert("Task connection error."); }
+            const res = await fetch('/api/task', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email: user.email })
+            });
+            const data = await res.json();
+            if(data.success) { alert("Task Complete!"); location.reload(); }
+            else alert(data.error);
         }
 
-        function logout() {
-            localStorage.clear();
-            window.location.reload();
-        }
+        function logout() { localStorage.clear(); location.reload(); }
 
-        // Run init immediately
-        window.onload = init;
+        window.onload = () => {
+            if(user) {
+                document.getElementById('auth-page').classList.add('hidden-sec');
+                document.getElementById('bottom-nav').classList.remove('hidden-sec');
+                showTab('home');
+                document.getElementById('top-email').innerText = user.email;
+                document.getElementById('prof-email').innerText = user.email;
+                document.getElementById('user-balance').innerText = user.balance.toFixed(2);
+                const plans = {1:"BASIC", 2:"SILVER", 3:"GOLD"};
+                const lims = {1:10, 2:20, 3:30};
+                document.getElementById('plan-name').innerText = plans[user.level];
+                document.getElementById('prof-plan').innerText = plans[user.level];
+                document.getElementById('tasks-left').innerText = lims[user.level] - (user.daily_count || 0);
+                const st = document.getElementById('user-status');
+                st.innerText = user.is_active ? "Verified" : "Unverified (Pay Fee)";
+                st.className = user.is_active ? "text-[9px] font-bold text-green-500" : "text-[9px] font-bold text-red-500";
+            }
+        };
     </script>
 </body>
 </html>
