@@ -3,64 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn | Ultra Pro</title>
+    <title>Digital Earn | Ultra Secure Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background: #0f172a; color: #f8fafc; }
+        body { background: #020617; color: #f8fafc; }
         .hidden-sec { display: none !important; }
-        /* Glass Effect */
+        
+        /* Premium Shiny Glass Effect */
         .glass-card { 
-            background: rgba(30, 41, 59, 0.7); 
-            backdrop-filter: blur(12px); 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            border-radius: 24px;
+            background: rgba(15, 23, 42, 0.8); 
+            backdrop-filter: blur(16px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            border-radius: 28px;
         }
+        
         .shiny-gold {
             background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4);
+            box-shadow: 0 4px 20px rgba(217, 119, 6, 0.3);
         }
+        
         .shiny-blue {
             background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            box-shadow: 0 4px 15px rgba(29, 78, 216, 0.4);
+            box-shadow: 0 4px 20px rgba(29, 78, 216, 0.3);
         }
+
         #sidebar { transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); transform: translateX(-100%); }
         #sidebar.open { transform: translateX(0); }
-        .progress-ring__circle { transition: 0.5s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
-        /* Smooth Tab Transitions */
-        .tab-content { animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .progress-ring__circle { transition: 0.6s ease; transform: rotate(-90deg); transform-origin: 50% 50%; }
+
+        /* Animation for tabs */
+        .tab-content { animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        input, select { transition: all 0.3s ease; }
+        input:focus { border-color: #3b82f6 !important; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
     </style>
 </head>
 <body class="font-sans overflow-hidden h-screen">
 
-    <div id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-slate-900/95 backdrop-blur-xl z-[6000] border-r border-white/10 flex flex-col">
-        <div class="p-8 border-b border-white/5">
-            <h2 class="text-2xl font-black italic tracking-tighter text-blue-400">DIGITAL EARN</h2>
-            <p class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">Secure Ecosystem</p>
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-slate-950/95 backdrop-blur-2xl z-[6000] border-r border-white/5 flex flex-col">
+        <div class="p-8 border-b border-white/5 bg-slate-900/50">
+            <h2 class="text-2xl font-black italic tracking-tighter text-blue-500">DIGITAL EARN</h2>
+            <p class="text-[9px] text-slate-500 uppercase tracking-[3px] font-bold mt-1">Verified Platform</p>
         </div>
         <nav class="flex-1 overflow-y-auto p-4 space-y-2">
-            <a onclick="navigate('home')" class="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-home text-blue-400"></i> Home</a>
-            <a onclick="navigate('profile')" class="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-user-shield text-purple-400"></i> Profile</a>
-            <a onclick="navigate('rewards')" class="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-gem text-pink-400"></i> Rewards</a>
-            <a onclick="navigate('income')" class="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-chart-pie text-green-400"></i> Income</a>
-            <a onclick="navigate('withdraw')" class="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-wallet text-amber-400"></i> Withdraw</a>
-            <a onclick="navigate('plans')" class="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-crown text-yellow-400"></i> Plans</a>
-            <a onclick="navigate('settings')" class="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-cog text-slate-400"></i> Settings</a>
-            <a onclick="openLogoutModal()" class="flex items-center gap-4 p-4 rounded-xl text-red-400 hover:bg-red-500/10 cursor-pointer mt-10"><i class="fas fa-power-off"></i> Logout</a>
+            <a onclick="navigate('home')" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-home text-blue-400"></i> Home</a>
+            <a onclick="navigate('profile')" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-user-shield text-purple-400"></i> Profile</a>
+            <a onclick="navigate('rewards')" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-gem text-pink-400"></i> Rewards</a>
+            <a onclick="navigate('income')" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-chart-line text-green-400"></i> Income</a>
+            <a onclick="navigate('withdraw')" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-wallet text-amber-400"></i> Withdraw</a>
+            <a onclick="navigate('plans')" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-crown text-yellow-400"></i> Plans</a>
+            <a onclick="navigate('settings')" class="flex items-center gap-4 p-4 rounded-2xl hover:bg-white/5 cursor-pointer transition-all"><i class="fas fa-cog text-slate-400"></i> Settings</a>
+            <a onclick="openLogoutModal()" class="flex items-center gap-4 p-4 rounded-2xl text-red-500 hover:bg-red-500/10 cursor-pointer mt-12"><i class="fas fa-power-off"></i> Logout session</a>
         </nav>
     </div>
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="hidden-sec fixed inset-0 bg-black/70 z-[5999]"></div>
 
     <div id="auth-page" class="min-h-screen flex items-center justify-center p-6 bg-slate-950 absolute inset-0 z-[5000]">
         <div class="w-full max-w-md glass-card p-10">
-            <div class="text-center mb-10">
-                <div class="w-16 h-16 shiny-blue rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fas fa-shield-alt"></i></div>
-                <h1 class="text-3xl font-black">Secure Login</h1>
-                <p id="auth-sub" class="text-slate-500 text-sm">Enter credentials to proceed</p>
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 shiny-blue rounded-3xl flex items-center justify-center mx-auto mb-4 text-2xl"><i class="fas fa-lock"></i></div>
+                <h1 id="auth-title" class="text-3xl font-black">Secure Login</h1>
+                <p id="auth-sub" class="text-slate-500 text-sm mt-1">Authorized access only</p>
             </div>
+            
             <div class="space-y-4">
-                <input id="auth-email" type="email" placeholder="Email Address" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none focus:border-blue-500">
-                <input id="auth-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none focus:border-blue-500">
+                <input id="auth-email" type="email" placeholder="Email Address" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
+                
+                <div id="otp-container" class="hidden-sec flex gap-2">
+                    <input id="auth-otp" type="text" placeholder="6-Digit OTP" class="flex-1 p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
+                    <button onclick="sendOTP()" class="px-4 bg-blue-600/10 text-blue-400 rounded-2xl text-[10px] font-bold border border-blue-600/30">Get Code</button>
+                </div>
+
+                <input id="auth-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
                 
                 <div id="register-extras" class="hidden-sec grid grid-cols-3 gap-2">
                     <div onclick="selectLvl(1)" id="p-1" class="border-2 border-blue-500 bg-blue-500/10 p-2 rounded-xl text-center cursor-pointer text-[10px] font-bold">BASIC<br>700</div>
@@ -68,141 +85,163 @@
                     <div onclick="selectLvl(3)" id="p-3" class="border border-white/10 p-2 rounded-xl text-center cursor-pointer text-[10px] font-bold">GOLD<br>2500</div>
                 </div>
 
-                <button onclick="handleAuth()" id="auth-btn" class="w-full shiny-blue text-white font-bold py-4 rounded-2xl active:scale-95 transition-all uppercase tracking-widest">Authorize</button>
+                <button onclick="handleAuth()" id="auth-btn" class="w-full shiny-blue text-white font-black py-4 rounded-2xl active:scale-95 transition-all uppercase tracking-widest text-sm">Authorize Access</button>
             </div>
-            <button onclick="toggleAuth()" class="w-full text-center mt-8 text-sm text-slate-500">Need account? <span class="text-blue-400 font-bold">Register</span></button>
+            
+            <button onclick="toggleAuth()" id="auth-toggle-btn" class="w-full text-center mt-8 text-sm text-slate-500 italic">Don't have an account? <span class="text-blue-400 font-bold not-italic">Sign Up</span></button>
         </div>
     </div>
 
     <div id="app-area" class="hidden-sec h-full flex flex-col">
-        <header class="p-6 flex justify-between items-center z-10 sticky top-0 bg-slate-950/50 backdrop-blur-md">
-            <button onclick="toggleSidebar()" class="w-10 h-10 glass-card flex items-center justify-center"><i class="fas fa-align-left text-blue-400"></i></button>
-            <span id="page-title" class="font-black text-sm tracking-widest uppercase">Overview</span>
-            <div class="w-10 h-10 shiny-blue rounded-full flex items-center justify-center text-xs"><i class="fas fa-user"></i></div>
+        <header class="p-6 flex justify-between items-center z-10 sticky top-0 bg-slate-950/80 backdrop-blur-md border-b border-white/5">
+            <button onclick="toggleSidebar()" class="w-10 h-10 glass-card flex items-center justify-center"><i class="fas fa-bars-staggered text-blue-400"></i></button>
+            <span id="page-title" class="font-black text-xs tracking-[4px] uppercase text-slate-400">Overview</span>
+            <div class="w-10 h-10 shiny-blue rounded-full flex items-center justify-center text-xs border-2 border-white/10"><i class="fas fa-user"></i></div>
         </header>
 
         <main class="flex-1 overflow-y-auto pb-32 p-6 space-y-6">
 
             <div id="tab-home" class="tab-content space-y-6">
-                <div class="bg-gradient-to-tr from-blue-600 to-indigo-900 p-8 rounded-[40px] relative overflow-hidden shadow-2xl">
-                    <p class="text-[10px] font-bold uppercase opacity-60 tracking-[4px]">Verified Balance</p>
-                    <h1 class="text-4xl font-black mt-2">Rs. <span id="disp-balance">0.00</span></h1>
-                    <div class="mt-8 flex gap-3">
-                        <button onclick="navigate('withdraw')" class="px-6 py-2 bg-white/10 backdrop-blur rounded-full text-[10px] font-bold border border-white/10">Withdraw</button>
-                        <button onclick="navigate('income')" class="px-6 py-2 bg-white/10 backdrop-blur rounded-full text-[10px] font-bold border border-white/10">History</button>
+                <div class="bg-gradient-to-br from-blue-600 via-indigo-900 to-slate-950 p-8 rounded-[40px] relative overflow-hidden shadow-2xl border border-white/10">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-[10px] font-bold uppercase opacity-60 tracking-[4px]">Main Portfolio</p>
+                            <h1 class="text-4xl font-black mt-2">Rs. <span id="disp-balance">0.00</span></h1>
+                        </div>
+                        <i class="fas fa-shield-check text-2xl text-blue-400 opacity-50"></i>
                     </div>
-                    <i class="fas fa-fingerprint absolute -bottom-6 -right-6 text-9xl opacity-10"></i>
+                    <div class="mt-8 flex gap-3">
+                        <button onclick="navigate('withdraw')" class="px-6 py-2 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold border border-white/10">Withdraw</button>
+                        <button onclick="navigate('income')" class="px-6 py-2 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold border border-white/10">History</button>
+                    </div>
+                    <i class="fas fa-fingerprint absolute -bottom-10 -right-10 text-[180px] opacity-5"></i>
                 </div>
 
                 <div class="glass-card p-6 flex items-center justify-between">
-                    <div class="relative w-20 h-20 flex items-center justify-center">
-                        <svg class="w-20 h-20">
-                            <circle class="text-white/5" stroke-width="6" stroke="currentColor" fill="transparent" r="35" cx="40" cy="40"/>
-                            <circle id="progress-circle" class="text-blue-500 progress-ring__circle" stroke-width="6" stroke-dasharray="219.8" stroke-dashoffset="219.8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="35" cx="40" cy="40"/>
+                    <div class="relative w-24 h-24 flex items-center justify-center">
+                        <svg class="w-24 h-24">
+                            <circle class="text-white/5" stroke-width="8" stroke="currentColor" fill="transparent" r="40" cx="48" cy="48"/>
+                            <circle id="progress-circle" class="text-blue-500 progress-ring__circle" stroke-width="8" stroke-dasharray="251.2" stroke-dashoffset="251.2" stroke-linecap="round" stroke="currentColor" fill="transparent" r="40" cx="48" cy="48"/>
                         </svg>
-                        <span id="progress-text" class="absolute font-black text-xs">0%</span>
+                        <span id="progress-text" class="absolute font-black text-sm">0%</span>
                     </div>
-                    <div class="flex-1 ml-6">
-                        <h4 class="font-bold text-sm">Work Progress</h4>
-                        <p class="text-[10px] text-slate-500">Finish tasks to reach daily goal.</p>
+                    <div class="flex-1 ml-8">
+                        <h4 class="font-bold text-sm">Task Completion</h4>
+                        <p class="text-[10px] text-slate-500 mt-1 leading-relaxed">Achieve 100% daily to unlock maximum profit potential.</p>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="glass-card p-5 text-center">
-                        <i class="fas fa-users text-purple-400 mb-2"></i>
-                        <p class="text-[9px] text-slate-500 font-bold uppercase">Referrals</p>
-                        <p id="ref-count" class="font-black">0</p>
+                <div class="glass-card p-6 border-blue-500/10 bg-blue-500/5">
+                    <div class="flex justify-between items-center mb-4">
+                        <h4 class="font-bold text-xs uppercase tracking-widest text-blue-400">Platform Integrity</h4>
+                        <div class="text-yellow-500 text-[10px]"><i class="fas fa-star"></i> 4.9/5.0</div>
                     </div>
-                    <div class="glass-card p-5 text-center">
-                        <i class="fas fa-tasks text-green-400 mb-2"></i>
-                        <p class="text-[9px] text-slate-500 font-bold uppercase">Done Today</p>
-                        <p id="disp-tasks-done" class="font-black">0</p>
+                    <div class="text-[10px] italic text-slate-400 border-l-2 border-blue-500 pl-4">
+                        "The fastest withdrawal system I've ever used. Security is top-notch." - Verified User
                     </div>
                 </div>
             </div>
 
             <div id="tab-rewards" class="tab-content hidden-sec space-y-6">
-                <div class="shiny-blue p-8 rounded-[40px] text-center">
-                    <i class="fas fa-play-circle text-5xl mb-4"></i>
-                    <h2 class="text-xl font-black">Ads Reward Center</h2>
-                    <p class="text-xs opacity-70 mb-6">Earn up to 20 PKR per 30sec Ad</p>
-                    <div class="bg-black/20 rounded-2xl p-4 mb-6">
-                        <p id="task-rem-text" class="font-bold text-sm">10 Tasks Left</p>
+                <div class="shiny-blue p-10 rounded-[45px] text-center relative overflow-hidden">
+                    <div class="z-10 relative">
+                        <i class="fas fa-play-circle text-6xl mb-4 text-white"></i>
+                        <h2 class="text-2xl font-black">Work Station</h2>
+                        <p class="text-xs opacity-70 mb-8 px-4">Secure Ad verification in progress. Do not refresh.</p>
+                        <div class="bg-black/30 backdrop-blur-xl rounded-3xl p-5 mb-8 border border-white/5">
+                            <p id="task-rem-text" class="font-bold text-lg">10 Tasks Remaining</p>
+                        </div>
+                        <button onclick="doTask()" class="w-full bg-white text-blue-900 py-5 rounded-3xl font-black shadow-2xl active:scale-95 transition-all">EXECUTE TASK</button>
                     </div>
-                    <button onclick="doTask()" class="w-full bg-white text-blue-700 py-4 rounded-2xl font-black shadow-xl">Watch Now</button>
-                </div>
-                <div class="glass-card p-6">
-                    <h4 class="font-bold text-sm mb-2 italic text-blue-400">Task Bonus Tip</h4>
-                    <p class="text-[10px] text-slate-400">Upgrade to Gold plan to unlock 3x more rewards and instant processing.</p>
+                    <i class="fas fa-rocket absolute -bottom-10 -left-10 text-[150px] opacity-10"></i>
                 </div>
             </div>
 
             <div id="tab-withdraw" class="tab-content hidden-sec space-y-6">
                 <div class="glass-card p-8 border-amber-500/20">
-                    <h2 class="text-xl font-black text-amber-500 mb-4">Request Fund</h2>
+                    <h2 class="text-xl font-black text-amber-500 mb-6 flex items-center gap-3">
+                        <i class="fas fa-vault"></i> Secure Outflow
+                    </h2>
                     <div class="space-y-4">
-                        <div class="bg-slate-900 rounded-2xl p-4 border border-white/5">
-                            <label class="text-[9px] font-bold text-slate-500 uppercase">Amount</label>
-                            <input id="w-amount" type="number" placeholder="Min 500" class="w-full bg-transparent outline-none font-bold">
+                        <div class="bg-slate-900/50 rounded-2xl p-4 border border-white/5">
+                            <label class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Amount (Min 500)</label>
+                            <input id="w-amount" type="number" placeholder="0.00" class="w-full bg-transparent outline-none font-bold text-lg mt-1">
                         </div>
-                        <select id="w-method" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none font-bold text-sm">
-                            <option value="Easypaisa">Easypaisa</option>
-                            <option value="JazzCash">JazzCash</option>
+                        <select id="w-method" class="w-full p-4 bg-slate-900/50 rounded-2xl border border-white/5 outline-none font-bold text-sm">
+                            <option value="Easypaisa">Easypaisa (Pakistan)</option>
+                            <option value="JazzCash">JazzCash (Pakistan)</option>
                         </select>
-                        <input id="w-name" type="text" placeholder="Account Holder Name" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-sm">
-                        <input id="w-number" type="text" placeholder="Account Number" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-sm">
-                        <button onclick="requestWithdraw()" class="w-full shiny-gold text-white font-black py-4 rounded-2xl">Secure Withdrawal</button>
+                        <input id="w-name" type="text" placeholder="Account Title Name" class="w-full p-4 bg-slate-900/50 rounded-2xl border border-white/5 outline-none text-sm font-bold">
+                        <input id="w-number" type="text" placeholder="Account Number" class="w-full p-4 bg-slate-900/50 rounded-2xl border border-white/5 outline-none text-sm font-bold">
+                        <button onclick="requestWithdraw()" class="w-full shiny-gold text-white font-black py-5 rounded-3xl mt-4">Initiate Transfer</button>
                     </div>
                 </div>
-                <div class="space-y-3" id="withdraw-history-list">
+                <div id="withdraw-history-list" class="space-y-3 pb-10">
                     </div>
             </div>
 
             <div id="tab-settings" class="tab-content hidden-sec space-y-6">
-                <h2 class="font-black text-xl px-2">Account Security</h2>
-                <div class="glass-card p-6 space-y-5">
+                <h2 class="font-black text-xl px-2">Security Hub</h2>
+                <div class="glass-card p-8 space-y-6">
                     <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase">New Password</label>
-                        <input id="set-pass" type="password" class="w-full p-4 bg-slate-900 rounded-2xl mt-1 outline-none border border-white/5">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Change Password</label>
+                        <input id="set-pass" type="password" placeholder="New Secret Phrase" class="w-full p-4 bg-slate-900/50 rounded-2xl mt-2 outline-none border border-white/5">
                     </div>
-                    <div>
-                        <label class="text-[10px] font-bold text-slate-500 uppercase">Profile Lock</label>
-                        <div class="flex justify-between items-center mt-2">
-                            <p class="text-xs text-slate-400">Enable 2-Step Verification</p>
-                            <div class="w-10 h-5 bg-blue-600 rounded-full"></div>
+                    <div class="flex gap-2">
+                        <input id="set-otp" type="text" placeholder="6-Digit OTP" class="flex-1 p-4 bg-slate-900/50 rounded-2xl outline-none border border-white/5">
+                        <button onclick="sendOTP()" class="px-6 bg-blue-600/10 text-blue-400 rounded-2xl font-bold border border-blue-600/30 text-[10px]">Send OTP</button>
+                    </div>
+                    <button onclick="alert('Security settings updated!')" class="w-full shiny-blue py-4 rounded-2xl font-black text-sm uppercase">Sync Changes</button>
+                </div>
+            </div>
+
+            <div id="tab-profile" class="tab-content hidden-sec space-y-6">
+                <div class="bg-slate-900 p-8 rounded-[40px] text-center border border-white/10">
+                    <div class="w-20 h-20 bg-blue-600 rounded-full mx-auto mb-4 flex items-center justify-center text-3xl border-4 border-white/5 shadow-2xl">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h2 id="prof-email" class="font-black text-lg">User Account</h2>
+                    <p id="prof-plan" class="text-[9px] font-black bg-blue-600/20 text-blue-400 rounded-full py-1 mt-3 inline-block px-5 uppercase tracking-widest">Silver Member</p>
+                </div>
+                
+                <div class="glass-card p-6">
+                    <h4 class="font-bold text-xs uppercase tracking-widest text-slate-500 mb-4">Referral Dashboard</h4>
+                    <div class="flex justify-between text-center gap-4">
+                        <div class="flex-1 bg-white/5 p-4 rounded-2xl">
+                            <p class="text-[10px] text-slate-500 font-bold uppercase">Network</p>
+                            <p id="ref-count" class="text-xl font-black">0</p>
+                        </div>
+                        <div class="flex-1 bg-white/5 p-4 rounded-2xl">
+                            <p class="text-[10px] text-slate-500 font-bold uppercase">Comms (PKR)</p>
+                            <p class="text-xl font-black text-green-500">0</p>
                         </div>
                     </div>
-                    <button onclick="alert('Settings Updated!')" class="w-full bg-blue-600 py-4 rounded-2xl font-bold">Update Account</button>
-                </div>
-                <div class="glass-card p-6 bg-red-500/5 border-red-500/10">
-                    <p class="text-red-400 text-xs font-bold"><i class="fas fa-exclamation-triangle mr-2"></i>Danger Zone</p>
-                    <button class="text-[10px] text-slate-500 mt-2 underline">Permanently Delete Account</button>
+                    <button onclick="copyRef()" class="w-full mt-4 p-4 bg-blue-600 text-white rounded-2xl font-black text-[10px] uppercase tracking-widest">Copy Referral Link</button>
                 </div>
             </div>
 
         </main>
 
-        <nav class="bg-slate-900/80 backdrop-blur-xl border-t border-white/5 p-4 flex justify-around fixed bottom-0 w-full z-50">
-            <button onclick="navigate('home')" id="btn-home" class="flex flex-col items-center gap-1 text-blue-500">
-                <i class="fas fa-home text-lg"></i><span class="text-[9px] font-bold">Home</span>
+        <nav class="bg-slate-950/90 backdrop-blur-2xl border-t border-white/5 p-5 flex justify-around fixed bottom-0 w-full z-50">
+            <button onclick="navigate('home')" id="btn-home" class="flex flex-col items-center gap-1 text-blue-500 transition-all active:scale-90">
+                <i class="fas fa-home text-xl"></i><span class="text-[10px] font-bold">Home</span>
             </button>
-            <button onclick="navigate('rewards')" id="btn-rewards" class="flex flex-col items-center gap-1 text-slate-500">
-                <i class="fas fa-gem text-lg"></i><span class="text-[9px] font-bold">Rewards</span>
+            <button onclick="navigate('rewards')" id="btn-rewards" class="flex flex-col items-center gap-1 text-slate-500 transition-all active:scale-90">
+                <i class="fas fa-gem text-xl"></i><span class="text-[10px] font-bold">Tasks</span>
             </button>
-            <button onclick="navigate('profile')" id="btn-profile" class="flex flex-col items-center gap-1 text-slate-500">
-                <i class="fas fa-user-shield text-lg"></i><span class="text-[9px] font-bold">Profile</span>
+            <button onclick="navigate('profile')" id="btn-profile" class="flex flex-col items-center gap-1 text-slate-500 transition-all active:scale-90">
+                <i class="fas fa-user-shield text-xl"></i><span class="text-[10px] font-bold">Profile</span>
             </button>
         </nav>
     </div>
 
-    <div id="logout-modal" class="hidden-sec fixed inset-0 z-[7000] bg-black/90 flex items-center justify-center p-6 backdrop-blur-sm">
-        <div class="glass-card p-10 w-full max-w-sm text-center">
-            <h2 class="text-2xl font-black mb-4">Logout?</h2>
-            <p class="text-slate-500 text-sm mb-8">Your secure session will be closed.</p>
+    <div id="logout-modal" class="hidden-sec fixed inset-0 z-[7000] bg-black/95 flex items-center justify-center p-6 backdrop-blur-sm">
+        <div class="glass-card p-10 w-full max-w-sm text-center border-red-500/20">
+            <h2 class="text-2xl font-black mb-4">Confirm Logout</h2>
+            <p class="text-slate-500 text-sm mb-10">You will need to re-verify your identity next time you log in.</p>
             <div class="flex gap-4">
-                <button onclick="closeLogoutModal()" class="flex-1 py-4 font-bold bg-slate-800 rounded-2xl">Cancel</button>
-                <button onclick="logout()" class="flex-1 py-4 font-bold bg-red-600 rounded-2xl">Confirm</button>
+                <button onclick="closeLogoutModal()" class="flex-1 py-4 font-bold bg-slate-800 rounded-3xl text-sm">Cancel</button>
+                <button onclick="logout()" class="flex-1 py-4 font-bold bg-red-600 rounded-3xl text-sm">Yes, Logout</button>
             </div>
         </div>
     </div>
@@ -212,41 +251,68 @@
         let isLogin = true;
         let selLvl = 1;
 
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-        function openLogoutModal() { document.getElementById('logout-modal').classList.remove('hidden-sec'); }
-        function closeLogoutModal() { document.getElementById('logout-modal').classList.add('hidden-sec'); }
-        function logout() { localStorage.clear(); location.reload(); }
+        // UI Helpers
+        function toggleSidebar() { 
+            document.getElementById('sidebar').classList.toggle('open'); 
+            document.getElementById('sidebar-overlay').classList.toggle('hidden-sec');
+        }
 
         function navigate(tab) {
             document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden-sec'));
-            const target = 'tab-' + tab;
+            const target = 'tab-' + (tab === 'tasks' ? 'rewards' : tab);
             if(document.getElementById(target)) document.getElementById(target).classList.remove('hidden-sec');
             
             document.getElementById('page-title').innerText = tab.toUpperCase();
             
+            // Highlight buttons
             ['home', 'rewards', 'profile'].forEach(b => {
                 const el = document.getElementById('btn-' + b);
                 if(el) el.className = (b === tab) ? "flex flex-col items-center gap-1 text-blue-500" : "flex flex-col items-center gap-1 text-slate-500";
             });
             document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebar-overlay').classList.add('hidden-sec');
         }
 
-        function updateProgress(done, total) {
-            const circle = document.getElementById('progress-circle');
-            const percent = (done / total) * 100;
-            const offset = 219.8 - (percent / 100 * 219.8);
-            circle.style.strokeDashoffset = offset;
-            document.getElementById('progress-text').innerText = Math.round(percent) + "%";
+        // OTP & Auth Logic
+        async function sendOTP() {
+            const email = document.getElementById('auth-email').value || user.email;
+            if(!email) return alert("Email address is required to send code");
+            const res = await fetch('/api/send-otp', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email })
+            });
+            const data = await res.json();
+            if(data.success) alert("SECURITY ALERT: Verification code sent to your terminal/console!");
+            else alert(data.error);
+        }
+
+        function toggleAuth() {
+            isLogin = !isLogin;
+            document.getElementById('auth-title').innerText = isLogin ? "Secure Login" : "New Registration";
+            document.getElementById('auth-btn').innerText = isLogin ? "Authorize Access" : "Verify & Join";
+            document.getElementById('auth-toggle-btn').innerHTML = isLogin ? "Don't have an account? <span class='text-blue-400 font-bold'>Sign Up</span>" : "Existing user? <span class='text-blue-400 font-bold'>Login</span>";
+            document.getElementById('register-extras').classList.toggle('hidden-sec', isLogin);
+            document.getElementById('otp-container').classList.toggle('hidden-sec', isLogin);
+        }
+
+        function selectLvl(l) {
+            selLvl = l;
+            document.querySelectorAll('#register-extras div').forEach(d => { d.classList.remove('border-blue-500', 'bg-blue-500/10'); d.classList.add('border-white/10'); });
+            document.getElementById('p-'+l).classList.add('border-blue-500', 'bg-blue-500/10');
         }
 
         async function handleAuth() {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-pass').value;
-            if(!email || !password) return alert("Required fields missing");
+            const otp = document.getElementById('auth-otp').value;
+            if(!email || !password) return alert("All fields are mandatory");
+            if(!isLogin && !otp) return alert("Please enter the verification code");
+
             const res = await fetch(isLogin ? '/api/login' : '/api/register', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ email, password, level: selLvl })
+                body: JSON.stringify({ email, password, level: selLvl, otp })
             });
             const data = await res.json();
             if(data.success) {
@@ -255,14 +321,17 @@
             } else alert(data.error);
         }
 
-        function toggleAuth() {
-            isLogin = !isLogin;
-            document.getElementById('auth-btn').innerText = isLogin ? "Authorize" : "Create Account";
-            document.getElementById('register-extras').classList.toggle('hidden-sec', isLogin);
+        // App Features
+        function updateProgress(done, total) {
+            const circle = document.getElementById('progress-circle');
+            const percent = (done / total) * 100;
+            const offset = 251.2 - (percent / 100 * 251.2);
+            circle.style.strokeDashoffset = offset;
+            document.getElementById('progress-text').innerText = Math.round(percent) + "%";
         }
 
         async function doTask() {
-            if(!user.is_active) return alert("Verification Required: Contact admin for account activation.");
+            if(!user.is_active) return alert("UNVERIFIED ACCOUNT: Your account must be activated by Admin before earning.");
             const res = await fetch('/api/task', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -270,13 +339,15 @@
             });
             const data = await res.json();
             if(data.success) {
-                localStorage.setItem('user', JSON.stringify({...user, balance: data.new_balance, history: data.history, daily_count: user.daily_count + 1}));
+                const updated = {...user, balance: data.new_balance, history: data.history, daily_count: user.daily_count + 1};
+                localStorage.setItem('user', JSON.stringify(updated));
                 location.reload();
             } else alert(data.error);
         }
 
         async function requestWithdraw() {
             const amount = document.getElementById('w-amount').value;
+            if(amount < 500) return alert("Security Limit: Minimum withdrawal is Rs. 500");
             const res = await fetch('/api/withdraw', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -284,30 +355,43 @@
             });
             const data = await res.json();
             if(data.success) {
-                alert("Withdrawal Locked & Submitted for processing.");
+                alert("Withdrawal Logged Successfully. Processing time: 2-24 hours.");
                 localStorage.setItem('user', JSON.stringify(data.user));
                 location.reload();
             } else alert(data.error);
         }
+
+        function copyRef() {
+            const link = window.location.origin + "?ref=" + user.referralCode;
+            navigator.clipboard.writeText(link);
+            alert("Referral link secured to clipboard!");
+        }
+
+        function openLogoutModal() { document.getElementById('logout-modal').classList.remove('hidden-sec'); }
+        function closeLogoutModal() { document.getElementById('logout-modal').classList.add('hidden-sec'); }
+        function logout() { localStorage.clear(); location.reload(); }
 
         window.onload = () => {
             if(user) {
                 document.getElementById('auth-page').classList.add('hidden-sec');
                 document.getElementById('app-area').classList.remove('hidden-sec');
                 document.getElementById('disp-balance').innerText = user.balance.toFixed(2);
+                document.getElementById('prof-email').innerText = user.email;
                 document.getElementById('ref-count').innerText = user.referralCount || 0;
                 
-                const limits = {1:10, 2:20, 3:30};
-                const max = limits[user.level || 1];
-                document.getElementById('task-rem-text').innerText = (max - (user.daily_count || 0)) + " Tasks remaining";
+                const plans = {1: "Basic Member", 2: "Silver Member", 3: "Gold Member"};
+                document.getElementById('prof-plan').innerText = plans[user.level || 1];
+                
+                const max = {1:10, 2:20, 3:30}[user.level || 1];
+                document.getElementById('task-rem-text').innerText = (max - (user.daily_count || 0)) + " Tasks Remaining";
                 updateProgress(user.daily_count || 0, max);
 
                 const wList = document.getElementById('withdraw-history-list');
-                if(user.withdrawals) {
+                if(user.withdrawals && user.withdrawals.length > 0) {
                     wList.innerHTML = user.withdrawals.map(w => `
-                        <div class="glass-card p-4 flex justify-between">
-                            <div><p class="font-bold text-xs">${w.method}</p><p class="text-[8px] text-slate-500">${w.date}</p></div>
-                            <div class="text-right"><p class="font-black text-amber-500">Rs. ${w.amount}</p><p class="text-[8px] font-bold text-blue-400">${w.status}</p></div>
+                        <div class="glass-card p-5 flex justify-between items-center border-l-4 ${w.status === 'Pending' ? 'border-amber-500' : 'border-green-500'}">
+                            <div><p class="font-black text-xs text-slate-300">${w.method}</p><p class="text-[8px] text-slate-500 mt-1">${w.date}</p></div>
+                            <div class="text-right"><p class="font-black text-white">Rs. ${w.amount}</p><p class="text-[8px] font-bold uppercase ${w.status === 'Pending' ? 'text-amber-500' : 'text-green-500'} tracking-tighter">${w.status}</p></div>
                         </div>
                     `).join('');
                 }
