@@ -9,7 +9,7 @@ app.use(cors());
 
 const DB_FILE = path.join(__dirname, 'database.json');
 
-// Auto-create database if missing
+// Auto-create database
 if (!fs.existsSync(DB_FILE)) {
     fs.writeFileSync(DB_FILE, JSON.stringify({ users: [] }, null, 2));
 }
@@ -29,11 +29,14 @@ app.post('/api/register', (req, res) => {
     const { email, password, level } = req.body;
     const db = readDB();
     if (db.users.find(u => u.email === email)) return res.json({ success: false, error: "User exists" });
+    
     const newUser = {
-        email, password, 
-        balance: 0, task_income: 0, ref_income: 0, // Added specific income tracking
+        email, password, avatar: "", // For Profile Pic
+        balance: 0, task_income: 0, ref_income: 0,
         level: Number(level) || 1, 
-        is_active: false, daily_count: 0, last_task_date: "", withdrawals: []
+        is_active: false, daily_count: 0, last_task_date: "", 
+        withdrawals: [],
+        history: [] // For Income Date & Time
     };
     db.users.push(newUser);
     writeDB(db);
@@ -61,11 +64,34 @@ app.post('/api/task', (req, res) => {
     if (user.daily_count >= plan.daily_tasks) return res.json({ success: false, error: "Limit reached" });
 
     user.balance += plan.per_task;
-    user.task_income = (user.task_income || 0) + plan.per_task; // Track specific income
+    user.task_income += plan.per_task;
     user.daily_count += 1;
     
+    // Add to Income History (Date & Time)
+    if (!user.history) user.history = [];
+    user.history.unshift({
+        type: "Ad Reward",
+        amount: plan.per_task,
+        date: new Date().toLocaleString()
+    });
+
     writeDB(db);
-    res.json({ success: true, new_balance: user.balance });
+    res.json({ success: true, new_balance: user.balance, history: user.history });
+});
+
+// New Endpoint for Settings
+app.post('/api/update-settings', (req, res) => {
+    const { email, newPassword, avatar } = req.body;
+    const db = readDB();
+    const user = db.users.find(u => u.email === email);
+    if(user) {
+        if(newPassword) user.password = newPassword;
+        if(avatar) user.avatar = avatar;
+        writeDB(db);
+        res.json({ success: true, user });
+    } else {
+        res.json({ success: false, error: "User not found" });
+    }
 });
 
 const PORT = process.env.PORT || 3000;
