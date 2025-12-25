@@ -134,4 +134,128 @@
             document.getElementById('auth-title').innerText = isLoginMode ? "Digital Earn" : "Create Account";
             document.getElementById('auth-subtitle').innerText = isLoginMode ? "Sign in to start earning" : "Join the community and earn daily";
             document.getElementById('register-extras').classList.toggle('hidden-sec', isLoginMode);
-            document
+            document.getElementById('toggle-btn').innerText = isLoginMode ? "Register Now" : "Login Now";
+            document.getElementById('auth-main-btn').innerText = isLoginMode ? "Login" : "Register";
+        }
+
+        function selectPlan(lvl) {
+            selectedLevel = lvl;
+            document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('active'));
+            document.getElementById('plan-' + lvl).classList.add('active');
+        }
+
+        async function handleAuth() {
+            const email = document.getElementById('auth-email').value;
+            const password = document.getElementById('auth-pass').value;
+            const btn = document.getElementById('auth-main-btn');
+
+            if(!email || !password) return alert("Please fill all fields");
+            
+            btn.innerText = "Processing...";
+            btn.disabled = true;
+
+            const endpoint = isLoginMode ? '/api/login' : '/api/register';
+            const payload = isLoginMode ? { email, password } : { email, password, level: selectedLevel };
+
+            try {
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                
+                if(data.success) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    window.location.reload(); 
+                } else {
+                    alert(data.error || "Action failed");
+                    btn.innerText = isLoginMode ? "Login" : "Register";
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                alert("Server connection error. Please wait 1 minute for server to wake up.");
+                btn.innerText = "Try Again";
+                btn.disabled = false;
+            }
+        }
+
+        function init() {
+            const authPage = document.getElementById('auth-page');
+            const dashPage = document.getElementById('dashboard-page');
+
+            if(user) {
+                authPage.classList.add('hidden-sec');
+                dashPage.classList.remove('hidden-sec');
+                
+                document.getElementById('top-email').innerText = user.email || "User";
+                document.getElementById('user-balance').innerText = (user.balance || 0).toFixed(2);
+                
+                const plans = { 1: "BASIC", 2: "SILVER", 3: "GOLD" };
+                const limits = { 1: 10, 2: 20, 3: 30 };
+                
+                const userLevel = user.level || 1;
+                document.getElementById('plan-badge').innerText = plans[userLevel];
+                document.getElementById('total-limit').innerText = limits[userLevel];
+                
+                const dailyCount = user.daily_count || 0;
+                document.getElementById('tasks-left').innerText = limits[userLevel] - dailyCount;
+
+                const statusEl = document.getElementById('user-status');
+                statusEl.innerText = user.is_active ? "Verified Account" : "Unverified (Pay Fee)";
+                statusEl.className = user.is_active ? "text-[9px] font-bold text-green-500" : "text-[9px] font-bold text-red-500";
+
+                const historyList = document.getElementById('withdraw-history-list');
+                if (user.withdrawals && user.withdrawals.length > 0) {
+                    historyList.innerHTML = user.withdrawals.map(w => `
+                        <tr class="border-b border-slate-50">
+                            <td class="py-3 text-slate-500 font-medium">${w.date}</td>
+                            <td class="py-3 font-black text-slate-700">Rs. ${w.amount}</td>
+                            <td class="py-3 text-right"><span class="bg-amber-100 text-amber-600 px-2 py-1 rounded-full text-[8px] font-black">${w.status}</span></td>
+                        </tr>
+                    `).join('');
+                }
+            } else {
+                authPage.classList.remove('hidden-sec');
+                dashPage.classList.add('hidden-sec');
+            }
+        }
+
+        async function doTask() {
+            if(!user.is_active) return alert("❌ Account Inactive. Contact Admin on WhatsApp to activate.");
+            try {
+                const res = await fetch('/api/task', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ email: user.email })
+                });
+                const data = await res.json();
+                if(data.success) {
+                    alert("✅ Success! Reward added.");
+                    // Fetch updated user data after task
+                    const loginRes = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ email: user.email, password: user.password })
+                    });
+                    const loginData = await loginRes.json();
+                    if(loginData.success) {
+                        localStorage.setItem('user', JSON.stringify(loginData.user));
+                        location.reload();
+                    }
+                } else {
+                    alert(data.error);
+                }
+            } catch (e) { alert("Task connection error."); }
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.reload();
+        }
+
+        // Run init immediately
+        window.onload = init;
+    </script>
+</body>
+</html>
