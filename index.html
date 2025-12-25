@@ -3,63 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn | Pro Dashboard</title>
+    <title>Digital Earn | Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         .hidden-sec { display: none !important; }
-        /* Sidebar Transition */
         #sidebar { transition: transform 0.3s ease-in-out; transform: translateX(-100%); }
         #sidebar.open { transform: translateX(0); }
-        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .nav-btn.active { color: #2563eb; }
+        /* Modal Animation */
+        .modal { transition: opacity 0.2s ease-in; }
     </style>
 </head>
 <body class="bg-slate-100 font-sans text-slate-800 h-screen overflow-hidden relative">
 
-    <div id="sidebar" class="fixed inset-y-0 left-0 w-64 bg-slate-900 text-white z-[6000] shadow-2xl flex flex-col">
-        <div class="p-6 border-b border-slate-700 flex justify-between items-center">
-            <h2 class="text-xl font-black italic">Digital Earn</h2>
-            <button onclick="toggleSidebar()"><i class="fas fa-times text-slate-400"></i></button>
+    <div id="sidebar" class="fixed inset-y-0 left-0 w-72 bg-slate-900 text-white z-[6000] shadow-2xl flex flex-col">
+        <div class="p-6 border-b border-slate-700 flex justify-between items-center bg-slate-800">
+            <div>
+                <h2 class="text-xl font-black italic tracking-wider">DIGITAL EARN</h2>
+                <p class="text-[10px] text-slate-400">Professional Platform</p>
+            </div>
+            <button onclick="toggleSidebar()" class="w-8 h-8 bg-slate-700 rounded-full"><i class="fas fa-times"></i></button>
         </div>
-        <nav class="flex-1 overflow-y-auto py-4 space-y-1">
-            <a onclick="navigate('home')" class="block px-6 py-3 hover:bg-slate-800 flex items-center gap-3"><i class="fas fa-home w-6 text-center"></i> Home</a>
-            <a onclick="navigate('profile')" class="block px-6 py-3 hover:bg-slate-800 flex items-center gap-3"><i class="fas fa-user w-6 text-center"></i> Profile</a>
-            <a onclick="navigate('rewards')" class="block px-6 py-3 hover:bg-slate-800 flex items-center gap-3"><i class="fas fa-gift w-6 text-center"></i> Rewards</a>
-            <a onclick="navigate('income')" class="block px-6 py-3 hover:bg-slate-800 flex items-center gap-3"><i class="fas fa-chart-line w-6 text-center"></i> Income</a>
-            <a onclick="navigate('withdraw')" class="block px-6 py-3 hover:bg-slate-800 flex items-center gap-3"><i class="fas fa-wallet w-6 text-center"></i> Withdraw</a>
-            <a onclick="navigate('plans')" class="block px-6 py-3 hover:bg-slate-800 flex items-center gap-3"><i class="fas fa-crown w-6 text-center"></i> Plans</a>
-            <a onclick="navigate('faqs')" class="block px-6 py-3 hover:bg-slate-800 flex items-center gap-3"><i class="fas fa-question-circle w-6 text-center"></i> F&Qs</a>
-            <div class="px-6 pt-4 pb-2 text-xs font-bold text-slate-500 uppercase">Settings</div>
-            <a onclick="navigate('settings')" class="block px-6 py-3 hover:bg-slate-800 flex items-center gap-3"><i class="fas fa-cog w-6 text-center"></i> Account Settings</a>
-            <a onclick="logout()" class="block px-6 py-3 hover:bg-red-900/50 text-red-400 flex items-center gap-3"><i class="fas fa-sign-out-alt w-6 text-center"></i> Logout</a>
+        
+        <nav class="flex-1 overflow-y-auto py-4">
+            <a onclick="navigate('home')" class="px-6 py-4 hover:bg-slate-800 flex items-center gap-4 border-l-4 border-transparent hover:border-blue-500 transition-all cursor-pointer">
+                <i class="fas fa-home w-5 text-center text-blue-400"></i> <span class="font-bold text-sm">Home</span>
+            </a>
+            <a onclick="navigate('profile')" class="px-6 py-4 hover:bg-slate-800 flex items-center gap-4 border-l-4 border-transparent hover:border-blue-500 transition-all cursor-pointer">
+                <i class="fas fa-user w-5 text-center text-purple-400"></i> <span class="font-bold text-sm">Profile</span>
+            </a>
+            <a onclick="navigate('rewards')" class="px-6 py-4 hover:bg-slate-800 flex items-center gap-4 border-l-4 border-transparent hover:border-blue-500 transition-all cursor-pointer">
+                <i class="fas fa-gift w-5 text-center text-pink-400"></i> <span class="font-bold text-sm">Rewards</span>
+            </a>
+            <a onclick="navigate('income')" class="px-6 py-4 hover:bg-slate-800 flex items-center gap-4 border-l-4 border-transparent hover:border-blue-500 transition-all cursor-pointer">
+                <i class="fas fa-chart-line w-5 text-center text-green-400"></i> <span class="font-bold text-sm">Income History</span>
+            </a>
+            <a onclick="navigate('withdraw')" class="px-6 py-4 hover:bg-slate-800 flex items-center gap-4 border-l-4 border-transparent hover:border-blue-500 transition-all cursor-pointer">
+                <i class="fas fa-wallet w-5 text-center text-amber-400"></i> <span class="font-bold text-sm">Withdraw</span>
+            </a>
+            <a onclick="navigate('plans')" class="px-6 py-4 hover:bg-slate-800 flex items-center gap-4 border-l-4 border-transparent hover:border-blue-500 transition-all cursor-pointer">
+                <i class="fas fa-crown w-5 text-center text-yellow-400"></i> <span class="font-bold text-sm">Plans</span>
+            </a>
+            <a href="mailto:saifullahbk386@gmail.com?subject=Digital%20Earn%20Help" class="px-6 py-4 hover:bg-slate-800 flex items-center gap-4 border-l-4 border-transparent hover:border-blue-500 transition-all cursor-pointer">
+                <i class="fas fa-envelope w-5 text-center text-red-400"></i> <span class="font-bold text-sm">F&Q (Help)</span>
+            </a>
+            <div class="px-6 pt-6 pb-2 text-[10px] font-bold text-slate-500 uppercase tracking-widest">System</div>
+            <a onclick="navigate('settings')" class="px-6 py-4 hover:bg-slate-800 flex items-center gap-4 border-l-4 border-transparent hover:border-blue-500 transition-all cursor-pointer">
+                <i class="fas fa-cog w-5 text-center text-slate-400"></i> <span class="font-bold text-sm">Settings</span>
+            </a>
+            <a onclick="openLogoutModal()" class="px-6 py-4 hover:bg-red-900/30 text-red-400 flex items-center gap-4 transition-all cursor-pointer mt-4">
+                <i class="fas fa-sign-out-alt w-5 text-center"></i> <span class="font-bold text-sm">Logout</span>
+            </a>
         </nav>
     </div>
-    <div id="sidebar-overlay" onclick="toggleSidebar()" class="hidden-sec fixed inset-0 bg-black/50 z-[5999]"></div>
+    <div id="sidebar-overlay" onclick="toggleSidebar()" class="hidden-sec fixed inset-0 bg-black/60 z-[5999] backdrop-blur-sm"></div>
 
     <div id="auth-page" class="min-h-screen flex items-center justify-center p-6 bg-white absolute inset-0 z-[5000]">
         <div class="w-full max-w-md">
             <h1 class="text-4xl font-black text-blue-900 mb-2">Welcome</h1>
             <p id="auth-sub" class="text-slate-400 mb-8">Login to your dashboard</p>
-            
             <div class="space-y-4">
-                <input id="auth-email" type="email" placeholder="Email Address" class="w-full p-4 bg-slate-50 rounded-2xl outline-none border border-slate-100 focus:border-blue-500">
-                <input id="auth-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl outline-none border border-slate-100 focus:border-blue-500">
+                <input id="auth-email" type="email" placeholder="Email Address" class="w-full p-4 bg-slate-50 rounded-2xl outline-none border border-slate-100 focus:border-blue-500 transition-colors">
+                <input id="auth-pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-50 rounded-2xl outline-none border border-slate-100 focus:border-blue-500 transition-colors">
                 
                 <div id="register-extras" class="hidden-sec grid grid-cols-3 gap-2">
-                    <div onclick="selectLvl(1)" id="p-1" class="border-2 border-blue-600 bg-blue-50 p-2 rounded-xl text-center cursor-pointer">
+                    <div onclick="selectLvl(1)" id="p-1" class="border-2 border-blue-600 bg-blue-50 p-2 rounded-xl text-center cursor-pointer transition-all">
                         <p class="text-[9px] font-bold">BASIC</p><p class="text-xs font-black">700</p>
                     </div>
-                    <div onclick="selectLvl(2)" id="p-2" class="border p-2 rounded-xl text-center cursor-pointer">
+                    <div onclick="selectLvl(2)" id="p-2" class="border p-2 rounded-xl text-center cursor-pointer transition-all">
                         <p class="text-[9px] font-bold">SILVER</p><p class="text-xs font-black">1500</p>
                     </div>
-                    <div onclick="selectLvl(3)" id="p-3" class="border p-2 rounded-xl text-center cursor-pointer">
+                    <div onclick="selectLvl(3)" id="p-3" class="border p-2 rounded-xl text-center cursor-pointer transition-all">
                         <p class="text-[9px] font-bold">GOLD</p><p class="text-xs font-black">2500</p>
                     </div>
                 </div>
 
                 <button onclick="handleAuth()" id="auth-btn" class="w-full bg-blue-900 text-white font-bold py-4 rounded-2xl shadow-xl active:scale-95 transition-transform">LOGIN</button>
             </div>
-
             <p class="text-center mt-8 text-sm">
                 <span id="auth-switch-text" class="text-slate-400">New user?</span> 
                 <button onclick="toggleAuth()" class="text-blue-600 font-bold ml-1">Create Account</button>
@@ -68,110 +89,175 @@
     </div>
 
     <div id="app-area" class="hidden-sec h-full flex flex-col">
-        
-        <header class="bg-white p-4 flex justify-between items-center shadow-sm z-10">
+        <header class="bg-white p-4 flex justify-between items-center shadow-sm z-10 sticky top-0">
             <button onclick="toggleSidebar()" class="text-xl text-slate-700 p-2"><i class="fas fa-bars"></i></button>
-            <span class="font-bold text-blue-900 italic">DIGITAL EARN</span>
-            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600"><i class="fas fa-user text-xs"></i></div>
+            <span id="page-title" class="font-bold text-blue-900 italic uppercase">Home</span>
+            <div onclick="navigate('profile')" class="w-9 h-9 bg-blue-100 rounded-full overflow-hidden border-2 border-white shadow-sm flex items-center justify-center">
+                <img id="header-avatar" src="" class="w-full h-full object-cover hidden-sec">
+                <i id="header-icon" class="fas fa-user text-blue-500 text-sm"></i>
+            </div>
         </header>
 
-        <main class="flex-1 overflow-y-auto pb-24 bg-slate-50">
+        <main class="flex-1 overflow-y-auto pb-24 bg-slate-50 p-6" id="main-content">
             
-            <div id="tab-home" class="p-6 space-y-6">
-                <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-6 text-white shadow-lg relative overflow-hidden">
+            <div id="tab-home" class="space-y-6">
+                <div class="bg-gradient-to-br from-blue-700 to-blue-900 rounded-[30px] p-8 text-white shadow-xl relative overflow-hidden">
                     <p class="text-xs font-medium opacity-80 uppercase tracking-widest">Total Income</p>
                     <h1 class="text-4xl font-black mt-2">Rs. <span id="disp-balance">0.00</span></h1>
-                    <i class="fas fa-wallet absolute -bottom-4 -right-4 text-8xl opacity-20"></i>
+                    <div class="mt-6 flex gap-3">
+                        <button onclick="navigate('withdraw')" class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-xs font-bold hover:bg-white/30">Withdraw</button>
+                        <button onclick="navigate('income')" class="bg-white/20 backdrop-blur px-4 py-2 rounded-full text-xs font-bold hover:bg-white/30">History</button>
+                    </div>
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-2"><i class="fas fa-check-circle"></i></div>
-                        <p class="text-[10px] text-slate-400 uppercase font-bold">Task Income</p>
-                        <p class="text-lg font-black text-slate-800">Rs. <span id="disp-task-inc">0</span></p>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 text-center">
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">Tasks Done</p>
+                        <p id="disp-tasks-done" class="text-xl font-black text-slate-800">0</p>
                     </div>
-                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 mb-2"><i class="fas fa-users"></i></div>
-                        <p class="text-[10px] text-slate-400 uppercase font-bold">Ref Income</p>
-                        <p class="text-lg font-black text-slate-800">Rs. <span id="disp-ref-inc">0</span></p>
-                    </div>
-                </div>
-
-                <div class="space-y-3">
-                    <button onclick="window.open('https://wa.me/923707340477')" class="w-full bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center justify-between active:scale-95 transition-transform">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white"><i class="fab fa-whatsapp"></i></div>
-                            <span class="font-bold text-sm text-slate-700">WhatsApp Help</span>
-                        </div>
-                        <i class="fas fa-chevron-right text-slate-300"></i>
-                    </button>
-
-                    <button class="w-full bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center justify-between active:scale-95 transition-transform">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white"><i class="fas fa-headset"></i></div>
-                            <span class="font-bold text-sm text-slate-700">Customer Support</span>
-                        </div>
-                        <i class="fas fa-chevron-right text-slate-300"></i>
-                    </button>
-
-                    <button class="w-full bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex items-center justify-between active:scale-95 transition-transform">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center text-white"><i class="fas fa-users"></i></div>
-                            <span class="font-bold text-sm text-slate-700">Join Community</span>
-                        </div>
-                        <i class="fas fa-chevron-right text-slate-300"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div id="tab-tasks" class="hidden-sec p-6 pt-10">
-                <div class="text-center space-y-6">
-                    <h2 class="text-2xl font-black text-blue-900">Today's Tasks</h2>
-                    <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-dashed border-slate-200">
-                        <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
-                            <i class="fas fa-play"></i>
-                        </div>
-                        <p id="task-limit-display" class="font-bold text-slate-600 mb-6">Loading...</p>
-                        <button onclick="doTask()" class="w-full bg-blue-600 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95">START WATCHING</button>
+                    <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 text-center">
+                        <p class="text-[10px] text-slate-400 uppercase font-bold">Plan</p>
+                        <p id="disp-plan" class="text-xl font-black text-slate-800">BASIC</p>
                     </div>
                 </div>
             </div>
 
-            <div id="tab-profile" class="hidden-sec p-0">
-                <div class="bg-blue-900 text-white p-8 pb-12 rounded-b-[40px]">
-                    <div class="flex flex-col items-center">
-                        <div class="w-20 h-20 bg-white/20 backdrop-blur rounded-full flex items-center justify-center text-3xl mb-3"><i class="fas fa-user"></i></div>
-                        <h2 id="prof-email" class="font-bold text-lg">User</h2>
-                        <span id="prof-status" class="bg-red-500 text-[10px] font-bold px-2 py-0.5 rounded mt-1">INACTIVE</span>
+            <div id="tab-profile" class="hidden-sec space-y-6">
+                <div class="bg-white rounded-3xl p-6 shadow-sm text-center">
+                    <div class="w-24 h-24 bg-slate-100 rounded-full mx-auto mb-4 flex items-center justify-center overflow-hidden relative group">
+                        <img id="profile-avatar" src="" class="w-full h-full object-cover hidden-sec">
+                        <i id="profile-icon" class="fas fa-user text-4xl text-slate-300"></i>
                     </div>
+                    <h2 id="prof-email" class="font-bold text-lg text-slate-800">User</h2>
+                    <p id="prof-status" class="text-xs font-bold text-red-500 mt-1 uppercase">Inactive</p>
                 </div>
-                <div class="p-6 -mt-8">
-                    <div class="bg-white p-6 rounded-2xl shadow-lg space-y-4">
-                        <div class="flex justify-between border-b pb-2 text-sm"><span>Current Plan</span><span id="prof-plan" class="font-bold">Basic</span></div>
-                        <div class="flex justify-between border-b pb-2 text-sm"><span>Total Earned</span><span id="prof-total" class="font-bold">Rs. 0</span></div>
-                        <div class="flex justify-between pb-0 text-sm"><span>Joined Date</span><span class="font-bold">Dec 2025</span></div>
+                <button onclick="navigate('settings')" class="w-full bg-white p-4 rounded-xl shadow-sm border text-left font-bold text-slate-600 flex justify-between">
+                    <span>Edit Profile Details</span> <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <div id="tab-rewards" class="hidden-sec space-y-6">
+                <div class="bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-6 text-white shadow-lg">
+                    <h2 class="font-black text-xl mb-2">Daily Tasks</h2>
+                    <p class="text-xs opacity-90 mb-4">Watch ads to earn money daily.</p>
+                    <p id="task-limit-display" class="font-bold text-2xl mb-4">0 Tasks Left</p>
+                    <button onclick="doTask()" class="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold w-full shadow-md active:scale-95 transition-transform">Start Task (+10 PKR)</button>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border">
+                    <h3 class="font-bold text-slate-700 mb-2">Referral Reward</h3>
+                    <p class="text-xs text-slate-500 mb-4">Invite friends and earn up to 250 PKR per active referral.</p>
+                    <div class="bg-slate-100 p-3 rounded-lg flex justify-between items-center">
+                        <span class="text-xs text-slate-500 font-mono">digitalearn.com/ref/123</span>
+                        <button class="text-blue-600 font-bold text-xs">COPY</button>
                     </div>
                 </div>
             </div>
 
-            <div id="tab-other" class="hidden-sec p-6 flex flex-col items-center justify-center h-full text-slate-400">
-                <i class="fas fa-tools text-4xl mb-4"></i>
-                <p>Feature coming soon...</p>
+            <div id="tab-income" class="hidden-sec space-y-4">
+                <h2 class="font-black text-xl px-2">Income History</h2>
+                <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-100">
+                    <table class="w-full text-sm text-left">
+                        <thead class="bg-slate-50 text-slate-500 font-bold text-[10px] uppercase">
+                            <tr>
+                                <th class="p-4">Date & Time</th>
+                                <th class="p-4">Type</th>
+                                <th class="p-4 text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody id="income-list">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-withdraw" class="hidden-sec space-y-6">
+                <div class="bg-amber-100 p-6 rounded-3xl border border-amber-200">
+                    <p class="text-amber-800 text-xs font-bold uppercase mb-1">Withdrawable Balance</p>
+                    <h2 class="text-3xl font-black text-amber-900">Rs. <span id="with-bal">0.00</span></h2>
+                </div>
+                <button onclick="alert('Withdrawals open from 9 AM to 5 PM')" class="w-full bg-amber-500 text-white font-bold py-4 rounded-xl shadow-lg active:scale-95">Request Withdrawal</button>
+                
+                <h3 class="font-bold text-slate-700 px-2">History</h3>
+                <div id="withdraw-list" class="space-y-3">
+                    <div class="bg-white p-4 rounded-xl shadow-sm border text-center text-slate-400 text-xs italic">No withdrawals yet</div>
+                </div>
+            </div>
+
+            <div id="tab-plans" class="hidden-sec space-y-4">
+                <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-sm relative">
+                    <span class="bg-slate-200 text-slate-600 text-[10px] font-bold px-2 py-1 rounded absolute top-4 right-4">BASIC</span>
+                    <h3 class="font-black text-xl text-slate-800">700 PKR</h3>
+                    <ul class="mt-4 space-y-2 text-xs text-slate-500">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> 10 Daily Tasks</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> 10 PKR per Task</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Standard Support</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border-2 border-blue-500 shadow-lg relative transform scale-105">
+                    <span class="bg-blue-500 text-white text-[10px] font-bold px-2 py-1 rounded absolute top-4 right-4">POPULAR</span>
+                    <h3 class="font-black text-xl text-blue-600">1500 PKR</h3>
+                    <ul class="mt-4 space-y-2 text-xs text-slate-500">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> 20 Daily Tasks</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> 15 PKR per Task</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Priority Support</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-3xl border-2 border-yellow-400 shadow-sm relative">
+                    <span class="bg-yellow-400 text-white text-[10px] font-bold px-2 py-1 rounded absolute top-4 right-4">VIP</span>
+                    <h3 class="font-black text-xl text-yellow-600">2500 PKR</h3>
+                    <ul class="mt-4 space-y-2 text-xs text-slate-500">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> 30 Daily Tasks</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> 20 PKR per Task</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i> Instant Withdrawals</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="tab-settings" class="hidden-sec space-y-6">
+                <h2 class="font-black text-xl px-2">Account Settings</h2>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border space-y-4">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">Profile Picture URL</label>
+                        <input id="set-avatar" type="text" placeholder="https://..." class="w-full p-3 bg-slate-50 rounded-xl mt-1 text-sm outline-none border focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-400 uppercase">New Password</label>
+                        <input id="set-pass" type="password" placeholder="Enter new password" class="w-full p-3 bg-slate-50 rounded-xl mt-1 text-sm outline-none border focus:border-blue-500">
+                    </div>
+                    <button onclick="saveSettings()" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl">Save Changes</button>
+                </div>
+                <div class="bg-white p-6 rounded-3xl shadow-sm border">
+                    <h3 class="font-bold text-sm mb-2"><i class="fas fa-shield-alt text-green-500 mr-2"></i>Security</h3>
+                    <p class="text-xs text-slate-500">Your account is secured with standard encryption.</p>
+                </div>
             </div>
 
         </main>
 
         <nav class="bg-white border-t border-slate-200 py-3 flex justify-around absolute bottom-0 w-full z-20">
-            <button onclick="switchTab('home')" id="btn-home" class="nav-btn text-blue-600 flex flex-col items-center gap-1 w-1/3">
+            <button onclick="navigate('home')" id="nav-home" class="nav-btn text-blue-600 flex flex-col items-center gap-1 w-1/3">
                 <i class="fas fa-home text-lg"></i><span class="text-[10px] font-bold">Home</span>
             </button>
-            <button onclick="switchTab('tasks')" id="btn-tasks" class="nav-btn text-slate-400 flex flex-col items-center gap-1 w-1/3">
-                <i class="fas fa-layer-group text-lg"></i><span class="text-[10px] font-bold">Tasks</span>
+            <button onclick="navigate('rewards')" id="nav-rewards" class="nav-btn text-slate-400 flex flex-col items-center gap-1 w-1/3">
+                <i class="fas fa-layer-group text-lg"></i><span class="text-[10px] font-bold">Rewards</span>
             </button>
-            <button onclick="switchTab('profile')" id="btn-profile" class="nav-btn text-slate-400 flex flex-col items-center gap-1 w-1/3">
+            <button onclick="navigate('profile')" id="nav-profile" class="nav-btn text-slate-400 flex flex-col items-center gap-1 w-1/3">
                 <i class="fas fa-user text-lg"></i><span class="text-[10px] font-bold">Profile</span>
             </button>
         </nav>
+    </div>
+
+    <div id="logout-modal" class="hidden-sec fixed inset-0 z-[7000] flex items-center justify-center bg-black/80 backdrop-blur-sm p-6">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-6 text-center shadow-2xl">
+            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4 text-red-500 text-2xl">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+            <h2 class="font-black text-xl text-slate-800">Logout?</h2>
+            <p class="text-sm text-slate-500 mb-6">Are you sure you want to end your session?</p>
+            <div class="flex gap-3">
+                <button onclick="closeLogoutModal()" class="flex-1 py-3 font-bold text-slate-500 bg-slate-100 rounded-xl">Cancel</button>
+                <button onclick="logout()" class="flex-1 py-3 font-bold text-white bg-red-500 rounded-xl shadow-lg">Yes, Logout</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -179,46 +265,51 @@
         let isLogin = true;
         let selLvl = 1;
 
-        // --- Sidebar Logic ---
+        // UI Helpers
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('sidebar-overlay').classList.toggle('hidden-sec');
         }
 
-        // --- Navigation Logic ---
+        function openLogoutModal() {
+            toggleSidebar(); // Close sidebar first
+            document.getElementById('logout-modal').classList.remove('hidden-sec');
+        }
+        function closeLogoutModal() { document.getElementById('logout-modal').classList.add('hidden-sec'); }
+
+        // Navigation Engine
         function navigate(page) {
-            toggleSidebar(); // Close sidebar
-            if(page === 'logout') { logout(); return; }
-            if(['home', 'profile'].includes(page)) {
-                switchTab(page);
-            } else if (page === 'income') {
-                switchTab('home'); // Income is on home
-            } else {
-                // Show generic page for others (Rewards, Withdraw, etc)
-                document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden-sec'));
-                document.getElementById('tab-other').classList.remove('hidden-sec');
-                document.querySelector('header span').innerText = page.toUpperCase();
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebar-overlay').classList.add('hidden-sec');
+            
+            // Hide all tabs
+            const tabs = ['home', 'profile', 'rewards', 'income', 'withdraw', 'plans', 'settings'];
+            tabs.forEach(t => document.getElementById('tab-' + t).classList.add('hidden-sec'));
+            
+            // Show selected tab
+            const target = document.getElementById('tab-' + page);
+            if(target) target.classList.remove('hidden-sec');
+            
+            // Update Header
+            const titles = {
+                home: "DIGITAL EARN", profile: "MY PROFILE", rewards: "EARN REWARDS",
+                income: "MY INCOME", withdraw: "WITHDRAWAL", plans: "UPGRADE PLAN", settings: "SETTINGS"
+            };
+            document.getElementById('page-title').innerText = titles[page] || page.toUpperCase();
+
+            // Update Bottom Nav Highlighting
+            document.querySelectorAll('.nav-btn').forEach(b => {
+                b.classList.remove('text-blue-600');
+                b.classList.add('text-slate-400');
+            });
+            const bottomMap = { home: 'nav-home', rewards: 'nav-rewards', profile: 'nav-profile' };
+            if(bottomMap[page]) {
+                document.getElementById(bottomMap[page]).classList.remove('text-slate-400');
+                document.getElementById(bottomMap[page]).classList.add('text-blue-600');
             }
         }
 
-        function switchTab(tab) {
-            document.querySelectorAll('[id^="tab-"]').forEach(el => el.classList.add('hidden-sec'));
-            document.getElementById('tab-' + tab).classList.remove('hidden-sec');
-            
-            // Update Bottom Nav Colors
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('text-blue-600', 'text-slate-400'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.add('text-slate-400'));
-            
-            const activeBtn = document.getElementById('btn-' + tab);
-            if(activeBtn) {
-                activeBtn.classList.remove('text-slate-400');
-                activeBtn.classList.add('text-blue-600');
-            }
-            
-            document.querySelector('header span').innerText = tab === 'home' ? 'DIGITAL EARN' : tab.toUpperCase();
-        }
-
-        // --- Auth Logic ---
+        // AUTH Logic
         function toggleAuth() {
             isLogin = !isLogin;
             document.getElementById('auth-sub').innerText = isLogin ? "Login to your dashboard" : "Join to start earning";
@@ -241,10 +332,9 @@
         async function handleAuth() {
             const email = document.getElementById('auth-email').value;
             const password = document.getElementById('auth-pass').value;
+            const btn = document.getElementById('auth-btn');
             
             if(!email || !password) return alert("Fill all fields");
-
-            const btn = document.getElementById('auth-btn');
             btn.innerText = "Processing...";
             
             try {
@@ -254,17 +344,14 @@
                     body: JSON.stringify({ email, password, level: selLvl })
                 });
                 const data = await res.json();
-                
                 if(data.success) {
                     localStorage.setItem('user', JSON.stringify(data.user));
                     location.reload();
-                } else {
-                    alert(data.error);
-                    btn.innerText = isLogin ? "LOGIN" : "REGISTER";
-                }
-            } catch (e) { alert("Connection Error"); btn.innerText = "RETRY"; }
+                } else { alert(data.error); btn.innerText = isLogin ? "LOGIN" : "REGISTER"; }
+            } catch(e) { alert("Server Error"); btn.innerText = "RETRY"; }
         }
 
+        // TASK Logic
         async function doTask() {
             if(!user.is_active) return alert("❌ Account Inactive. Contact Admin to activate.");
             const res = await fetch('/api/task', {
@@ -275,48 +362,84 @@
             const data = await res.json();
             if(data.success) {
                 alert("✅ Earned!");
-                // Quick Update
                 user.balance = data.new_balance;
+                user.history = data.history; // Update history
                 user.daily_count = (user.daily_count || 0) + 1;
-                user.task_income = (user.task_income || 0) + (user.level === 3 ? 20 : user.level === 2 ? 15 : 10);
                 localStorage.setItem('user', JSON.stringify(user));
                 location.reload();
             } else alert(data.error);
         }
 
+        // SETTINGS Logic
+        async function saveSettings() {
+            const newPassword = document.getElementById('set-pass').value;
+            const avatar = document.getElementById('set-avatar').value;
+            
+            const res = await fetch('/api/update-settings', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ email: user.email, newPassword, avatar })
+            });
+            const data = await res.json();
+            if(data.success) {
+                alert("Settings Saved! Please re-login.");
+                logout();
+            } else alert(data.error);
+        }
+
         function logout() { localStorage.clear(); location.reload(); }
 
-        // --- Initialization ---
+        // INIT
         window.onload = () => {
             if(user) {
                 document.getElementById('auth-page').classList.add('hidden-sec');
                 document.getElementById('app-area').classList.remove('hidden-sec');
+                navigate('home'); // Default Tab
                 
-                // Fill Data
+                // Populate Data
                 document.getElementById('disp-balance').innerText = user.balance.toFixed(2);
-                document.getElementById('disp-task-inc').innerText = (user.task_income || 0).toFixed(2);
-                document.getElementById('disp-ref-inc').innerText = (user.ref_income || 0).toFixed(2);
-                
-                // Profile Data
+                document.getElementById('with-bal').innerText = user.balance.toFixed(2);
                 document.getElementById('prof-email').innerText = user.email;
-                document.getElementById('prof-total').innerText = "Rs. " + user.balance.toFixed(2);
-                const plans = {1:"Basic", 2:"Silver", 3:"Gold"};
-                document.getElementById('prof-plan').innerText = plans[user.level || 1];
                 
-                const st = document.getElementById('prof-status');
-                st.innerText = user.is_active ? "VERIFIED" : "UNPAID";
-                st.className = user.is_active ? "bg-green-500 text-[10px] font-bold px-2 py-0.5 rounded mt-1 text-white" : "bg-red-500 text-[10px] font-bold px-2 py-0.5 rounded mt-1 text-white";
+                const plans = {1:"BASIC", 2:"SILVER", 3:"GOLD"};
+                const lims = {1:10, 2:20, 3:30};
+                document.getElementById('disp-plan').innerText = plans[user.level || 1];
+                document.getElementById('disp-tasks-done').innerText = user.daily_count || 0;
+                
+                const remaining = lims[user.level||1] - (user.daily_count||0);
+                document.getElementById('task-limit-display').innerText = remaining + " Tasks Left";
 
-                // Task Data
-                const limits = {1:10, 2:20, 3:30};
-                const max = limits[user.level || 1];
-                const done = user.daily_count || 0;
-                document.getElementById('task-limit-display').innerText = `${max - done} Tasks Remaining Today`;
+                // Status
+                const st = document.getElementById('prof-status');
+                st.innerText = user.is_active ? "VERIFIED ACCOUNT" : "UNPAID (INACTIVE)";
+                st.className = user.is_active ? "text-xs font-bold text-green-500 mt-1 uppercase" : "text-xs font-bold text-red-500 mt-1 uppercase";
+
+                // Avatar Logic
+                if(user.avatar) {
+                    document.getElementById('header-avatar').src = user.avatar;
+                    document.getElementById('profile-avatar').src = user.avatar;
+                    document.getElementById('header-avatar').classList.remove('hidden-sec');
+                    document.getElementById('profile-avatar').classList.remove('hidden-sec');
+                    document.getElementById('header-icon').classList.add('hidden-sec');
+                    document.getElementById('profile-icon').classList.add('hidden-sec');
+                }
+
+                // Render Income History (Date & Time)
+                const incomeList = document.getElementById('income-list');
+                if(user.history && user.history.length > 0) {
+                    incomeList.innerHTML = user.history.map(h => `
+                        <tr class="border-b border-slate-50">
+                            <td class="p-4 text-slate-500">${h.date}</td>
+                            <td class="p-4 font-bold text-slate-700">${h.type}</td>
+                            <td class="p-4 text-right font-black text-green-600">+${h.amount}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    incomeList.innerHTML = `<tr><td colspan="3" class="p-6 text-center text-slate-300 italic">No income yet. Start tasks!</td></tr>`;
+                }
 
             } else {
-                // FORCE Auth Page if no user
                 document.getElementById('auth-page').classList.remove('hidden-sec');
-                document.getElementById('app-area').classList.add('hidden-sec');
             }
         };
     </script>
