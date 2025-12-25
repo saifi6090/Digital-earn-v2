@@ -9,7 +9,6 @@ app.use(cors());
 
 const DB_FILE = path.join(__dirname, 'database.json');
 
-// Auto-create database if it doesn't exist
 if (!fs.existsSync(DB_FILE)) {
     fs.writeFileSync(DB_FILE, JSON.stringify({ users: [] }, null, 2));
 }
@@ -21,30 +20,22 @@ const PLANS = {
 };
 
 function readDB() {
-    const data = fs.readFileSync(DB_FILE, 'utf8');
-    return JSON.parse(data);
+    return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
 }
 
 function writeDB(data) {
     fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
 }
 
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.post('/api/register', (req, res) => {
     const { email, password, level } = req.body;
     const db = readDB();
     if (db.users.find(u => u.email === email)) return res.json({ success: false, error: "User exists" });
-    
     const newUser = {
-        email, password, balance: 0, 
-        level: Number(level) || 1, 
-        is_active: false, 
-        daily_count: 0, 
-        last_task_date: "", 
-        withdrawals: []
+        email, password, balance: 0, level: Number(level) || 1, 
+        is_active: false, daily_count: 0, last_task_date: "", withdrawals: []
     };
     db.users.push(newUser);
     writeDB(db);
@@ -56,7 +47,7 @@ app.post('/api/login', (req, res) => {
     const db = readDB();
     const user = db.users.find(u => u.email === email && u.password === password);
     if (user) res.json({ success: true, user });
-    else res.json({ success: false, error: "Invalid login" });
+    else res.json({ success: false, error: "Invalid credentials" });
 });
 
 app.post('/api/task', (req, res) => {
@@ -64,17 +55,10 @@ app.post('/api/task', (req, res) => {
     const db = readDB();
     const user = db.users.find(u => u.email === email);
     if (!user || !user.is_active) return res.json({ success: false, error: "Account Inactive" });
-    
     const plan = PLANS[user.level || 1];
     const today = new Date().toLocaleDateString();
-    
-    if (user.last_task_date !== today) {
-        user.daily_count = 0;
-        user.last_task_date = today;
-    }
-
+    if (user.last_task_date !== today) { user.daily_count = 0; user.last_task_date = today; }
     if (user.daily_count >= plan.daily_tasks) return res.json({ success: false, error: "Limit reached" });
-
     user.balance += plan.per_task;
     user.daily_count += 1;
     writeDB(db);
@@ -82,4 +66,4 @@ app.post('/api/task', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log("Server running"));
