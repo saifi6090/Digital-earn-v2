@@ -1,98 +1,42 @@
-const express = require('express');
-const fs = require('fs');
-const path = require('path');
-const cors = require('cors');
+// Add this near the top of server.js
+let verificationCodes = {}; // Stores { email: "123456" } temporarily
 
-const app = express();
-app.use(express.json());
-app.use(cors());
+// ENDPOINT: Send Verification Code
+app.post('/api/send-otp', (req, res) => {
+    const { email } = req.body;
+    if (!email) return res.json({ success: false, error: "Email required" });
 
-const DB_FILE = path.join(__dirname, 'database.json');
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    verificationCodes[email] = code;
 
-// Auto-create database
-if (!fs.existsSync(DB_FILE)) {
-    fs.writeFileSync(DB_FILE, JSON.stringify({ users: [] }, null, 2));
-}
-
-const PLANS = {
-    1: { name: "Basic", daily_tasks: 10, per_task: 10 },
-    2: { name: "Silver", daily_tasks: 20, per_task: 15 },
-    3: { name: "Gold", daily_tasks: 30, per_task: 20 }
-};
-
-function readDB() { return JSON.parse(fs.readFileSync(DB_FILE, 'utf8')); }
-function writeDB(data) { fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2)); }
-
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
-app.post('/api/register', (req, res) => {
-    const { email, password, level } = req.body;
-    const db = readDB();
-    if (db.users.find(u => u.email === email)) return res.json({ success: false, error: "User exists" });
+    // In a real professional app, you'd use 'nodemailer' here to email the code.
+    // For now, we will log it to the console so you can see it.
+    console.log(`[SECURITY] Verification code for ${email}: ${code}`);
     
+    res.json({ success: true, message: "Code sent to email!" });
+});
+
+// [UPDATE] Register Endpoint with OTP Check
+app.post('/api/register', (req, res) => {
+    const { email, password, level, otp } = req.body;
+    
+    // Check if OTP matches
+    if (!verificationCodes[email] || verificationCodes[email] !== otp) {
+        return res.json({ success: false, error: "Invalid or expired verification code" });
+    }
+
+    const db = readDB();
+    if (db.users.find(u => u.email === email)) return res.json({ success: false, error: "Email already registered" });
+
     const newUser = {
-        email, password, avatar: "", // For Profile Pic
-        balance: 0, task_income: 0, ref_income: 0,
-        level: Number(level) || 1, 
-        is_active: false, daily_count: 0, last_task_date: "", 
-        withdrawals: [],
-        history: [] // For Income Date & Time
+        email, password, level,
+        balance: 0, is_active: false, daily_count: 0,
+        referralCode: "REF" + Math.random().toString(36).substring(7).toUpperCase(),
+        history: [], withdrawals: []
     };
+
     db.users.push(newUser);
+    delete verificationCodes[email]; // Clear code after use
     writeDB(db);
     res.json({ success: true, user: newUser });
 });
-
-app.post('/api/login', (req, res) => {
-    const { email, password } = req.body;
-    const db = readDB();
-    const user = db.users.find(u => u.email === email && u.password === password);
-    if (user) res.json({ success: true, user });
-    else res.json({ success: false, error: "Invalid credentials" });
-});
-
-app.post('/api/task', (req, res) => {
-    const { email } = req.body;
-    const db = readDB();
-    const user = db.users.find(u => u.email === email);
-    if (!user || !user.is_active) return res.json({ success: false, error: "Account Inactive" });
-    
-    const plan = PLANS[user.level || 1];
-    const today = new Date().toLocaleDateString();
-    
-    if (user.last_task_date !== today) { user.daily_count = 0; user.last_task_date = today; }
-    if (user.daily_count >= plan.daily_tasks) return res.json({ success: false, error: "Limit reached" });
-
-    user.balance += plan.per_task;
-    user.task_income += plan.per_task;
-    user.daily_count += 1;
-    
-    // Add to Income History (Date & Time)
-    if (!user.history) user.history = [];
-    user.history.unshift({
-        type: "Ad Reward",
-        amount: plan.per_task,
-        date: new Date().toLocaleString()
-    });
-
-    writeDB(db);
-    res.json({ success: true, new_balance: user.balance, history: user.history });
-});
-
-// New Endpoint for Settings
-app.post('/api/update-settings', (req, res) => {
-    const { email, newPassword, avatar } = req.body;
-    const db = readDB();
-    const user = db.users.find(u => u.email === email);
-    if(user) {
-        if(newPassword) user.password = newPassword;
-        if(avatar) user.avatar = avatar;
-        writeDB(db);
-        res.json({ success: true, user });
-    } else {
-        res.json({ success: false, error: "User not found" });
-    }
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Server running"));
