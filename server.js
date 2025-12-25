@@ -7,6 +7,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+// --- CRITICAL FIX: SERVE THE FRONTEND ---
+// This line tells the server to send your index.html when you visit the site
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 const DB_FILE = path.join(__dirname, 'database.json');
 
 // Initialize Database
@@ -21,7 +27,7 @@ let tempOTP = {};
 
 // --- API ROUTES ---
 
-// 1. Send OTP (Simulated)
+// 1. Send OTP
 app.post('/api/send-otp', (req, res) => {
     const { email } = req.body;
     if (!email) return res.json({ success: false, error: "Email required" });
@@ -43,9 +49,8 @@ app.post('/api/register', (req, res) => {
         email, password, 
         level: Number(level) || 1,
         balance: 0,
-        is_active: (email === 'admin@digitalearn.com'), // Auto-activate admin
+        is_active: (email === 'admin@digitalearn.com'), 
         daily_count: 0,
-        last_task_date: "",
         referralCode: "DE" + Math.random().toString(36).substring(7).toUpperCase(),
         referralCount: 0,
         history: [],
@@ -82,13 +87,17 @@ app.post('/api/task', (req, res) => {
     res.json({ success: true, user });
 });
 
-// 5. Admin: Activate User
+// 5. Admin Actions
 app.post('/api/admin/activate', (req, res) => {
     const { email } = req.body;
     const db = readDB();
     const user = db.users.find(u => u.email === email);
     if (user) { user.is_active = true; writeDB(db); res.json({ success: true }); }
     else res.json({ success: false });
+});
+
+app.get('/api/admin/all-users', (req, res) => {
+    res.json({ success: true, users: readDB().users });
 });
 
 // 6. Withdraw
@@ -98,12 +107,11 @@ app.post('/api/withdraw', (req, res) => {
     const user = db.users.find(u => u.email === email);
     if (user.balance < amount) return res.json({ success: false, error: "Low Balance" });
 
-    const reqId = Date.now();
     user.balance -= Number(amount);
-    user.withdrawals.unshift({ id: reqId, amount, method, accountTitle, accountNumber, status: "Pending", date: new Date().toLocaleString() });
+    user.withdrawals.unshift({ id: Date.now(), amount, method, accountTitle, accountNumber, status: "Pending", date: new Date().toLocaleString() });
     writeDB(db);
     res.json({ success: true, user });
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`🚀 Server Shield Active on Port ${PORT}`));
