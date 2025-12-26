@@ -51,6 +51,31 @@
 
         <main class="flex-1 overflow-y-auto p-6 pb-32 space-y-6">
             <div id="view-home" class="view-sec space-y-6">
+                <main class="flex-1 overflow-y-auto p-6 pb-32 space-y-6">
+    <div id="view-home" class="view-sec space-y-6"> ... </div>
+
+    <div id="view-task" class="view-sec hidden-sec">
+        <div class="glass p-10 text-center border-blue-500/20">
+            <i class="fas fa-play-circle text-6xl text-blue-500 mb-6"></i>
+            <h2 class="text-2xl font-black">Daily Task</h2>
+            <p class="text-[10px] text-slate-500 mt-2 mb-8 uppercase tracking-widest">Wait 15 Seconds to Earn</p>
+            <div id="t-box" class="hidden-sec bg-blue-600/10 p-8 rounded-3xl mb-8 border border-blue-600/20">
+                <span id="t-count" class="text-5xl font-black">15</span>
+            </div>
+            <button id="t-btn" onclick="startWork()" class="w-full blue-grad py-5 rounded-3xl font-black shadow-lg">START TASK</button>
+        </div>
+    </div>
+
+    <div id="view-profile" class="view-sec hidden-sec space-y-6">
+        <div class="glass p-6">
+            <h3 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-widest">Transaction History</h3>
+            <div id="hist-list" class="space-y-3">
+                <p class="text-[10px] text-center opacity-30 py-10">No History Available</p>
+            </div>
+        </div>
+        <button onclick="localStorage.clear(); location.reload();" class="w-full p-4 glass text-red-500 text-[10px] font-black uppercase">Logout Account</button>
+    </div>
+</main>
                 <div class="blue-grad p-8 rounded-[35px] shadow-2xl relative">
                     <p class="text-[10px] font-bold opacity-70 tracking-widest">TOTAL INCOME</p>
                     <h1 class="text-4xl font-black mt-2">Rs. <span id="disp-bal">0.00</span></h1>
