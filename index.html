@@ -97,31 +97,36 @@
             <button onclick="navigate('profile')" class="flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-history"></i><span class="text-[9px] font-black uppercase">Profile</span></button>
         </nav>
     </div>
+        <script>
+    // 1. THIS OPENS/CLOSES THE SIDE MENU
+    function toggleMenu() {
+        const menu = document.getElementById('side-menu');
+        menu.classList.toggle('-translate-x-full'); 
+    }
 
-    <script>
-        // TOGGLE MENU FUNCTION
-        function toggleMenu() {
-            const menu = document.getElementById('side-menu');
-            menu.classList.toggle('-translate-x-full');
-        }
-
-        function navigate(view) {
-            // Logic to switch screens
-            if(document.getElementById('side-menu').classList.contains('-translate-x-full') === false) {
-                toggleMenu();
-            }
-            alert("Navigating to " + view);
-        }
-
-        function copyRef() {
-            navigator.clipboard.writeText("https://digitalearn.pro/?ref=DE-1029");
-            alert("Link Copied!");
-        }
-
-        function showTeam() {
+    // 2. THIS SWITCHES BETWEEN HOME, TASK, AND PROFILE
+    function navigate(view) {
+        // First, close the side menu if it is open
+        const menu = document.getElementById('side-menu');
+        if (!menu.classList.contains('-translate-x-full')) {
             toggleMenu();
-            alert("Opening Team List...");
         }
-    </script>
+
+        // Hide ALL sections first
+        document.querySelectorAll('.view-sec').forEach(section => {
+            section.classList.add('hidden-sec');
+        });
+
+        // Show ONLY the section you clicked
+        const targetView = document.getElementById('view-' + view);
+        if (targetView) {
+            targetView.classList.remove('hidden-sec');
+        }
+        
+        // Update the top header title
+        document.querySelector('header span').innerText = view.toUpperCase();
+    }
+</script>
+
 </body>
 </html>
