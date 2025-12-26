@@ -11,72 +11,40 @@
         .hidden-sec { display: none !important; }
         .glass { background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; }
         .blue-grad { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-        .circle-progress { width: 110px; height: 110px; border-radius: 50%; background: conic-gradient(#3b82f6 var(--p), #1e293b 0); display: flex; align-items: center; justify-content: center; transition: 0.5s; }
+        .circle-progress { width: 110px; height: 110px; border-radius: 50%; background: conic-gradient(#3b82f6 var(--p), #1e293b 0); display: flex; align-items: center; justify-content: center; }
         .circle-inner { width: 95px; height: 95px; background: #010409; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
-        #team-modal { transition: 0.3s ease-in-out; transform: translateY(100%); }
-        #team-modal.active { transform: translateY(0); }
+        /* Sidebar styling */
+        #side-menu { transition: 0.3s ease-in-out; }
     </style>
 </head>
-    <body class="h-screen flex flex-col">
-    <div id="side-menu" class="fixed inset-y-0 left-0 w-72 bg-slate-950 z-[9000] transform -translate-x-full transition-transform duration-300 ease-in-out border-r border-white/10 shadow-2xl">
+<body class="h-screen flex flex-col">
+
+    <div id="side-menu" class="fixed inset-y-0 left-0 w-72 bg-slate-950 z-[9000] transform -translate-x-full border-r border-white/10 shadow-2xl">
         <div class="p-6">
             <div class="flex justify-between items-center mb-8">
-                <h3 class="font-black text-blue-500 text-sm italic">MENU</h3>
-                <button onclick="toggleMenu()"><i class="fas fa-times text-xl"></i></button>
+                <h3 class="font-black text-blue-500 text-sm italic uppercase">Menu</h3>
+                <button onclick="toggleMenu()"><i class="fas fa-times text-xl text-slate-500"></i></button>
             </div>
             <div class="grid grid-cols-2 gap-3">
                  <button onclick="navigate('home')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-home text-blue-400"></i>Home</button>
-                 <button onclick="navigate('task')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>Income</button>
+                 <button onclick="navigate('task')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>Task Earn</button>
                  <button onclick="showTeam()" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-users text-purple-400"></i>Team</button>
                  <button onclick="navigate('profile')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-history text-amber-400"></i>History</button>
                  <button onclick="window.open('https://wa.me/923096090737')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fab fa-whatsapp text-green-500"></i>WhatsApp</button>
                  <button onclick="alert('Support: saifullahbk386@gmail.com')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-headset text-blue-500"></i>Service</button>
-                 <button onclick="alert('Privacy Policy v1.0')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-shield-alt text-red-400"></i>Privacy</button>
+                 <button onclick="alert('Privacy Policy: One account per device.')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-shield-alt text-red-400"></i>Privacy</button>
                  <button onclick="copyRef()" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-link text-cyan-400"></i>Ref Link</button>
-                 <button id="adm-btn" class="hidden-sec glass p-4 text-[10px] font-bold flex flex-col items-center gap-2 text-red-500"><i class="fas fa-crown"></i>Admin</button>
+                 <button onclick="navigate('admin')" id="adm-btn" class="hidden-sec glass p-4 text-[10px] font-bold flex flex-col items-center gap-2 text-red-500"><i class="fas fa-crown"></i>Admin</button>
             </div>
+            <button onclick="localStorage.clear(); location.reload();" class="mt-10 w-full text-[10px] font-bold text-slate-600 uppercase">Logout</button>
         </div>
     </div>
 
-<body class="h-screen flex flex-col">
-
-    <div id="int-auth" class="absolute inset-0 z-[5000] bg-slate-950 flex items-center justify-center p-6">
-        <div class="glass w-full max-w-md p-8">
-            <h2 id="auth-title" class="text-2xl font-black text-center mb-6">LOGIN</h2>
-            <div class="space-y-4">
-                <input id="email" type="email" placeholder="Email" class="w-full p-4 bg-slate-900 rounded-2xl outline-none border border-white/5">
-                <input id="pass" type="password" placeholder="Password" class="w-full p-4 bg-slate-900 rounded-2xl outline-none border border-white/5">
-                
-                <div id="signup-fields" class="hidden-sec space-y-4">
-                    <input id="otp" type="text" placeholder="Activation OTP" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5">
-                    <p class="text-[9px] text-blue-400 text-center">Join Payment: 03707340477</p>
-                </div>
-
-                <button onclick="handleAuth()" class="w-full blue-grad py-4 rounded-2xl font-bold uppercase tracking-widest">Continue</button>
-                <div class="flex justify-between text-[10px] text-slate-500 px-2 mt-4">
-                    <span onclick="toggleAuth('signup')" class="cursor-pointer hover:text-white">Sign Up</span>
-                    <span onclick="alert('Help: 03096090737')" class="cursor-pointer hover:text-white">Forgot Password?</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="int-privacy" class="hidden-sec absolute inset-0 z-[4000] bg-slate-950 flex items-center justify-center p-6">
-        <div class="glass w-full max-w-md p-8">
-            <h2 class="text-xl font-black mb-4">Terms & Privacy</h2>
-            <div class="text-xs text-slate-400 space-y-3 h-64 overflow-y-auto mb-6 pr-2">
-                <p><b>1. Plan Activation:</b> Fees are non-refundable once the plan is active. [cite: 2025-12-24]</p>
-                <p><b>2. Withdrawals:</b> Processed within 24 hours to your provided number. [cite: 2025-12-24]</p>
-                <p><b>3. Security:</b> One account per device. Any cheating results in a ban.</p>
-                <p><b>4. Support:</b> Use the official WhatsApp 03096090737 for help. [cite: 2025-12-25]</p>
-            </div>
-            <button onclick="acceptPrivacy()" class="w-full blue-grad py-4 rounded-2xl font-bold">I AGREE & START</button>
-        </div>
-    </div>
-
-    <div id="int-main" class="hidden-sec h-full flex flex-col">
+    <div id="int-main" class="h-full flex flex-col">
         <header class="p-6 flex justify-between items-center border-b border-white/5">
-            <i class="fas fa-bars text-xl text-blue-500"></i>
+            <button onclick="toggleMenu()" class="text-xl text-blue-500">
+                <i class="fas fa-bars"></i>
+            </button>
             <span class="font-black text-[11px] tracking-[3px] uppercase">Digital Earn Pro</span>
             <div class="w-9 h-9 blue-grad rounded-full border border-white/10 shadow-lg"></div>
         </header>
@@ -87,8 +55,8 @@
                     <p class="text-[10px] font-bold opacity-70 tracking-widest">TOTAL INCOME</p>
                     <h1 class="text-4xl font-black mt-2">Rs. <span id="disp-bal">0.00</span></h1>
                     <div class="flex gap-8 mt-6">
-                        <div><p class="text-[8px] opacity-60">TASK EARN</p><p class="font-bold text-xs" id="disp-task-inc">Rs. 0</p></div>
-                        <div><p class="text-[8px] opacity-60">REF EARN</p><p class="font-bold text-xs" id="disp-ref-inc">Rs. 0</p></div>
+                        <div><p class="text-[8px] opacity-60">TASK EARN</p><p class="font-bold text-xs">Rs. 0</p></div>
+                        <div><p class="text-[8px] opacity-60">REF EARN</p><p class="font-bold text-xs">Rs. 0</p></div>
                     </div>
                 </div>
 
@@ -99,163 +67,61 @@
                         </div>
                         <p class="text-[9px] font-bold mt-3 opacity-50 uppercase">Task Progress</p>
                     </div>
-                    <div onclick="showTeam()" class="glass p-5 flex flex-col items-center justify-center text-center cursor-pointer active:scale-95 transition">
+                    <div class="glass p-5 flex flex-col items-center justify-center text-center">
                         <i class="fas fa-users text-2xl text-blue-500 mb-2"></i>
-                        <h4 class="text-xl font-black" id="disp-team">0</h4>
+                        <h4 class="text-xl font-black">0</h4>
                         <p class="text-[9px] font-bold opacity-50 uppercase">Team Members</p>
                     </div>
                 </div>
 
                 <div class="glass p-6 space-y-4">
                     <div class="flex justify-between items-center text-xs">
-                        <span class="opacity-50">My Referral Link:</span>
-                        <span class="font-black text-blue-500" id="disp-ref-code">DE-1029</span>
+                        <span class="opacity-50 text-[10px]">My Referral Link:</span>
+                        <span class="font-black text-blue-500 text-[10px]">DE-1029</span>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <a href="https://wa.me/923096090737" class="bg-green-600/10 p-4 rounded-xl flex items-center justify-center gap-2 text-[10px] font-bold text-green-500">
                             <i class="fab fa-whatsapp"></i> WhatsApp
                         </a>
-                        <button onclick="alert('Email: saifullahbk386@gmail.com')" class="bg-blue-600/10 p-4 rounded-xl flex items-center justify-center gap-2 text-[10px] font-bold text-blue-500">
+                        <button onclick="alert('Help: 03096090737')" class="bg-blue-600/10 p-4 rounded-xl flex items-center justify-center gap-2 text-[10px] font-bold text-blue-500">
                             <i class="fas fa-headset"></i> Support
                         </button>
                     </div>
                 </div>
-
-                <div class="glass p-5">
-                    <p class="text-[10px] font-black mb-3 opacity-40 uppercase">User Reviews</p>
-                    <div class="space-y-3" id="review-list">
-                        <div class="text-[10px] text-slate-400 italic">"Highly recommended for students!" - Ali K.</div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="view-task" class="view-sec hidden-sec">
-                <div class="glass p-10 text-center">
-                    <i class="fas fa-stopwatch text-6xl text-blue-500 mb-6"></i>
-                    <h3 class="text-xl font-black">Ad Verification</h3>
-                    <p class="text-[10px] text-slate-500 mt-2 mb-8 uppercase tracking-widest">Wait 15 Seconds</p>
-                    <div id="t-box" class="hidden-sec bg-blue-600/10 p-8 rounded-3xl mb-8 border border-blue-600/20">
-                        <span id="t-count" class="text-5xl font-black">15</span>
-                    </div>
-                    <button id="t-btn" onclick="startWork()" class="w-full blue-grad py-5 rounded-3xl font-black shadow-lg uppercase">Start Task</button>
-                </div>
-            </div>
-
-            <div id="view-profile" class="view-sec hidden-sec space-y-6">
-                <div class="glass p-6">
-                    <h3 class="text-xs font-black uppercase text-slate-500 mb-4 tracking-widest">Withdraw History</h3>
-                    <div id="hist-list" class="space-y-3">
-                        </div>
-                </div>
-                <button onclick="location.reload()" class="w-full p-4 text-red-500 text-xs font-bold uppercase">Logout Account</button>
             </div>
         </main>
 
-        <div id="team-modal" class="fixed inset-x-0 bottom-0 z-[6000] bg-slate-900 rounded-t-[40px] p-8 shadow-2xl h-[70vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-6">
-                <h3 class="font-black uppercase tracking-widest">My Team</h3>
-                <button onclick="hideTeam()"><i class="fas fa-times-circle text-2xl opacity-50"></i></button>
-            </div>
-            <div id="team-list" class="space-y-4">
-                <p class="text-center text-xs opacity-30 mt-10 uppercase">No team members yet</p>
-            </div>
-        </div>
-
         <nav class="fixed bottom-0 w-full bg-slate-950/90 backdrop-blur-xl border-t border-white/5 p-5 flex justify-around z-50">
-            <button onclick="navigate('home')" class="nav-btn flex flex-col items-center gap-1 text-blue-500"><i class="fas fa-home"></i><span class="text-[9px] font-black uppercase">Home</span></button>
-            <button onclick="navigate('task')" class="nav-btn flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-play"></i><span class="text-[9px] font-black uppercase">Task</span></button>
-            <button onclick="navigate('profile')" class="nav-btn flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-history"></i><span class="text-[9px] font-black uppercase">Profile</span></button>
+            <button onclick="navigate('home')" class="flex flex-col items-center gap-1 text-blue-500"><i class="fas fa-home"></i><span class="text-[9px] font-black uppercase">Home</span></button>
+            <button onclick="navigate('task')" class="flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-play"></i><span class="text-[9px] font-black uppercase">Task</span></button>
+            <button onclick="navigate('profile')" class="flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-history"></i><span class="text-[9px] font-black uppercase">Profile</span></button>
         </nav>
     </div>
 
     <script>
-        let userData = { balance: 0, taskInc: 0, refInc: 0, team: 0, daily: 0, limit: 10 };
-        let authMode = 'login';
-
-        function toggleAuth(mode) {
-            authMode = mode;
-            document.getElementById('auth-title').innerText = mode.toUpperCase();
-            document.getElementById('signup-fields').classList.toggle('hidden-sec', mode === 'login');
-        }
-function toggleMenu() {
-    const menu = document.getElementById('side-menu');
-    // This command moves the menu in and out
-    menu.classList.toggle('-translate-x-full'); 
-}
-
-        function handleAuth() {
-            document.getElementById('int-auth').classList.add('hidden-sec');
-            document.getElementById('int-privacy').classList.remove('hidden-sec');
-        }
-
-        function acceptPrivacy() {
-            document.getElementById('int-privacy').classList.add('hidden-sec');
-            document.getElementById('int-main').classList.remove('hidden-sec');
+        // TOGGLE MENU FUNCTION
+        function toggleMenu() {
+            const menu = document.getElementById('side-menu');
+            menu.classList.toggle('-translate-x-full');
         }
 
         function navigate(view) {
-            document.querySelectorAll('.view-sec').forEach(v => v.classList.add('hidden-sec'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.replace('text-blue-500', 'text-slate-500'));
-            
-            document.getElementById('view-'+view).classList.remove('hidden-sec');
-            event.currentTarget.classList.replace('text-slate-500', 'text-blue-500');
+            // Logic to switch screens
+            if(document.getElementById('side-menu').classList.contains('-translate-x-full') === false) {
+                toggleMenu();
+            }
+            alert("Navigating to " + view);
         }
 
-        function startWork() {
-            const btn = document.getElementById('t-btn');
-            const box = document.getElementById('t-box');
-            btn.classList.add('hidden-sec'); box.classList.remove('hidden-sec');
-            let count = 15;
-            const timer = setInterval(() => {
-                count--; document.getElementById('t-count').innerText = count;
-                if(count <= 0) {
-                    clearInterval(timer);
-                    alert("Rs. 10 Added!");
-                    userData.balance += 10;
-                    userData.daily++;
-                    updateUI();
-                    box.classList.add('hidden-sec'); btn.classList.remove('hidden-sec');
-                }
-            }, 1000);
+        function copyRef() {
+            navigator.clipboard.writeText("https://digitalearn.pro/?ref=DE-1029");
+            alert("Link Copied!");
         }
 
-        function showTeam() { document.getElementById('team-modal').classList.add('active'); }
-        function hideTeam() { document.getElementById('team-modal').classList.remove('active'); }
-
-        function updateUI() {
-            document.getElementById('disp-bal').innerText = userData.balance.toFixed(2);
-            const p = (userData.daily / userData.limit) * 100;
-            document.getElementById('prog-circle').style.setProperty('--p', p + '%');
-            document.getElementById('prog-val').innerText = Math.round(p) + '%';
-        }<script>
-    // ADD THIS:
-    function toggleMenu() {
-        const menu = document.getElementById('side-menu');
-        // This adds/removes the class that slides the menu in and out
-        menu.classList.toggle('-translate-x-full'); 
-    }
-    
-    // ... your other functions (handleAuth, startWork, etc.)
-</script>
+        function showTeam() {
+            toggleMenu();
+            alert("Opening Team List...");
+        }
+    </script>
 </body>
-    <div id="side-menu" class="fixed inset-y-0 left-0 w-72 bg-slate-900 z-[9000] transform -translate-x-full transition-transform duration-300 ease-in-out border-r border-white/10 shadow-2xl">
-    <div class="p-6">
-        <div class="flex justify-between items-center mb-8">
-            <h3 class="font-black text-blue-500 text-sm italic">DIGITAL EARN MENU</h3>
-            <button onclick="toggleMenu()"><i class="fas fa-times text-xl"></i></button>
-        </div>
-        <div class="grid grid-cols-2 gap-3">
-             <button onclick="navigate('home')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-home text-blue-400"></i>Home</button>
-             <button onclick="navigate('task')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>Income</button>
-             <button onclick="showTeam()" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-users text-purple-400"></i>Team</button>
-             <button onclick="navigate('profile')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-history text-amber-400"></i>History</button>
-             <button onclick="window.open('https://wa.me/923096090737')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fab fa-whatsapp text-green-500"></i>WhatsApp</button>
-             <button onclick="alert('Support: saifullahbk386@gmail.com')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-headset text-blue-500"></i>Service</button>
-             <button onclick="alert('Privacy Policy v1.0')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-shield-alt text-red-400"></i>Privacy</button>
-             <button onclick="copyRef()" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-link text-cyan-400"></i>Ref Link</button>
-             <button id="adm-btn" class="hidden-sec glass p-4 text-[10px] font-bold flex flex-col items-center gap-2 text-red-500"><i class="fas fa-crown"></i>Admin</button>
-        </div>
-    </div>
-</div>
-
 </html>
