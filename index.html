@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn Pro | Official</title>
+    <title>Digital Earn Pro | Official Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
@@ -19,76 +19,72 @@
 </head>
 <body class="h-screen flex flex-col">
 
-    <div id="int-auth" class="absolute inset-0 z-[10000] bg-[#010409] flex items-center justify-center p-6">
-        <div class="glass w-full max-w-sm p-8 space-y-6">
+    <div id="layer-auth" class="absolute inset-0 z-[10000] bg-[#010409] flex items-center justify-center p-6">
+        <div id="auth-box" class="glass w-full max-w-sm p-8 space-y-6">
             <div class="text-center">
-                <h2 id="auth-title" class="text-2xl font-black tracking-tighter text-blue-500">LOGIN</h2>
+                <h2 id="auth-title" class="text-2xl font-black text-blue-500">LOGIN</h2>
                 <p class="text-[10px] text-slate-500 uppercase tracking-widest mt-1">Digital Earn Pro</p>
             </div>
-            
             <div class="space-y-4">
                 <div id="reg-fields" class="hidden-sec space-y-4">
-                    <input type="text" id="reg-name" placeholder="Full Name" class="w-full p-4 bg-slate-900/50 rounded-2xl border border-white/5 outline-none focus:border-blue-500">
-                    <input type="text" id="reg-otp" placeholder="Activation OTP (Pay to 03707340477)" class="w-full p-4 bg-slate-900/50 rounded-2xl border border-white/5 outline-none focus:border-blue-500">
+                    <input type="text" id="reg-name" placeholder="Full Name" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
+                    <input type="text" id="reg-otp" placeholder="OTP (Pay to 03707340477)" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
                 </div>
-                <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 bg-slate-900/50 rounded-2xl border border-white/5 outline-none focus:border-blue-500">
-                <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 bg-slate-900/50 rounded-2xl border border-white/5 outline-none focus:border-blue-500">
-                
-                <button onclick="processAuth()" class="w-full blue-grad py-4 rounded-2xl font-black tracking-widest uppercase text-sm shadow-lg shadow-blue-500/20">Continue</button>
-                
-                <div class="flex justify-between text-[10px] font-bold text-slate-500 uppercase px-2">
-                    <span id="auth-switch" onclick="toggleAuthMode()" class="cursor-pointer hover:text-white">Create Account</span>
-                    <span onclick="alert('Contact Support: 03096090737')" class="cursor-pointer hover:text-white text-blue-500">Help?</span>
-                </div>
+                <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
+                <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
+                <button onclick="handleAuth()" class="w-full blue-grad py-4 rounded-2xl font-black uppercase text-sm">Continue</button>
+                <p class="text-[10px] text-center text-slate-500 uppercase cursor-pointer" onclick="toggleAuth()">Switch Login/Signup</p>
             </div>
+        </div>
+
+        <div id="verify-box" class="hidden-sec glass w-full max-w-sm p-10 text-center border-blue-500/30">
+            <i class="fas fa-envelope-open-text text-6xl text-blue-500 mb-6"></i>
+            <h2 class="text-xl font-black uppercase tracking-widest">Verify Email</h2>
+            <p class="text-[10px] text-slate-500 mt-4 leading-relaxed uppercase">Check your inbox to activate your account.</p>
+            <button onclick="finishVerify()" class="w-full blue-grad py-4 rounded-2xl font-black text-xs uppercase mt-8">I've Verified</button>
         </div>
     </div>
 
-    <div id="side-menu" class="fixed inset-y-0 left-0 w-72 bg-slate-950 transform -translate-x-full border-r border-white/5 shadow-2xl p-6">
+    <div id="side-menu" class="fixed inset-y-0 left-0 w-72 bg-slate-950 transform -translate-x-full border-r border-white/5 p-6">
         <div class="flex justify-between items-center mb-8">
-            <h3 class="font-black text-blue-500 text-xs tracking-tighter uppercase italic">Digital Earn Menu</h3>
-            <button onclick="toggleMenu()"><i class="fas fa-times text-xl text-slate-500"></i></button>
+            <h3 class="font-black text-blue-500 text-xs italic">MENU</h3>
+            <button onclick="toggleMenu()"><i class="fas fa-times text-xl"></i></button>
         </div>
         <div class="grid grid-cols-2 gap-3">
             <button onclick="navigate('home')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-home text-blue-400"></i>Home</button>
-            <button onclick="navigate('task')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>Tasks</button>
+            <button onclick="navigate('task')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>Task</button>
             <button onclick="navigate('withdraw')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-wallet text-amber-400"></i>Withdraw</button>
             <button onclick="navigate('history')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-history text-purple-400"></i>History</button>
             <button onclick="window.open('https://wa.me/923096090737')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fab fa-whatsapp text-green-500"></i>WhatsApp</button>
             <button onclick="navigate('settings')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-cog text-slate-400"></i>Settings</button>
-            <button onclick="alert('Privacy: 2025 Standard.')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-shield-alt text-red-400"></i>Privacy</button>
+            <button onclick="alert('Privacy Policy 2025')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-shield-alt text-red-400"></i>Privacy</button>
             <button onclick="copyRef()" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-share-alt text-cyan-400"></i>Share</button>
-            <button onclick="logout()" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2 text-red-500 col-span-2 mt-4 border-red-500/20"><i class="fas fa-power-off"></i>Logout</button>
+            <button onclick="location.reload()" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2 text-red-500 col-span-2 mt-4"><i class="fas fa-power-off"></i>Logout</button>
         </div>
     </div>
 
     <div id="int-main" class="h-full flex flex-col hidden-sec">
-        <header class="p-6 flex justify-between items-center border-b border-white/5 bg-[#010409]/80 backdrop-blur-md sticky top-0 z-50">
+        <header class="p-6 flex justify-between items-center border-b border-white/5">
             <button onclick="toggleMenu()" class="text-xl text-blue-500"><i class="fas fa-bars"></i></button>
             <span id="page-title" class="font-black text-[11px] tracking-[3px] uppercase">Digital Earn Pro</span>
-            <div onclick="navigate('settings')" id="header-pfp" class="w-10 h-10 blue-grad rounded-full border border-white/10 shadow-lg overflow-hidden flex items-center justify-center">
+            <div onclick="navigate('settings')" class="w-10 h-10 blue-grad rounded-full border border-white/10 shadow-lg flex items-center justify-center overflow-hidden" id="header-pfp">
                 <i class="fas fa-user text-xs"></i>
             </div>
         </header>
 
         <main class="flex-1 overflow-y-auto p-6 pb-28 space-y-6">
-            
             <div id="view-home" class="view-sec space-y-6">
-                <div class="blue-grad p-8 rounded-[35px] shadow-2xl relative overflow-hidden">
-                    <div class="absolute -right-4 -top-4 w-24 h-24 bg-white/10 rounded-full blur-3xl"></div>
-                    <p class="text-[10px] font-bold opacity-70 tracking-widest uppercase">Total Income</p>
+                <div class="blue-grad p-8 rounded-[35px] shadow-2xl">
+                    <p class="text-[10px] font-bold opacity-70 uppercase">Total Income</p>
                     <h1 class="text-4xl font-black mt-2">Rs. <span id="bal-val">0.00</span></h1>
                     <div class="flex gap-8 mt-6">
                         <div><p class="text-[8px] opacity-60">TASK EARN</p><p class="font-bold text-xs">Rs. 0</p></div>
                         <div><p class="text-[8px] opacity-60">REF EARN</p><p class="font-bold text-xs">Rs. 0</p></div>
                     </div>
                 </div>
-
                 <div class="grid grid-cols-2 gap-4">
-                    <div class="glass p-5 flex flex-col items-center justify-center">
-                        <div id="circle" class="circle-progress" style="--p: 0%">
-                            <div class="circle-inner" id="perc-text">0%</div>
-                        </div>
+                    <div class="glass p-5 flex flex-col items-center justify-center text-center">
+                        <div class="circle-progress" id="circle" style="--p: 0%"><div class="circle-inner" id="perc-text">0%</div></div>
                         <p class="text-[9px] font-bold mt-3 opacity-50 uppercase">Today's Progress</p>
                     </div>
                     <div class="glass p-5 flex flex-col items-center justify-center text-center">
@@ -97,159 +93,121 @@
                         <p class="text-[9px] font-bold opacity-50 uppercase">Team Members</p>
                     </div>
                 </div>
-
                 <div class="glass p-6 flex justify-between items-center">
-                    <div>
-                        <p class="text-[9px] opacity-50 uppercase font-bold mb-1">My Referral Code</p>
-                        <span class="text-blue-500 font-black text-sm tracking-widest">DE-1029</span>
-                    </div>
+                    <div><p class="text-[9px] opacity-50 font-bold mb-1 uppercase">Referral Code</p><span class="text-blue-500 font-black text-sm">DE-1029</span></div>
                     <button onclick="copyRef()" class="blue-grad px-6 py-3 rounded-2xl text-[10px] font-black uppercase">Copy Link</button>
                 </div>
             </div>
 
             <div id="view-task" class="view-sec hidden-sec">
-                <div class="glass p-10 text-center border-blue-500/20">
+                <div class="glass p-10 text-center">
                     <i class="fas fa-play-circle text-6xl text-blue-500 mb-6"></i>
-                    <h3 class="text-xl font-black">Daily Ad Work</h3>
-                    <p class="text-[10px] text-slate-500 mt-2 mb-8 uppercase tracking-widest">Rewards: Rs. 10 Per Task</p>
-                    <div id="t-box" class="hidden-sec bg-blue-600/10 p-10 rounded-full w-32 h-32 mx-auto mb-8 flex items-center justify-center border-4 border-blue-500">
-                        <span id="t-count" class="text-4xl font-black">15</span>
-                    </div>
-                    <button id="t-btn" onclick="startAd()" class="w-full blue-grad py-5 rounded-3xl font-black shadow-xl">START WORK</button>
+                    <h3 class="text-xl font-black">Ad Tasks</h3>
+                    <div id="t-box" class="hidden-sec bg-blue-600/10 p-10 rounded-full w-32 h-32 mx-auto mb-8 flex items-center justify-center border-4 border-blue-500"><span id="t-count" class="text-4xl font-black">15</span></div>
+                    <button id="t-btn" onclick="startTask()" class="w-full blue-grad py-5 rounded-3xl font-black uppercase text-sm">Start Working</button>
                 </div>
+            </div>
+
+            <div id="view-withdraw" class="view-sec hidden-sec">
+                <div class="glass p-8 space-y-4">
+                    <h3 class="text-xs font-black uppercase tracking-widest text-slate-500">Withdraw Funds</h3>
+                    <input type="number" placeholder="Min Amount 500" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-xs">
+                    <input type="text" placeholder="Account Number" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-xs">
+                    <button onclick="alert('Sent to Admin!')" class="w-full blue-grad py-4 rounded-2xl font-black text-xs uppercase">Submit Request</button>
+                </div>
+            </div>
+
+            <div id="view-history" class="view-sec hidden-sec">
+                <div class="glass p-6 text-center py-20 opacity-30"><i class="fas fa-history text-4xl mb-4"></i><p class="text-[10px] font-black uppercase">No Recent Transactions</p></div>
             </div>
 
             <div id="view-settings" class="view-sec hidden-sec space-y-6">
                 <div class="glass p-8 text-center">
                     <div class="relative w-24 h-24 mx-auto mb-4">
-                        <div id="pfp-main" class="w-full h-full blue-grad rounded-full border-4 border-white/10 flex items-center justify-center overflow-hidden">
-                            <i class="fas fa-user text-3xl"></i>
-                        </div>
-                        <label for="pfp-input" class="absolute bottom-0 right-0 bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center border-2 border-[#010409] cursor-pointer">
-                            <i class="fas fa-camera text-[10px]"></i>
-                        </label>
+                        <div id="pfp-main" class="w-full h-full blue-grad rounded-full border-4 border-white/10 flex items-center justify-center overflow-hidden"><i class="fas fa-user text-3xl"></i></div>
+                        <label for="pfp-input" class="absolute bottom-0 right-0 bg-blue-500 w-8 h-8 rounded-full flex items-center justify-center border-2 border-[#010409] cursor-pointer"><i class="fas fa-camera text-[10px]"></i></label>
                         <input type="file" id="pfp-input" class="hidden" accept="image/*" onchange="updatePFP(this)">
                     </div>
-                    <h4 id="user-display-name" class="font-bold text-sm">Member Account</h4>
-                    <p class="text-[10px] text-slate-500 uppercase">Verified User</p>
+                    <h4 class="font-bold text-sm">Account Settings</h4>
                 </div>
                 <div class="glass p-6 space-y-4">
-                    <p class="text-[10px] font-black opacity-40 uppercase tracking-widest">Account Security</p>
-                    <input type="password" id="set-pass" placeholder="Enter New Password" class="w-full p-4 bg-slate-900/50 rounded-2xl border border-white/5 outline-none text-xs">
-                    <button onclick="alert('Password Updated!')" class="w-full blue-grad py-4 rounded-2xl font-black text-xs uppercase">Save Changes</button>
+                    <input type="password" placeholder="New Password" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-xs">
+                    <button onclick="alert('Password Updated!')" class="w-full blue-grad py-4 rounded-2xl font-black text-xs uppercase">Update Password</button>
                 </div>
             </div>
-
-            <div id="view-withdraw" class="view-sec hidden-sec">
-                <div class="glass p-8">
-                    <h3 class="text-xs font-black uppercase mb-6 tracking-widest text-slate-500">New Withdrawal</h3>
-                    <input type="number" placeholder="Amount (Min 500)" class="w-full p-4 bg-slate-900 rounded-2xl mb-4 border border-white/5 outline-none text-xs">
-                    <input type="text" placeholder="EasyPaisa/JazzCash No." class="w-full p-4 bg-slate-900 rounded-2xl mb-6 border border-white/5 outline-none text-xs">
-                    <button onclick="alert('Sent for Admin Approval!')" class="w-full blue-grad py-4 rounded-2xl font-black uppercase text-xs">Submit Request</button>
-                </div>
-            </div>
-
-            <div id="view-history" class="view-sec hidden-sec">
-                <div class="glass p-6 text-center py-20 opacity-30">
-                    <i class="fas fa-history text-4xl mb-4"></i>
-                    <p class="text-[10px] font-black uppercase">No Recent Transactions</p>
-                </div>
-            </div>
-
         </main>
 
-        <nav class="fixed bottom-0 w-full bg-slate-950/90 backdrop-blur-xl border-t border-white/5 p-5 flex justify-around z-50">
-            <button onclick="navigate('home')" class="nav-btn flex flex-col items-center gap-1 text-blue-500 transition-all"><i class="fas fa-home"></i><span class="text-[9px] font-black uppercase">Home</span></button>
-            <button onclick="navigate('task')" class="nav-btn flex flex-col items-center gap-1 text-slate-500 transition-all"><i class="fas fa-play"></i><span class="text-[9px] font-black uppercase">Task</span></button>
-            <button onclick="navigate('history')" class="nav-btn flex flex-col items-center gap-1 text-slate-500 transition-all"><i class="fas fa-history"></i><span class="text-[9px] font-black uppercase">Profile</span></button>
+        <nav class="fixed bottom-0 w-full bg-slate-950/90 backdrop-blur-xl border-t border-white/5 p-5 flex justify-around">
+            <button onclick="navigate('home')" class="flex flex-col items-center gap-1 text-blue-500"><i class="fas fa-home"></i><span class="text-[9px] font-black uppercase">Home</span></button>
+            <button onclick="navigate('task')" class="flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-play"></i><span class="text-[9px] font-black uppercase">Task</span></button>
+            <button onclick="navigate('history')" class="flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-history"></i><span class="text-[9px] font-black uppercase">History</span></button>
         </nav>
     </div>
 
     <script>
         let isLogin = true;
-
-        // AUTH SYSTEM
-        function toggleAuthMode() {
+        function toggleAuth() {
             isLogin = !isLogin;
             document.getElementById('auth-title').innerText = isLogin ? 'LOGIN' : 'SIGN UP';
-            document.getElementById('auth-switch').innerText = isLogin ? 'Create Account' : 'Back to Login';
             document.getElementById('reg-fields').classList.toggle('hidden-sec', isLogin);
         }
 
-        function processAuth() {
-            // Check if fields are empty
-            const email = document.getElementById('auth-email').value;
-            if(!email) return alert("Enter your email");
-
-            // Successful Login/Register Animation
-            document.getElementById('int-auth').classList.add('hidden-sec');
-            document.getElementById('int-main').classList.remove('hidden-sec');
-            
-            if(!isLogin) {
-                const name = document.getElementById('reg-name').value;
-                document.getElementById('user-display-name').innerText = name || "New Member";
+        function handleAuth() {
+            if (isLogin) {
+                document.getElementById('layer-auth').classList.add('hidden-sec');
+                document.getElementById('int-main').classList.remove('hidden-sec');
+            } else {
+                document.getElementById('auth-box').classList.add('hidden-sec');
+                document.getElementById('verify-box').classList.remove('hidden-sec');
             }
         }
 
-        // NAVIGATION SYSTEM
+        function finishVerify() {
+            document.getElementById('layer-auth').classList.add('hidden-sec');
+            document.getElementById('int-main').classList.remove('hidden-sec');
+        }
+
         function toggleMenu() {
-            const menu = document.getElementById('side-menu');
-            const isOpen = menu.style.transform === 'translateX(0px)';
-            menu.style.transform = isOpen ? 'translateX(-100%)' : 'translateX(0px)';
+            const m = document.getElementById('side-menu');
+            m.style.transform = m.style.transform === 'translateX(0px)' ? 'translateX(-100%)' : 'translateX(0px)';
         }
 
         function navigate(view) {
             document.querySelectorAll('.view-sec').forEach(v => v.classList.add('hidden-sec'));
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.replace('text-blue-500', 'text-slate-500'));
-            
-            const target = document.getElementById('view-' + view);
-            if(target) target.classList.remove('hidden-sec');
-            
-            document.getElementById('page-title').innerText = view === 'home' ? 'Digital Earn Pro' : view.toUpperCase();
-            
-            const menu = document.getElementById('side-menu');
-            if(menu.style.transform === 'translateX(0px)') toggleMenu();
+            document.getElementById('view-' + view).classList.remove('hidden-sec');
+            document.getElementById('page-title').innerText = view.toUpperCase();
+            if (document.getElementById('side-menu').style.transform === 'translateX(0px)') toggleMenu();
         }
 
-        // TASK SYSTEM
-        function startAd() {
+        function startTask() {
             const btn = document.getElementById('t-btn');
             const box = document.getElementById('t-box');
-            btn.classList.add('hidden-sec');
-            box.classList.remove('hidden-sec');
+            btn.classList.add('hidden-sec'); box.classList.remove('hidden-sec');
             let count = 15;
             let timer = setInterval(() => {
-                count--;
-                document.getElementById('t-count').innerText = count;
+                count--; document.getElementById('t-count').innerText = count;
                 if(count <= 0) {
-                    clearInterval(timer);
-                    alert("Rs. 10 Added to Balance!");
-                    box.classList.add('hidden-sec');
-                    btn.classList.remove('hidden-sec');
+                    clearInterval(timer); alert("Reward Claimed!");
+                    box.classList.add('hidden-sec'); btn.classList.remove('hidden-sec');
                     navigate('home');
                 }
             }, 1000);
         }
 
-        // PROFILE PICTURE SYSTEM
         function updatePFP(input) {
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    const imgHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
-                    document.getElementById('pfp-main').innerHTML = imgHTML;
-                    document.getElementById('header-pfp').innerHTML = imgHTML;
+                    const img = `<img src="${e.target.result}" class="w-full h-full object-cover rounded-full">`;
+                    document.getElementById('pfp-main').innerHTML = img;
+                    document.getElementById('header-pfp').innerHTML = img;
                 };
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function logout() {
-            if(confirm("Logout from this device?")) location.reload();
-        }
-
         function copyRef() {
-            navigator.clipboard.writeText("https://digital-earn.pro/?ref=DE-1029");
+            navigator.clipboard.writeText("https://digitalearn-pro.onrender.com/?ref=DE-1029");
             alert("Referral Link Copied!");
         }
     </script>
