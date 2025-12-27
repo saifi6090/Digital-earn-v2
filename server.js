@@ -2,59 +2,51 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-
 app.use(express.json());
 app.use(express.static(__dirname));
 
-const DB_PATH = path.join(__dirname, 'database.json');
+const DB_FILE = './database.json';
+const readDB = () => JSON.parse(fs.readFileSync(DB_FILE));
+const writeDB = (data) => fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
 
-// Initialize database if it doesn't exist
-if (!fs.existsSync(DB_PATH)) {
-    fs.writeFileSync(DB_PATH, JSON.stringify({ users: [] }));
-}
+if (!fs.existsSync(DB_FILE)) writeDB({ users: [], withdrawals: [], globalStats: { joins: 0, payouts: 0 } });
 
-// Helper to read/write database
-const getDB = () => JSON.parse(fs.readFileSync(DB_PATH));
-const saveDB = (data) => fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
-
-// 1. Register/Login Route
-app.post('/api/auth', (req, res) => {
-    const { email, password, name, type } = req.body;
-    let db = getDB();
-
-    if (type === 'register') {
-        if (db.users.find(u => u.email === email)) return res.status(400).json({ error: "Email exists" });
-        const newUser = { name, email, password, balance: 0, isPaid: false, withdrawDetails: {} };
-        db.users.push(newUser);
-        saveDB(db);
-        return res.json(newUser);
-    } else {
-        const user = db.users.find(u => u.email === email && u.password === password);
-        if (!user) return res.status(401).json({ error: "Invalid credentials" });
-        res.json(user);
-    }
-});
-
-// 2. Admin: Get All Users
-app.get('/api/admin/users', (req, res) => {
-    res.json(getDB().users);
-});
-
-// 3. Admin: Approve Payment
-app.post('/api/admin/approve', (req, res) => {
+// AUTH & OTP SIMULATION
+app.post('/api/auth/otp', (req, res) => {
     const { email } = req.body;
-    let db = getDB();
-    const user = db.users.find(u => u.email === email);
+    // In production, use Nodemailer here. For launch, we simulate sending.
+    res.json({ message: "OTP Sent to " + email });
+});
+
+app.post('/api/auth/final', (req, res) => {
+    const { email, password, name, otp, type } = req.body;
+    let db = readDB();
+    if (type === 'register') {
+        const user = { 
+            name, email, password, plan: 'none', isPaid: false, 
+            balance: 0, tasksDone: 0, wallet: {}, history: [] 
+        };
+        db.users.push(user);
+        writeDB(db);
+        return res.json(user);
+    }
+    const user = db.users.find(u => u.email === email && u.password === password);
+    user ? res.json(user) : res.status(401).send("Error");
+});
+
+// ADMIN ONLY ACTIONS
+app.post('/api/admin/verify-payment', (req, res) => {
+    const { email, plan, secret } = req.body;
+    if (secret !== "SUPER_ADMIN_2025") return res.status(403).send("Denied");
+    let db = readDB();
+    let user = db.users.find(u => u.email === email);
     if (user) {
         user.isPaid = true;
-        saveDB(db);
+        user.plan = plan; // 700, 1500, or 2500
+        writeDB(db);
         res.json({ success: true });
-    } else {
-        res.status(404).json({ error: "User not found" });
     }
 });
 
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.listen(process.env.PORT || 3000);
