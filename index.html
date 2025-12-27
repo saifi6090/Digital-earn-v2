@@ -3,91 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn Pro | Global</title>
+    <title>Digital Earn Pro | Global Trust Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background: #010409; color: white; font-family: 'Inter', sans-serif; overflow: hidden; }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;900&display=swap');
+        body { background: #010409; color: white; font-family: 'Outfit', sans-serif; overflow: hidden; }
         .hidden-sec { display: none !important; }
-        .glass { background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); border-radius: 30px; }
-        .blue-grad { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-        .locked-blur { filter: blur(8px); pointer-events: none; }
+        .glass { background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; }
+        .blue-grad { background: linear-gradient(135deg, #1d4ed8, #3b82f6, #60a5fa); }
+        .task-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); transition: 0.3s; }
+        .task-card:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); }
+        #side-menu { transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 9999; }
+        .btn-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
     </style>
 </head>
 <body class="h-screen flex flex-col">
 
     <div id="layer-auth" class="absolute inset-0 z-[10000] bg-[#010409] flex items-center justify-center p-6">
-        <div id="auth-box" class="glass w-full max-w-sm p-8 space-y-6">
-            <h2 class="text-2xl font-black text-center text-blue-500">SECURE LOGIN</h2>
-            <input type="email" id="email" placeholder="Email Address" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
-            <input type="password" id="pass" placeholder="Password" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none">
-            <button onclick="showVerify()" class="w-full blue-grad py-4 rounded-2xl font-black uppercase">Login / Register</button>
+        <div id="auth-box" class="glass w-full max-w-sm p-10 space-y-8 shadow-2xl">
+            <div class="text-center">
+                <div class="w-16 h-16 blue-grad rounded-2xl mx-auto mb-4 flex items-center justify-center rotate-3 shadow-lg">
+                    <i class="fas fa-gem text-2xl"></i>
+                </div>
+                <h2 class="text-3xl font-black tracking-tighter">GLOBAL EARN</h2>
+                <p class="text-[10px] text-blue-500 font-bold uppercase tracking-[4px] mt-1">Official Registration</p>
+            </div>
+            <div class="space-y-4">
+                <input type="email" id="email" placeholder="Professional Email Address" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none focus:border-blue-500 transition-all">
+                <input type="password" id="pass" placeholder="Secure Password" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none focus:border-blue-500 transition-all">
+                <button onclick="showVerify()" class="w-full blue-grad py-5 rounded-2xl font-black uppercase text-sm btn-glow">Verify & Continue</button>
+                <p class="text-[10px] text-center text-slate-500 uppercase font-bold">Encrypted End-to-End System</p>
+            </div>
         </div>
 
-        <div id="verify-box" class="hidden-sec glass w-full max-w-sm p-10 text-center">
-            <i class="fas fa-shield-check text-5xl text-blue-500 mb-4"></i>
-            <h2 class="font-black uppercase tracking-widest">Verify Identity</h2>
-            <p class="text-[10px] text-slate-500 my-4">Enter the 6-digit code sent to your email.</p>
-            <input type="text" placeholder="0 0 0 0 0 0" class="w-full p-4 bg-slate-900 rounded-2xl text-center tracking-[10px] font-bold outline-none border border-blue-500/30">
-            <button onclick="enterApp()" class="w-full blue-grad py-4 rounded-2xl font-black mt-6">VERIFY & START</button>
+        <div id="verify-box" class="hidden-sec glass w-full max-w-sm p-12 text-center border-blue-500/30">
+            <div class="w-20 h-20 bg-blue-500/10 rounded-full mx-auto mb-6 flex items-center justify-center border border-blue-500/20">
+                <i class="fas fa-envelope-open-text text-4xl text-blue-500"></i>
+            </div>
+            <h2 class="text-xl font-black uppercase">Verify Your Email</h2>
+            <p class="text-[11px] text-slate-400 my-6 leading-relaxed">We sent a secure code to your inbox. Verification is required to earn trust and money.</p>
+            <input type="text" maxlength="6" placeholder="· · · · · ·" class="w-full p-5 bg-slate-900 rounded-2xl text-center text-2xl font-black tracking-[12px] outline-none border border-blue-500/40 text-blue-500">
+            <button onclick="enterApp()" class="w-full blue-grad py-5 rounded-2xl font-black mt-8 shadow-lg uppercase text-xs">Verify Identity</button>
         </div>
     </div>
 
     <div id="int-main" class="h-full flex flex-col hidden-sec">
-        <header class="p-6 flex justify-between items-center border-b border-white/5">
-            <button onclick="toggleMenu()" class="text-xl text-blue-500"><i class="fas fa-bars"></i></button>
-            <span class="font-black text-[11px] tracking-[3px] uppercase">Digital Earn Pro</span>
-            <div class="w-10 h-10 blue-grad rounded-full border border-white/10" id="header-pfp"></div>
+        <header class="p-6 flex justify-between items-center border-b border-white/5 sticky top-0 z-50 bg-[#010409]/90 backdrop-blur-md">
+            <button onclick="toggleMenu()" class="w-12 h-12 glass flex items-center justify-center text-blue-500"><i class="fas fa-bars-staggered"></i></button>
+            <div class="text-center">
+                <span class="block font-black text-xs tracking-[4px] uppercase">Digital Earn</span>
+                <span class="text-[8px] text-blue-500 font-bold uppercase opacity-60">Worldwide Pro</span>
+            </div>
+            <div onclick="navigate('settings')" class="w-12 h-12 blue-grad rounded-full border border-white/20 flex items-center justify-center shadow-lg overflow-hidden" id="header-pfp">
+                <i class="fas fa-user-shield text-xs"></i>
+            </div>
         </header>
 
-        <main class="flex-1 overflow-y-auto p-6 pb-28 space-y-6">
+        <main class="flex-1 overflow-y-auto p-6 pb-32 space-y-6">
             <div id="view-home" class="view-sec space-y-6">
-                <div class="blue-grad p-8 rounded-[35px] shadow-2xl">
-                    <p class="text-[10px] font-bold opacity-70 uppercase tracking-tighter">Current Balance</p>
-                    <h1 class="text-4xl font-black mt-2">Rs. <span id="balance">0.00</span></h1>
-                    <p class="text-[9px] mt-4 opacity-50 uppercase">Tasks Reset at 12:00 PM</p>
+                <div class="blue-grad p-10 rounded-[40px] shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-8 -top-8 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                    <p class="text-[11px] font-bold opacity-80 uppercase tracking-widest">Available Balance</p>
+                    <h1 class="text-5xl font-black mt-3 flex items-center gap-3">Rs. <span id="balance">0.00</span></h1>
+                    <div class="mt-8 flex gap-6">
+                        <div class="bg-black/20 px-4 py-2 rounded-xl"><p class="text-[8px] opacity-60">TASK PROFIT</p><p class="font-bold text-xs text-green-400">+Rs. 0</p></div>
+                        <div class="bg-black/20 px-4 py-2 rounded-xl"><p class="text-[8px] opacity-60">TEAM REWARD</p><p class="font-bold text-xs text-blue-300">+Rs. 0</p></div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass p-6 text-center">
+                        <h4 class="text-2xl font-black text-blue-500">10</h4>
+                        <p class="text-[9px] font-bold opacity-50 uppercase mt-1">Daily Videos</p>
+                    </div>
+                    <div class="glass p-6 text-center">
+                        <h4 class="text-2xl font-black text-amber-500">1000</h4>
+                        <p class="text-[9px] font-bold opacity-50 uppercase mt-1">Min Withdraw</p>
+                    </div>
+                </div>
+
+                <div class="glass p-6 flex justify-between items-center border-blue-500/10">
+                    <div>
+                        <p class="text-[9px] opacity-50 font-black uppercase mb-1">Global Invitation Link</p>
+                        <span class="text-blue-500 font-black text-sm tracking-widest uppercase">DE-PRO-2025</span>
+                    </div>
+                    <button onclick="copyRef()" class="bg-blue-500/10 text-blue-500 px-6 py-3 rounded-2xl text-[10px] font-black uppercase border border-blue-500/20">Copy</button>
                 </div>
             </div>
 
-            <div id="view-task" class="view-sec hidden-sec">
-                <div id="task-locked" class="glass p-10 text-center border-amber-500/20">
-                    <i class="fas fa-lock text-5xl text-amber-500 mb-6"></i>
-                    <h3 class="text-xl font-black uppercase">Account Inactive</h3>
-                    <p class="text-[10px] text-slate-500 mt-2 mb-6 uppercase">Pay Rs. 1000 Registration Fee to Unlock Tasks</p>
-                    <p class="bg-white/5 p-4 rounded-xl text-blue-400 font-bold text-xs mb-6 uppercase">Admin Number: 03707340477</p>
-                    <button onclick="alert('Upload Receipt to WhatsApp')" class="w-full blue-grad py-4 rounded-2xl font-black">ACTIVATE NOW</button>
+            <div id="view-task" class="view-sec hidden-sec space-y-6">
+                <div id="task-locked" class="glass p-12 text-center border-amber-500/20">
+                    <div class="w-20 h-20 bg-amber-500/10 rounded-full mx-auto mb-6 flex items-center justify-center border border-amber-500/20">
+                        <i class="fas fa-lock text-3xl text-amber-500"></i>
+                    </div>
+                    <h3 class="text-xl font-black uppercase">Tasks Restricted</h3>
+                    <p class="text-[11px] text-slate-500 mt-4 leading-relaxed uppercase">You must activate your worldwide license to earn. Payment builds user trust.</p>
+                    <div class="bg-slate-900 p-5 rounded-2xl my-8 border border-white/5">
+                        <p class="text-[9px] text-slate-500 mb-2 uppercase">Official Admin EasyPaisa/JazzCash</p>
+                        <p class="text-lg font-black text-blue-500">03707340477</p>
+                    </div>
+                    <button onclick="window.open('https://wa.me/923096090737')" class="w-full blue-grad py-5 rounded-2xl font-black uppercase text-xs">Send Receipt for Unlock</button>
                 </div>
+
                 <div id="task-list" class="hidden-sec space-y-4">
-                    <h3 class="text-xs font-black uppercase text-slate-500 tracking-widest px-2">Available Videos (0/10)</h3>
-                    <div class="glass p-4 flex justify-between items-center border-white/5">
-                        <span class="text-[11px] font-bold uppercase">Video Task #1</span>
-                        <button onclick="startVideo()" class="blue-grad px-4 py-2 rounded-xl text-[10px] font-black">WATCH</button>
+                    <div class="flex justify-between items-center px-2">
+                        <h3 class="text-xs font-black uppercase text-slate-500">Daily Work (0/10)</h3>
+                        <span class="text-[9px] bg-blue-500/10 text-blue-500 px-3 py-1 rounded-full font-bold">Rs. 100 Reward</span>
+                    </div>
+                    <div class="task-card p-6 rounded-3xl flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-500"><i class="fas fa-play text-[10px]"></i></div>
+                            <div><p class="text-xs font-black">Video Ad #1</p><p class="text-[8px] opacity-40 uppercase">30 Seconds Duration</p></div>
+                        </div>
+                        <button onclick="startVideo()" class="blue-grad px-6 py-3 rounded-2xl text-[10px] font-black uppercase">Watch</button>
                     </div>
                     </div>
             </div>
 
             <div id="view-settings" class="view-sec hidden-sec space-y-6">
-                <div class="glass p-8 space-y-4">
-                    <h3 class="text-xs font-black uppercase text-slate-500 tracking-widest">Withdrawal Settings</h3>
-                    <select id="method" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 text-xs outline-none">
-                        <option>Select Method</option>
-                        <option>EasyPaisa</option>
-                        <option>JazzCash</option>
-                        <option>Bank Transfer</option>
-                    </select>
-                    <input type="text" id="acc-name" placeholder="Account Holder Name" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 text-xs outline-none">
-                    <input type="number" id="acc-num" placeholder="Account Number" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 text-xs outline-none">
-                    <button onclick="alert('Payment Method Saved!')" class="w-full blue-grad py-4 rounded-2xl font-black uppercase text-xs">Save Details</button>
+                <div class="glass p-8 space-y-6">
+                    <h3 class="text-xs font-black uppercase text-slate-500 tracking-widest border-b border-white/5 pb-4">Wallet Configuration</h3>
+                    <div class="space-y-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black opacity-40 uppercase ml-2">Preferred Network</label>
+                            <select id="wallet-type" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 text-xs outline-none focus:border-blue-500">
+                                <option>Select EasyPaisa / JazzCash / Bank</option>
+                                <option>EasyPaisa</option>
+                                <option>JazzCash</option>
+                                <option>SadaPay / NayaPay</option>
+                                <option>Other Bank</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black opacity-40 uppercase ml-2">Account Title</label>
+                            <input type="text" placeholder="Full Name on Account" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 text-xs outline-none focus:border-blue-500">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black opacity-40 uppercase ml-2">Account Number</label>
+                            <input type="number" placeholder="03XXXXXXXXX" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 text-xs outline-none focus:border-blue-500">
+                        </div>
+                        <button onclick="alert('Wallet Secured Successfully!')" class="w-full blue-grad py-5 rounded-2xl font-black uppercase text-xs mt-4">Secure My Wallet</button>
+                    </div>
                 </div>
-                <button onclick="location.reload()" class="w-full p-5 glass text-red-500 font-black text-[10px] uppercase">Logout Account</button>
+
+                <div class="glass p-8">
+                    <h3 class="text-xs font-black uppercase text-slate-500 tracking-widest border-b border-white/5 pb-4 mb-6">Account Security</h3>
+                    <input type="password" placeholder="Change Account Password" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 text-xs outline-none mb-4">
+                    <button onclick="location.reload()" class="w-full p-5 glass text-red-500 font-black text-[10px] uppercase border-red-500/20">Close Current Session</button>
+                </div>
             </div>
         </main>
 
-        <nav class="fixed bottom-0 w-full bg-slate-950/90 backdrop-blur-xl border-t border-white/5 p-5 flex justify-around">
-            <button onclick="navigate('home')" class="flex flex-col items-center gap-1 text-blue-500"><i class="fas fa-home"></i><span class="text-[9px] font-black uppercase">Home</span></button>
-            <button onclick="navigate('task')" class="flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-play"></i><span class="text-[9px] font-black uppercase">Tasks</span></button>
-            <button onclick="navigate('settings')" class="flex flex-col items-center gap-1 text-slate-500"><i class="fas fa-cog"></i><span class="text-[9px] font-black uppercase">Settings</span></button>
+        <nav class="fixed bottom-0 w-full bg-slate-950/90 backdrop-blur-2xl border-t border-white/5 p-6 flex justify-around z-50">
+            <button onclick="navigate('home')" class="nav-icon text-blue-500"><i class="fas fa-home text-xl"></i></button>
+            <button onclick="navigate('task')" class="nav-icon text-slate-600"><i class="fas fa-play-circle text-xl"></i></button>
+            <button onclick="navigate('settings')" class="nav-icon text-slate-600"><i class="fas fa-user-cog text-xl"></i></button>
         </nav>
+    </div>
+
+    <div id="side-menu" class="fixed inset-y-0 left-0 w-80 bg-[#010409] transform -translate-x-full border-r border-white/5 p-8 flex flex-col">
+        <div class="flex justify-between items-center mb-12">
+            <h3 class="font-black text-blue-500 tracking-tighter">GLOBAL MENU</h3>
+            <button onclick="toggleMenu()"><i class="fas fa-times text-xl text-slate-600"></i></button>
+        </div>
+        <div class="space-y-3">
+             <button onclick="navigate('home')" class="w-full p-5 glass text-left text-xs font-bold flex items-center gap-4"><i class="fas fa-home text-blue-500"></i> Dashboard</button>
+             <button onclick="navigate('task')" class="w-full p-5 glass text-left text-xs font-bold flex items-center gap-4"><i class="fas fa-bolt text-amber-500"></i> My Tasks</button>
+             <button onclick="navigate('settings')" class="w-full p-5 glass text-left text-xs font-bold flex items-center gap-4"><i class="fas fa-wallet text-green-500"></i> Payout Settings</button>
+             <button onclick="window.open('https://wa.me/923096090737')" class="w-full p-5 glass text-left text-xs font-bold flex items-center gap-4"><i class="fab fa-whatsapp text-green-400"></i> Support Live</button>
+             <button onclick="location.reload()" class="w-full p-5 glass text-left text-xs font-bold flex items-center gap-4 text-red-500 mt-12"><i class="fas fa-power-off"></i> Logout</button>
+        </div>
     </div>
 
     <script>
@@ -101,13 +187,25 @@
             document.getElementById('int-main').classList.remove('hidden-sec');
         }
 
+        function toggleMenu() {
+            const m = document.getElementById('side-menu');
+            const isOpen = m.style.transform === 'translateX(0px)';
+            m.style.transform = isOpen ? 'translateX(-100%)' : 'translateX(0px)';
+        }
+
         function navigate(view) {
             document.querySelectorAll('.view-sec').forEach(v => v.classList.add('hidden-sec'));
             document.getElementById('view-' + view).classList.remove('hidden-sec');
+            if(document.getElementById('side-menu').style.transform === 'translateX(0px)') toggleMenu();
         }
 
         function startVideo() {
-            alert("Playing Video... Stay on screen for 30s");
+            alert("Secure video loading... Please stay on the page for 30s to verify trust.");
+        }
+
+        function copyRef() {
+            navigator.clipboard.writeText("https://digital-earn.pro/ref/DE-PRO-2025");
+            alert("Global Link Copied!");
         }
     </script>
 </body>
