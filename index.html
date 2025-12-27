@@ -3,131 +3,208 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn Pro | Global</title>
+    <title>Digital Earn Pro | Global Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background: #010409; color: white; font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&display=swap');
+        body { background: #010409; color: white; font-family: 'Outfit', sans-serif; overflow: hidden; }
         .hidden-sec { display: none !important; }
-        .glass { background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; }
+        .glass { background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: 30px; }
         .blue-grad { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-        #side-menu { transition: 0.4s ease; z-index: 10000; }
-        .ticker { white-space: nowrap; animation: scroll 20s linear infinite; }
+        .ticker { white-space: nowrap; animation: scroll 25s linear infinite; }
         @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        #side-menu { transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 9999; }
     </style>
 </head>
-<body>
+<body class="h-screen flex flex-col">
 
-    <div id="auth-layer" class="fixed inset-0 bg-[#010409] z-[11000] flex items-center justify-center p-6">
-        <div class="glass w-full max-w-sm p-8 space-y-6">
-            <h2 id="auth-title" class="text-2xl font-black text-center text-blue-500">REGISTER</h2>
-            <div id="reg-inputs" class="space-y-4">
-                <input type="text" id="auth-name" placeholder="Full Name" class="w-full p-4 bg-slate-900 rounded-xl border border-white/5">
-                <input type="email" id="auth-email" placeholder="Email" class="w-full p-4 bg-slate-900 rounded-xl border border-white/5">
-                <input type="password" id="auth-pass" placeholder="Password" class="w-full p-4 bg-slate-900 rounded-xl border border-white/5">
-                <button onclick="handleAuth()" class="w-full blue-grad py-4 rounded-xl font-black">CONTINUE</button>
-                <p onclick="toggleAuth()" class="text-center text-[10px] text-slate-500 cursor-pointer">ALREADY HAVE AN ACCOUNT? LOGIN</p>
+    <div id="layer-auth" class="absolute inset-0 z-[10000] bg-[#010409] flex items-center justify-center p-6">
+        <div id="auth-box" class="glass w-full max-w-sm p-10 space-y-6">
+            <h2 id="auth-title" class="text-3xl font-black text-center text-blue-500 tracking-tighter">REGISTER</h2>
+            <div class="space-y-4">
+                <input type="text" id="reg-name" placeholder="Full Name" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none">
+                <input type="email" id="auth-email" placeholder="Email Address" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none">
+                <input type="password" id="auth-pass" placeholder="Password" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none">
+                <button onclick="handleAuth()" class="w-full blue-grad py-5 rounded-2xl font-black uppercase text-sm shadow-xl shadow-blue-500/20">Create Account</button>
+                <p onclick="toggleAuth()" class="text-center text-[10px] text-slate-500 uppercase font-bold cursor-pointer">Switch to Login</p>
             </div>
         </div>
     </div>
 
-    <div id="side-menu" class="fixed inset-y-0 left-0 w-72 bg-slate-950 transform -translate-x-full p-6 border-r border-white/5">
-        <div class="flex justify-between mb-8"><span class="font-black text-blue-500">MENU</span><i onclick="toggleMenu()" class="fas fa-times"></i></div>
+    <div id="side-menu" class="fixed inset-y-0 left-0 w-80 bg-slate-950 transform -translate-x-full border-r border-white/5 p-8 flex flex-col">
+        <div class="flex justify-between items-center mb-10">
+            <span class="font-black text-blue-500 tracking-widest text-xs">GLOBAL MENU</span>
+            <button onclick="toggleMenu()"><i class="fas fa-times text-xl"></i></button>
+        </div>
         <div class="grid grid-cols-2 gap-3">
-            <button onclick="nav('home')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-home text-blue-400"></i>Home</button>
-            <button onclick="nav('task')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>10 Tasks</button>
-            <button onclick="nav('withdraw')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-wallet text-amber-400"></i>Withdraw</button>
-            <button onclick="nav('history')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-history text-purple-400"></i>History</button>
-            <button onclick="nav('privacy')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-shield text-red-400"></i>Privacy</button>
-            <button onclick="nav('reviews')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-star text-yellow-400"></i>Reviews</button>
-            <button onclick="nav('settings')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-cog text-slate-400"></i>Settings</button>
-            <button onclick="window.open('https://wa.me/923096090737')" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fab fa-whatsapp text-green-500"></i>WhatsApp</button>
-            <button onclick="location.reload()" class="glass p-4 text-[10px] font-bold flex flex-col items-center gap-2 text-red-500"><i class="fas fa-power-off"></i>Logout</button>
+            <button onclick="navigate('home')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-home text-blue-400"></i>Home</button>
+            <button onclick="navigate('task')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>Tasks</button>
+            <button onclick="navigate('withdraw')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-wallet text-amber-400"></i>Withdraw</button>
+            <button onclick="navigate('history')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-history text-purple-400"></i>History</button>
+            <button onclick="navigate('reviews')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-star text-yellow-400"></i>Reviews</button>
+            <button onclick="navigate('privacy')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-shield-alt text-red-400"></i>Privacy</button>
+            <button onclick="navigate('settings')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-cog text-slate-400"></i>Settings</button>
+            <button onclick="window.open('https://wa.me/923096090737')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fab fa-whatsapp text-green-500"></i>WhatsApp</button>
+            <button onclick="location.reload()" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2 text-red-500 col-span-2 mt-4"><i class="fas fa-power-off"></i>Logout</button>
         </div>
     </div>
 
-    <div id="app-layer" class="hidden-sec flex flex-col h-screen">
-        <header class="p-6 flex justify-between items-center bg-[#010409]">
-            <i onclick="toggleMenu()" class="fas fa-bars text-blue-500 text-xl"></i>
-            <span class="font-black text-xs tracking-widest uppercase">Digital Earn Pro</span>
-            <div onclick="nav('admin')" class="w-8 h-8 blue-grad rounded-full flex items-center justify-center text-[10px]">ID</div>
+    <div id="int-main" class="h-full flex flex-col hidden-sec">
+        <header class="p-6 flex justify-between items-center bg-[#010409]/80 backdrop-blur-md sticky top-0 z-50">
+            <button onclick="toggleMenu()" class="text-xl text-blue-500"><i class="fas fa-bars-staggered"></i></button>
+            <span class="font-black text-xs tracking-[4px] uppercase">Digital Earn Pro</span>
+            <div onclick="openAdmin()" class="w-10 h-10 blue-grad rounded-full border border-white/10 flex items-center justify-center cursor-pointer shadow-lg">
+                <span class="text-[10px] font-black">ID</span>
+            </div>
         </header>
 
-        <main class="flex-1 overflow-y-auto p-6 space-y-6 pb-24">
-            <div class="glass overflow-hidden py-2 bg-blue-500/10 border-blue-500/20">
-                <div class="ticker text-[10px] font-bold text-blue-400">
-                    User DE-9921 just withdrew Rs. 14,000 via EasyPaisa... New Member DE-102 joined from Lahore...
+        <main class="flex-1 overflow-y-auto p-6 pb-28 space-y-6">
+            <div class="glass py-2 overflow-hidden border-blue-500/10">
+                <div class="ticker text-[10px] font-bold text-blue-400 uppercase">
+                    New Member DE-992 joined... Withdrawal of Rs. 2,500 approved for User DE-441... Global Tasks Reset in 4 Hours...
                 </div>
             </div>
 
             <div id="view-home" class="view-sec space-y-6">
-                <div class="blue-grad p-8 rounded-[35px] shadow-2xl">
-                    <p class="text-[10px] font-bold opacity-70">TOTAL BALANCE</p>
-                    <h1 class="text-4xl font-black mt-1">Rs. <span id="user-bal">0.00</span></h1>
+                <div class="blue-grad p-10 rounded-[40px] shadow-2xl relative overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+                    <p class="text-[11px] font-bold opacity-70 uppercase tracking-widest">Global Income</p>
+                    <h1 class="text-5xl font-black mt-2 tracking-tighter">Rs. <span id="main-balance">0.00</span></h1>
+                    <div class="mt-8 flex gap-6">
+                        <div class="bg-black/20 px-4 py-2 rounded-xl"><p class="text-[8px] opacity-60">ADS EARN</p><p class="font-bold text-xs text-green-400">Rs. 0</p></div>
+                        <div class="bg-black/20 px-4 py-2 rounded-xl"><p class="text-[8px] opacity-60">TEAM EARN</p><p class="font-bold text-xs text-blue-300">Rs. 0</p></div>
+                    </div>
                 </div>
+
                 <div class="glass p-6 text-center">
-                    <p class="text-[10px] font-black mb-2 opacity-50">PLATFORM TRUST RATING</p>
-                    <div class="flex justify-center gap-1 text-yellow-500 text-xl">
+                    <p class="text-[10px] font-black opacity-40 uppercase mb-3">Today's Performance</p>
+                    <div class="flex justify-center gap-1 text-yellow-500 mb-2">
                         <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
                     </div>
-                    <p class="text-[9px] mt-2">4.9/5 Based on 12,400+ Global Users</p>
+                    <p class="text-[9px] font-bold">4.9/5 Trust Rating</p>
                 </div>
             </div>
 
-            <div id="view-task" class="view-sec hidden-sec space-y-4">
-                <h3 class="text-xs font-black px-2">DAILY VIDEO TASKS (0/10)</h3>
-                <div id="task-lock-msg" class="glass p-10 text-center border-red-500/20">
-                    <i class="fas fa-lock text-4xl mb-4 text-red-500"></i>
-                    <p class="text-xs font-bold">TASK LOCKED</p>
-                    <p class="text-[10px] text-slate-500 mt-2">Pay Rs. 1000 joining fee to admin to unlock.</p>
+            <div id="view-task" class="view-sec hidden-sec">
+                <div id="task-locked" class="glass p-12 text-center border-amber-500/20">
+                    <i class="fas fa-lock text-5xl text-amber-500 mb-6"></i>
+                    <h3 class="text-xl font-black">MEMBERSHIP REQUIRED</h3>
+                    <p class="text-[11px] text-slate-500 mt-4 leading-relaxed uppercase">Unlock 10 daily tasks by paying Rs. 1000 joining fee to admin.</p>
+                    <div class="bg-slate-900 p-5 rounded-2xl my-6 border border-white/5">
+                        <p class="text-[9px] text-slate-500 mb-1 uppercase">Admin EasyPaisa</p>
+                        <p class="text-lg font-black text-blue-500">03707340477</p>
+                    </div>
+                    <button onclick="window.open('https://wa.me/923096090737')" class="w-full blue-grad py-4 rounded-2xl font-black text-xs uppercase">Send Proof to WhatsApp</button>
                 </div>
             </div>
 
-            <div id="view-history" class="view-sec hidden-sec space-y-4">
-                <h3 class="text-xs font-black px-2">WITHDRAWAL RECORDS</h3>
-                <div class="glass p-8 text-center opacity-30">
-                    <i class="fas fa-folder-open text-4xl mb-2"></i>
-                    <p class="text-[10px] font-bold">NO HISTORY FOUND</p>
+            <div id="view-withdraw" class="view-sec hidden-sec space-y-6">
+                <div class="glass p-8 space-y-4">
+                    <h3 class="text-xs font-black text-slate-500 uppercase">Submit Withdrawal</h3>
+                    <p class="text-[9px] text-red-500 font-bold uppercase">Note: Minimum withdrawal is Rs. 1000</p>
+                    <input type="number" id="w-amount" placeholder="Amount (Min 1000)" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-xs">
+                    <button onclick="processWithdraw()" class="w-full blue-grad py-4 rounded-2xl font-black text-xs uppercase">Request Cashout</button>
                 </div>
             </div>
 
-            <div id="view-privacy" class="view-sec hidden-sec glass p-6">
-                <h3 class="font-black mb-4">PRIVACY POLICY</h3>
-                <p class="text-[10px] text-slate-400 leading-relaxed">
-                    1. One account per user.<br>2. Withdrawals processed within 24 hours.<br>3. Registration fee is non-refundable.
-                </p>
+            <div id="view-settings" class="view-sec hidden-sec space-y-6">
+                <div class="glass p-8 space-y-4">
+                    <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest">Wallet Details</h3>
+                    <select id="w-method" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-xs">
+                        <option>Select Method</option>
+                        <option>EasyPaisa</option>
+                        <option>JazzCash</option>
+                        <option>SadaPay</option>
+                    </select>
+                    <input type="text" id="w-name" placeholder="Account Title (Full Name)" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-xs">
+                    <input type="number" id="w-phone" placeholder="Account Number" class="w-full p-4 bg-slate-900 rounded-2xl border border-white/5 outline-none text-xs">
+                    <button onclick="alert('Wallet Details Saved Locally!')" class="w-full blue-grad py-4 rounded-2xl font-black text-xs uppercase">Save Details</button>
+                </div>
             </div>
+
+            <div id="view-admin" class="view-sec hidden-sec space-y-6">
+                <div class="glass p-6 border-blue-500/40">
+                    <h2 class="text-sm font-black text-blue-500 uppercase mb-6">Master Admin Controller</h2>
+                    <div class="space-y-4">
+                        <p class="text-[10px] font-bold opacity-50 uppercase">Approve Joining Fee</p>
+                        <div class="bg-white/5 p-4 rounded-2xl flex justify-between items-center">
+                            <div><p class="text-xs font-bold">New User: user1@mail.com</p><p class="text-[9px] text-amber-500">PENDING Rs. 1000</p></div>
+                            <button onclick="alert('User Approved! Tasks Unlocked.')" class="bg-green-600 text-[9px] px-4 py-2 rounded-lg font-black uppercase">Approve</button>
+                        </div>
+                        <p class="text-[10px] font-bold opacity-50 uppercase mt-8">Withdrawal Requests</p>
+                        <div class="bg-white/5 p-4 rounded-2xl flex justify-between items-center opacity-50">
+                            <p class="text-[10px]">No pending withdrawal requests found.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-reviews" class="view-sec hidden-sec glass p-10 text-center py-20 opacity-30">
+                <i class="fas fa-comment-dots text-4xl mb-4"></i><p class="text-[10px] font-black uppercase">No User Reviews Yet</p>
+            </div>
+            <div id="view-history" class="view-sec hidden-sec glass p-10 text-center py-20 opacity-30">
+                <i class="fas fa-history text-4xl mb-4"></i><p class="text-[10px] font-black uppercase">Transaction History Clear</p>
+            </div>
+            <div id="view-privacy" class="view-sec hidden-sec glass p-10">
+                <h3 class="font-black text-xs mb-4 uppercase">Privacy & Terms</h3>
+                <p class="text-[10px] text-slate-500 leading-relaxed uppercase">1. Only one account per person.<br>2. Registration fee is non-refundable.<br>3. Minimum payout is Rs. 1000.</p>
+            </div>
+
         </main>
-        
-        <a href="https://wa.me/923096090737" class="fixed bottom-24 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-2xl z-50">
-            <i class="fab fa-whatsapp text-3xl"></i>
-        </a>
+
+        <nav class="fixed bottom-0 w-full bg-slate-950/90 backdrop-blur-xl border-t border-white/5 p-6 flex justify-around z-50">
+            <button onclick="navigate('home')" class="text-blue-500 nav-icon"><i class="fas fa-home text-xl"></i></button>
+            <button onclick="navigate('task')" class="text-slate-600 nav-icon"><i class="fas fa-play-circle text-xl"></i></button>
+            <button onclick="navigate('settings')" class="text-slate-600 nav-icon"><i class="fas fa-user-cog text-xl"></i></button>
+        </nav>
     </div>
 
     <script>
-        let currentUser = null;
-
+        // AUTH LOGIC
         function toggleAuth() {
-            const title = document.getElementById('auth-title');
-            title.innerText = title.innerText === 'REGISTER' ? 'LOGIN' : 'REGISTER';
-            document.getElementById('auth-name').classList.toggle('hidden-sec');
+            const t = document.getElementById('auth-title');
+            t.innerText = t.innerText === 'REGISTER' ? 'LOGIN' : 'REGISTER';
+            document.getElementById('reg-name').classList.toggle('hidden-sec');
         }
 
-        async function handleAuth() {
-            // Simplified for demonstration - this connects to /api/auth
-            document.getElementById('auth-layer').classList.add('hidden-sec');
-            document.getElementById('app-layer').classList.remove('hidden-sec');
+        function handleAuth() {
+            document.getElementById('layer-auth').classList.add('hidden-sec');
+            document.getElementById('int-main').classList.remove('hidden-sec');
         }
 
+        // NAVIGATION
         function toggleMenu() {
             const m = document.getElementById('side-menu');
-            m.style.transform = m.style.transform === 'translateX(0px)' ? 'translateX(-100%)' : 'translateX(0px)';
+            const isOpen = m.style.transform === 'translateX(0px)';
+            m.style.transform = isOpen ? 'translateX(-100%)' : 'translateX(0px)';
         }
 
-        function nav(v) {
+        function navigate(view) {
             document.querySelectorAll('.view-sec').forEach(s => s.classList.add('hidden-sec'));
-            document.getElementById('view-' + v).classList.remove('hidden-sec');
-            toggleMenu();
+            document.getElementById('view-' + view).classList.remove('hidden-sec');
+            
+            // Update nav icons color
+            document.querySelectorAll('.nav-icon').forEach(icon => icon.classList.replace('text-blue-500', 'text-slate-600'));
+            
+            if (document.getElementById('side-menu').style.transform === 'translateX(0px)') toggleMenu();
+        }
+
+        // ADMIN LOGIC (HIDDEN ACCESS)
+        function openAdmin() {
+            const pass = prompt("Enter Admin Secret Key:");
+            if (pass === "1122") {
+                navigate('admin');
+            } else {
+                alert("Access Denied.");
+            }
+        }
+
+        // WITHDRAW LOGIC
+        function processWithdraw() {
+            const amt = document.getElementById('w-amount').value;
+            if (amt < 1000) return alert("Minimum Withdrawal is Rs. 1000");
+            alert("Request Submitted! Status: Pending Approval.");
         }
     </script>
 </body>
