@@ -3,172 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Earn Pro | Global Security</title>
+    <title>Digital Earn Pro | Global</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&display=swap');
         body { background: #010409; color: white; font-family: 'Outfit', sans-serif; overflow: hidden; }
         .hidden-sec { display: none !important; }
-        .glass { background: rgba(13, 17, 23, 0.85); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); border-radius: 30px; }
-        .blue-grad { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-        .bg-animate { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle at 50% 50%, #0f172a, #010409); }
-        .bg-dots { position: absolute; inset: 0; background-image: radial-gradient(#ffffff0a 1px, transparent 1px); background-size: 30px 30px; animation: move 60s linear infinite; }
-        @keyframes move { from { background-position: 0 0; } to { background-position: 1000px 1000px; } }
-        #side-menu { transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10000; }
-        .ticker { white-space: nowrap; animation: scroll 25s linear infinite; }
-        @keyframes scroll { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        .glass { background: rgba(13, 17, 23, 0.8); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.08); border-radius: 25px; }
+        .blue-grad { background: linear-gradient(135deg, #1d4ed8, #3b82f6); }
+        
+        /* LIVE WALLPAPER */
+        .bg-wrap { position: fixed; inset: 0; z-index: -1; background: #010409; }
+        .bg-glow { position: absolute; width: 300px; height: 300px; background: #3b82f6; filter: blur(120px); border-radius: 50%; opacity: 0.15; animation: float 10s infinite alternate; }
+        @keyframes float { from { transform: translate(0, 0); } to { transform: translate(100px, 100px); } }
+
+        #side-menu { transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); z-index: 10000; }
+        .ticker { white-space: nowrap; animation: ticker 25s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
     </style>
 </head>
 <body class="h-screen flex flex-col">
-    <div class="bg-animate"><div class="bg-dots"></div></div>
+    <div class="bg-wrap"><div class="bg-glow"></div></div>
 
-    <div id="layer-auth" class="fixed inset-0 z-[11000] bg-[#010409] flex items-center justify-center p-6">
-        <div id="auth-box" class="glass w-full max-w-sm p-10 space-y-5">
-            <h2 id="auth-title" class="text-3xl font-black text-center text-blue-500 uppercase tracking-tighter">Register</h2>
-            <div class="space-y-4">
-                <input type="text" id="reg-name" placeholder="Full Name" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none">
-                <input type="email" id="reg-email" placeholder="Gmail Address" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none">
-                <input type="password" id="reg-pass" placeholder="Password" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none">
-                <input type="text" id="reg-ref" placeholder="Referral Email (Optional)" class="w-full p-5 bg-slate-900 rounded-2xl border border-white/5 outline-none">
-                <button onclick="sendOTP()" class="w-full blue-grad py-5 rounded-2xl font-black uppercase text-xs">Verify Gmail</button>
-                <p onclick="toggleAuth()" class="text-center text-[10px] text-slate-500 font-bold cursor-pointer uppercase">Switch to Login</p>
+    <div id="auth-layer" class="fixed inset-0 z-[11000] bg-[#010409] flex items-center justify-center p-6">
+        <div id="reg-box" class="glass w-full max-w-sm p-8 space-y-4">
+            <h2 id="auth-header" class="text-3xl font-black text-blue-500 uppercase tracking-tighter">Register</h2>
+            <div id="form-fields" class="space-y-3">
+                <input type="text" id="name" placeholder="Full Name" class="w-full p-4 bg-slate-900 rounded-xl outline-none border border-white/5">
+                <input type="email" id="email" placeholder="Gmail Address" class="w-full p-4 bg-slate-900 rounded-xl outline-none border border-white/5">
+                <input type="password" id="pass" placeholder="Password" class="w-full p-4 bg-slate-900 rounded-xl outline-none border border-white/5">
+                <input type="text" id="ref" placeholder="Referral Email (Optional)" class="w-full p-4 bg-slate-900 rounded-xl outline-none border border-white/5">
             </div>
-        </div>
-        <div id="otp-box" class="hidden-sec glass w-full max-w-sm p-10 text-center">
-            <h2 class="text-xl font-black mb-4">OTP VERIFICATION</h2>
-            <p class="text-[10px] text-slate-500 mb-6">Enter code sent to your mail</p>
-            <input type="text" id="otp-val" placeholder="0 0 0 0" class="w-full p-5 bg-slate-900 rounded-2xl text-center text-2xl font-black tracking-[10px]">
-            <button onclick="finishReg()" class="w-full blue-grad py-5 rounded-2xl font-black mt-6 uppercase">Confirm OTP</button>
+            <div id="otp-field" class="hidden-sec">
+                <p class="text-[10px] text-blue-400 font-bold mb-2 uppercase">Check your gmail for code</p>
+                <input type="text" id="otp-input" placeholder="Enter 4-Digit OTP" class="w-full p-4 bg-slate-900 rounded-xl text-center font-black tracking-widest border-2 border-blue-500">
+            </div>
+            <button id="auth-btn" onclick="sendOTP()" class="w-full blue-grad py-4 rounded-xl font-black uppercase text-xs">Verify Gmail</button>
+            <p onclick="toggleLogin()" id="auth-toggle" class="text-center text-[10px] font-bold text-slate-500 cursor-pointer uppercase">I have an account</p>
         </div>
     </div>
 
-    <div id="side-menu" class="fixed inset-y-0 left-0 w-80 bg-slate-950 transform -translate-x-full border-r border-white/5 p-8 flex flex-col">
-        <div class="flex justify-between items-center mb-10"><span class="font-black text-blue-500 text-xs uppercase">Navigation</span><i onclick="toggleMenu()" class="fas fa-times"></i></div>
+    <div id="side-menu" class="fixed inset-y-0 left-0 w-80 bg-[#0d1117] transform -translate-x-full border-r border-white/10 p-8 flex flex-col">
+        <div class="flex justify-between items-center mb-8"><span class="text-xs font-black text-blue-500 uppercase">Secure Menu</span><i onclick="toggleMenu()" class="fas fa-times cursor-pointer"></i></div>
         <div class="grid grid-cols-2 gap-3">
-            <button onclick="nav('home')" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2"><i class="fas fa-home text-blue-400"></i>Home</button>
-            <button onclick="nav('task')" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>Tasks</button>
-            <button onclick="nav('withdraw')" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2"><i class="fas fa-wallet text-amber-400"></i>Withdraw</button>
-            <button onclick="nav('history')" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2"><i class="fas fa-history text-purple-400"></i>History</button>
-            <button onclick="nav('reviews')" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2"><i class="fas fa-star text-yellow-400"></i>Reviews</button>
-            <button onclick="nav('privacy')" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2"><i class="fas fa-shield text-red-400"></i>Guide</button>
-            <button onclick="nav('settings')" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2"><i class="fas fa-cog text-slate-400"></i>Settings</button>
-            <button onclick="window.open('https://wa.me/923096090737')" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2"><i class="fab fa-whatsapp text-green-500"></i>Support</button>
-            <button onclick="location.reload()" class="glass p-5 text-[10px] font-black flex flex-col items-center gap-2 text-red-500 col-span-2 mt-4 uppercase"><i class="fas fa-power-off"></i>Logout</button>
+            <button onclick="nav('home')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-home text-blue-400"></i>Home</button>
+            <button onclick="nav('task')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-play text-green-400"></i>Tasks</button>
+            <button onclick="nav('withdraw')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-wallet text-amber-400"></i>Withdraw</button>
+            <button onclick="nav('history')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-history text-purple-400"></i>History</button>
+            <button onclick="nav('reviews')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-star text-yellow-400"></i>Reviews</button>
+            <button onclick="nav('guide')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-book text-red-400"></i>Guide</button>
+            <button onclick="nav('settings')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fas fa-cog text-slate-400"></i>Settings</button>
+            <button onclick="window.open('https://wa.me/923096090737')" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2"><i class="fab fa-whatsapp text-green-500"></i>Support</button>
+            <button onclick="location.reload()" class="glass p-5 text-[10px] font-bold flex flex-col items-center gap-2 text-red-500 col-span-2 mt-4"><i class="fas fa-power-off"></i>Logout</button>
         </div>
     </div>
 
-    <div id="int-main" class="h-full flex flex-col hidden-sec">
-        <header class="p-6 flex justify-between items-center bg-[#010409]/80 backdrop-blur-md sticky top-0 z-50">
-            <i onclick="toggleMenu()" class="fas fa-bars-staggered text-blue-500 text-xl"></i>
-            <span class="font-black text-xs tracking-widest uppercase">Digital Earn Pro</span>
-            <div onclick="openAdmin()" class="w-10 h-10 blue-grad rounded-full flex items-center justify-center cursor-pointer shadow-lg"><span class="text-[9px] font-black">ID</span></div>
+    <div id="main-content" class="h-full flex flex-col hidden-sec">
+        <header class="p-6 flex justify-between items-center bg-[#010409]/90 backdrop-blur-md">
+            <i onclick="toggleMenu()" class="fas fa-bars-staggered text-blue-500 text-xl cursor-pointer"></i>
+            <span class="text-[10px] font-black tracking-[4px] uppercase">Digital Earn Pro</span>
+            <div onclick="openAdmin()" class="w-10 h-10 blue-grad rounded-full flex items-center justify-center font-black text-[9px] cursor-pointer shadow-lg">ID</div>
         </header>
 
         <main class="flex-1 overflow-y-auto p-6 pb-28 space-y-6">
-            <div class="glass py-2 overflow-hidden bg-blue-500/10 border-blue-500/20"><div class="ticker text-[10px] font-black text-blue-400 uppercase">Member DE-921 Withdrew Rs. 3,500... New Diamond Member Joined... Reset at 12:00 PM...</div></div>
+            <div class="glass py-2 overflow-hidden border-blue-500/20"><div class="ticker text-[10px] font-black text-blue-400 uppercase">Withdrawal Rs. 2,500 Approved... Diamond Plan is Viral... Team Bonus 10% Active...</div></div>
 
             <div id="view-home" class="view-sec space-y-6">
                 <div class="blue-grad p-10 rounded-[40px] shadow-2xl relative overflow-hidden">
-                    <p class="text-[11px] font-bold opacity-70 uppercase tracking-widest">Global Balance</p>
-                    <h1 class="text-5xl font-black mt-2 tracking-tighter">Rs. <span id="user-bal">0.00</span></h1>
-                    <p id="plan-tag" class="text-[9px] mt-4 bg-white/10 w-max px-4 py-1 rounded-full font-bold uppercase tracking-widest border border-white/10">Plan: Loading...</p>
+                    <p class="text-[10px] font-bold opacity-60 uppercase tracking-widest">Main Wallet</p>
+                    <h1 class="text-5xl font-black mt-2 tracking-tighter">Rs. <span id="u-bal">0.00</span></h1>
+                    <div id="u-plan-tag" class="mt-6 text-[8px] bg-black/20 w-max px-4 py-1 rounded-full font-black uppercase tracking-widest">Plan: Inactive</div>
                 </div>
-                <div class="glass p-6 text-center">
-                    <p class="text-[9px] font-black opacity-40 uppercase mb-2">Platform Rating</p>
-                    <div class="flex justify-center gap-1 text-yellow-500 mb-2"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
-                    <p class="text-[8px] font-bold uppercase tracking-widest">4.9/5 Official Trust</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass p-6 text-center"><p class="text-[8px] font-black opacity-40 uppercase">Daily Tasks</p><p class="text-xl font-black" id="u-tasks">0/0</p></div>
+                    <div class="glass p-6 text-center"><p class="text-[8px] font-black opacity-40 uppercase">Team Size</p><p class="text-xl font-black">0</p></div>
                 </div>
             </div>
 
             <div id="view-task" class="view-sec hidden-sec">
-                <div id="task-locked" class="glass p-12 text-center border-amber-500/20">
+                <div id="locked-area" class="glass p-10 text-center border-amber-500/20">
                     <i class="fas fa-lock text-5xl text-amber-500 mb-6"></i>
-                    <h3 class="text-xl font-black uppercase">Restricted</h3>
-                    <p class="text-[10px] text-slate-500 mt-4 uppercase">Select plan and pay Rs. 700 / 1500 / 2500 to Admin: 03707340477</p>
-                    <button onclick="window.open('https://wa.me/923096090737')" class="w-full blue-grad py-5 rounded-2xl font-black uppercase text-xs mt-8">Send Receipt to WhatsApp</button>
+                    <h3 class="text-xl font-black uppercase">Plan Restricted</h3>
+                    <p class="text-[10px] text-slate-500 mt-4 leading-relaxed uppercase">Send Fees to: 03707340477 (EasyPaisa)<br>Basic: 700 | Silver: 1500 | Diamond: 2500</p>
+                    <button onclick="window.open('https://wa.me/923096090737')" class="w-full blue-grad py-4 rounded-xl font-black text-xs uppercase mt-8">Submit Proof</button>
                 </div>
                 <div id="task-list" class="hidden-sec space-y-4"></div>
             </div>
 
-            <div id="view-admin" class="view-sec hidden-sec space-y-6">
-                <div class="glass p-8">
-                    <h2 class="text-blue-500 font-black mb-6 uppercase">Admin Control Block</h2>
-                    <input type="email" id="adm-target" placeholder="User Email" class="w-full p-4 bg-slate-900 rounded-xl mb-3 outline-none">
-                    <select id="adm-plan" class="w-full p-4 bg-slate-900 rounded-xl mb-3 outline-none">
-                        <option value="700">Basic (700)</option>
-                        <option value="1500">Silver (1500)</option>
-                        <option value="2500">Diamond (2500)</option>
-                    </select>
-                    <button onclick="approveNow()" class="w-full blue-grad py-4 rounded-xl font-black uppercase text-xs">Approve Payment</button>
+            <div id="view-withdraw" class="view-sec hidden-sec glass p-8 space-y-4">
+                <h3 class="text-xs font-black uppercase text-blue-500">Request Cashout</h3>
+                <input type="number" id="w-amount" placeholder="Min Amount 1000" class="w-full p-4 bg-slate-900 rounded-xl outline-none">
+                <button onclick="alert('Sent to Admin Block for Approval')" class="w-full blue-grad py-4 rounded-xl font-black text-xs uppercase">Send Request</button>
+            </div>
+
+            <div id="view-reviews" class="view-sec hidden-sec space-y-6">
+                <div class="glass p-8 space-y-4">
+                    <h3 class="text-xs font-black uppercase text-yellow-500">Share Your Experience</h3>
+                    <textarea id="review-text" placeholder="Write your review here..." class="w-full p-4 bg-slate-900 rounded-xl h-24 outline-none text-[10px]"></textarea>
+                    <button onclick="alert('Review Published Locally!')" class="w-full blue-grad py-4 rounded-xl font-black text-xs uppercase">Submit Review</button>
                 </div>
             </div>
 
-            <div id="view-privacy" class="view-sec hidden-sec glass p-8">
-                <h3 class="font-black text-blue-500 mb-6 uppercase">User Guide & Policy</h3>
-                <div class="text-[11px] text-slate-500 space-y-4 leading-relaxed uppercase">
-                    <p>1. Joining Fees: Basic 700 | Silver 1500 | Diamond 2500.</p>
-                    <p>2. Referrals get 10% auto-reward on every task done by team.</p>
-                    <p>3. Reset time: 12:00 PM sharp daily.</p>
-                    <p>4. Withdrawals processed within 24 hours. Min: 1000.</p>
-                    <p class="text-red-500 font-bold border-t border-white/5 pt-4">Complaints: saifullahbk386@gmail.com</p>
+            <div id="view-guide" class="view-sec hidden-sec glass p-8 space-y-4">
+                <h3 class="text-xs font-black uppercase text-red-500">User Manual & Policy</h3>
+                <div class="text-[10px] text-slate-500 space-y-3 leading-relaxed uppercase">
+                    <p>1. 10% bonus added instantly when referral completes a task.</p>
+                    <p>2. Withdrawals processed within 24 hours.</p>
+                    <p>3. Reset Time: 12:00 PM Daily.</p>
+                    <p>4. No refund on joining fees.</p>
                 </div>
             </div>
+
+            <div id="view-admin" class="view-sec hidden-sec glass p-8 space-y-4 border-blue-500">
+                <h2 class="font-black text-blue-500 uppercase">Admin Command Block</h2>
+                <input type="email" id="target-mail" placeholder="User Email" class="w-full p-4 bg-slate-900 rounded-xl outline-none">
+                <select id="target-plan" class="w-full p-4 bg-slate-900 rounded-xl outline-none">
+                    <option value="700">Basic (700)</option><option value="1500">Silver (1500)</option><option value="2500">Diamond (2500)</option>
+                </select>
+                <button onclick="approveNow()" class="w-full blue-grad py-4 rounded-xl font-black text-xs uppercase">Unlock User</button>
+            </div>
+            
+            <div id="view-history" class="view-sec hidden-sec glass p-10 text-center opacity-30 uppercase text-[10px]">No Transactions Yet</div>
+            <div id="view-settings" class="view-sec hidden-sec glass p-8 space-y-4">
+                <input type="text" placeholder="Wallet Name" class="w-full p-4 bg-slate-900 rounded-xl outline-none">
+                <input type="number" placeholder="Wallet Number" class="w-full p-4 bg-slate-900 rounded-xl outline-none">
+                <button class="w-full blue-grad py-4 rounded-xl font-black text-xs uppercase">Save Details</button>
+            </div>
+
         </main>
-
-        <nav class="fixed bottom-0 w-full bg-slate-950/80 backdrop-blur-xl border-t border-white/5 p-6 flex justify-around z-50">
-            <button onclick="nav('home')" class="text-blue-500"><i class="fas fa-home text-xl"></i></button>
-            <button onclick="nav('task')" class="text-slate-600"><i class="fas fa-play-circle text-xl"></i></button>
-            <button onclick="nav('settings')" class="text-slate-600"><i class="fas fa-user-shield text-xl"></i></button>
-        </nav>
     </div>
 
     <a href="https://wa.me/923096090737" class="fixed bottom-24 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center shadow-2xl z-50 animate-bounce"><i class="fab fa-whatsapp text-2xl"></i></a>
 
     <script>
         let curr = null;
+        let isLoginMode = false;
 
-        function toggleAuth() {
-            const t = document.getElementById('auth-title');
-            t.innerText = t.innerText === 'REGISTER' ? 'LOGIN' : 'REGISTER';
-            document.getElementById('reg-name').classList.toggle('hidden-sec');
-            document.getElementById('reg-ref').classList.toggle('hidden-sec');
+        function toggleLogin() {
+            isLoginMode = !isLoginMode;
+            document.getElementById('auth-header').innerText = isLoginMode ? "Login" : "Register";
+            document.getElementById('auth-btn').innerText = isLoginMode ? "Secure Login" : "Verify Gmail";
+            document.getElementById('form-fields').classList.toggle('hidden-sec', isLoginMode && false); // Keep fields
+            document.getElementById('name').style.display = isLoginMode ? 'none' : 'block';
+            document.getElementById('ref').style.display = isLoginMode ? 'none' : 'block';
+            document.getElementById('auth-toggle').innerText = isLoginMode ? "Create New Account" : "I have an account";
         }
 
         async function sendOTP() {
-            const email = document.getElementById('reg-email').value;
+            if(isLoginMode) return finishAuth('/api/auth/login');
+            
+            const email = document.getElementById('email').value;
             if(!email.includes('@')) return alert("Enter valid Gmail");
-            document.getElementById('auth-box').classList.add('hidden-sec');
-            document.getElementById('otp-box').classList.remove('hidden-sec');
+            
+            document.getElementById('form-fields').classList.add('hidden-sec');
+            document.getElementById('otp-field').classList.remove('hidden-sec');
+            document.getElementById('auth-btn').innerText = "Complete Registration";
+            document.getElementById('auth-btn').setAttribute('onclick', "finishAuth('/api/auth/register')");
+            
+            await fetch('/api/auth/send-otp', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email}) });
         }
 
-        async function finishReg() {
-            const isReg = !document.getElementById('reg-name').classList.contains('hidden-sec');
-            const url = isReg ? '/api/auth/register' : '/api/auth/login';
-            const res = await fetch(url, {
+        async function finishAuth(route) {
+            const res = await fetch(route, {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type':'application/json'},
                 body: JSON.stringify({
-                    name: document.getElementById('reg-name').value,
-                    email: document.getElementById('reg-email').value,
-                    password: document.getElementById('reg-pass').value,
-                    referredBy: document.getElementById('reg-ref').value
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('pass').value,
+                    referral: document.getElementById('ref').value,
+                    otp: document.getElementById('otp-input').value
                 })
             });
             const data = await res.json();
             if(res.ok) {
                 curr = data;
+                document.getElementById('auth-layer').classList.add('hidden-sec');
+                document.getElementById('main-content').classList.remove('hidden-sec');
                 updateUI();
-                document.getElementById('layer-auth').classList.add('hidden-sec');
-                document.getElementById('int-main').classList.remove('hidden-sec');
-            } else { alert("Error"); }
+            } else { alert("Failed. Try again."); }
         }
 
         function updateUI() {
-            document.getElementById('user-bal').innerText = curr.balance.toFixed(2);
-            document.getElementById('plan-tag').innerText = `Plan: ${curr.plan.toUpperCase()}`;
+            document.getElementById('u-bal').innerText = curr.balance.toFixed(2);
+            document.getElementById('u-plan-tag').innerText = `Plan: ${curr.plan.toUpperCase()}`;
             if(curr.isPaid) {
-                document.getElementById('task-locked').classList.add('hidden-sec');
+                document.getElementById('locked-area').classList.add('hidden-sec');
                 document.getElementById('task-list').classList.remove('hidden-sec');
                 renderTasks();
             }
@@ -177,22 +198,19 @@
         function renderTasks() {
             const list = document.getElementById('task-list');
             const limit = curr.plan == '700' ? 10 : (curr.plan == '1500' ? 20 : 30);
+            document.getElementById('u-tasks').innerText = `${curr.tasksDone}/${limit}`;
             list.innerHTML = "";
             for(let i=1; i<=limit; i++) {
-                const done = i <= curr.tasksDone;
-                list.innerHTML += `<div class="glass p-5 flex justify-between items-center mb-3 ${done ? 'opacity-40' : ''}">
-                    <p class="text-xs font-bold uppercase">Video Task #${i}</p>
-                    ${done ? '<i class="fas fa-check-circle text-green-500"></i>' : `<button onclick="doTask()" class="blue-grad px-6 py-2 rounded-xl text-[9px] font-black uppercase tracking-widest">Watch</button>`}
+                const isDone = i <= curr.tasksDone;
+                list.innerHTML += `<div class="glass p-5 flex justify-between items-center ${isDone ? 'opacity-40' : ''}">
+                    <p class="text-[10px] font-black uppercase">Video Ad #${i}</p>
+                    ${isDone ? '<i class="fas fa-check-circle text-green-500"></i>' : `<button onclick="doTask()" class="blue-grad px-5 py-2 rounded-xl text-[8px] font-black uppercase">Watch</button>`}
                 </div>`;
             }
         }
 
         async function doTask() {
-            const res = await fetch('/api/tasks/complete', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ email: curr.email })
-            });
+            const res = await fetch('/api/tasks/claim', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({email: curr.email}) });
             const data = await res.json();
             if(res.ok) { curr.balance = data.balance; curr.tasksDone = data.tasksDone; updateUI(); }
         }
@@ -203,26 +221,20 @@
             toggleMenu(false);
         }
 
-        function toggleMenu(force) {
+        function toggleMenu(f) {
             const m = document.getElementById('side-menu');
-            m.style.transform = (force === false) ? 'translateX(-100%)' : (m.style.transform === 'translateX(0px)' ? 'translateX(-100%)' : 'translateX(0px)');
+            m.style.transform = f === false ? 'translateX(-100%)' : (m.style.transform === 'translateX(0px)' ? 'translateX(-100%)' : 'translateX(0px)');
         }
 
-        function openAdmin() {
-            if(prompt("Admin Key:") === "1122") nav('admin');
-        }
+        function openAdmin() { if(prompt("Key:") === "1122") nav('admin'); }
 
         async function approveNow() {
-            const res = await fetch('/api/admin/approve', {
+            const res = await fetch('/api/admin/verify', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ 
-                    email: document.getElementById('adm-target').value,
-                    plan: document.getElementById('adm-plan').value,
-                    adminKey: "1122" 
-                })
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify({ targetEmail: document.getElementById('target-mail').value, plan: document.getElementById('target-plan').value, key: "1122" })
             });
-            if(res.ok) alert("User Approved Successfully!");
+            if(res.ok) alert("Success");
         }
     </script>
 </body>
